@@ -1,14 +1,14 @@
-export default function Posts({ id, userScrapData }) {
-  const keywordData = getKeywordData(id, userScrapData);
+export default function Posts({ date, userScrapData }) {
+  const dateData = getDateData(date, userScrapData);
 
   return (
     <div className="py-4 border-2 border-gray-400 h-screen overflow-auto">
       <h1 className="px-4 py-2 text-5xl text-center font-bold ">
-        {id ? `검색어: ${id}` : ``}
+        {date ? `Date: ${date}` : ``}
       </h1>
-      {keywordData && (
+      {dateData && (
         <ul className="h-full overflow-auto p-6">
-          {keywordData.map((titleObj, index) => (
+          {dateData.map((titleObj, index) => (
             <div key={index}>
               <div className="px-4 py-2 text-left text-xl">
                 {titleObj.title}
@@ -30,13 +30,15 @@ export default function Posts({ id, userScrapData }) {
   );
 }
 
-function getKeywordData(keyword, userScrapData) {
+function getDateData(date, userScrapData) {
+  let dateData = [];
   for (const item of userScrapData) {
-    if (item.keywords.keyword === keyword) {
-      return item.keywords.titles.map((title, i) => {
+    if (item.date === date) {
+      const titlesAndUrls = item.keywords.titles.map((title, i) => {
         return { title: title, url: item.keywords.urls[i] };
       });
+      dateData.push(...titlesAndUrls);
     }
   }
-  return null;
+  return dateData;
 }

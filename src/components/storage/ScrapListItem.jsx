@@ -1,6 +1,7 @@
 import React from "react";
 import Keyword from "./Keyword";
 import Title from "./Title";
+
 export default function ScrapListItem({
   item,
   handleToggleKeywordClick,
@@ -9,6 +10,7 @@ export default function ScrapListItem({
   currentKeyword,
   handleTitleClick,
   deleteTitle,
+  showKeywords,
 }) {
   return (
     <ul>
@@ -19,8 +21,10 @@ export default function ScrapListItem({
           deleteKeyword={deleteKeyword}
           cookies={cookies}
           item={item}
+          showKeywords={showKeywords}
         />
-        {currentKeyword === item.keywords.keyword &&
+        {showKeywords &&
+          currentKeyword === item.keywords.keyword &&
           item.keywords.titles.map((title, titleIndex) => (
             <div key={`title-${titleIndex}`}>
               <Title
