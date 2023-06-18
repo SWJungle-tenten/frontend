@@ -1,12 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Swal from "sweetalert2";
 
 export default function SignUp(prop) {
   const { handleLogin } = prop;
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [name, setName] = useState("");
+  const email = useRef("");
+  const password = useRef("");
+  const name = useRef("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -14,22 +17,26 @@ export default function SignUp(prop) {
   };
 
   const emailHandler = (event) => {
-    setEmail(event.target.value);
+    // setEmail(event.target.value);
+    email.current = event.target.value;
   };
   const passwordHandler = (event) => {
-    setPassword(event.target.value);
+    // setPassword(event.target.value);
+    password.current = event.target.value;
+
   };
   const nameHandler = (event) => {
-    setName(event.target.value);
-  };
+    // setName(event.target.value);
+    name.current = event.target.value;
 
+  };
   const submitHandler = async (event) => {
     event.preventDefault();
 
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/register`,
-        { name: name, email: email, password: password },
+        { name: name.current, email: email.current, password: password.current },
         {
           headers: {
             "Content-Type": "application/json",
@@ -61,6 +68,7 @@ export default function SignUp(prop) {
           confirmButtonColor: "#0ea5e9",
         });
       });
+      
   };
   return (
     <div className="p-6  pb-0">

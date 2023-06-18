@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
@@ -10,9 +10,10 @@ export default function SignIn(prop) {
 
   const { handleLogin } = prop;
   const [cookies, setCookie, removeCookie] = useCookies("accessToken");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const email = useRef("");
+  const password= useRef("");
 
   const handleCheckboxChange = () => {
     setShowPassword(!showPassword);
@@ -30,14 +31,17 @@ export default function SignIn(prop) {
     });
   };
   const emailHandler = (event) => {
-    setEmail(event.target.value);
+    email.current = event.target.value;
   };
+  
   const passwordHandler = (event) => {
-    setPassword(event.target.value);
+    password.current = event.target.value;
+
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    console.log(email.current);
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/login`,
@@ -45,8 +49,8 @@ export default function SignIn(prop) {
         {
           headers: {
             "Content-Type": "application/json",
-            email: email,
-            password: password,
+            email: email.current,
+            password: password.current,
           },
         }
       )
