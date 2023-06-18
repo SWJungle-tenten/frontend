@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function Title({
   title,
   handleTitleClick,
@@ -25,7 +27,6 @@ export default function Title({
 >
   x
 </button>
-
     </div>
   );
 }

@@ -13,7 +13,6 @@ export default function Scrap({ socket, userScrapData }) {
   const [currentTitle, setCurrentTitle] = useState(null);
   const [showKeywords, setShowKeywords] = useState(false);
   const [cookies] = useCookies(["accessToken"]);
-  console.log("scra data", scrapData);
 
   socket.on("deleteKeyWord respond from server", (data) => {
     setScrapData(data.dataToSend);
@@ -43,7 +42,8 @@ export default function Scrap({ socket, userScrapData }) {
       date,
       url,
     });
-    socket.on("deleteUserScrap respond from serve", (data) => {
+
+    socket.on("deleteUserScrap respond from server", (data) => {
       setScrapData(data.dataToSend);
     });
   };

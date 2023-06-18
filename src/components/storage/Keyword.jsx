@@ -14,6 +14,7 @@ export default function Keyword({
         onClick={() => handleToggleKeywordClick(keyword)}
       >
         검색어: {keyword}
+
       </button>
       <button
         className="ml-2"

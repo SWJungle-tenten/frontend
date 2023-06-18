@@ -26,3 +26,4 @@ function getTitleData(title, userScrapData) {
   }
   return null;
 }
+
