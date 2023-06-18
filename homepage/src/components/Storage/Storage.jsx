@@ -27,7 +27,6 @@ export default function Storage() {
       socket.disconnect();
     };
   }, []);
-
   return (
     <div style={{ display: "flex" }}>
       <div

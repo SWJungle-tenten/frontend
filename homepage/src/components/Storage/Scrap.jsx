@@ -13,6 +13,7 @@ export default function Scrap({ socket, userScrapData }) {
   const [currentTitle, setCurrentTitle] = useState(null);
   const [showKeywords, setShowKeywords] = useState(false);
   const [cookies] = useCookies(["accessToken"]);
+  console.log("scra data", scrapData);
 
   socket.on("deleteKeyWord respond from server", (data) => {
     setScrapData(data.dataToSend);
@@ -20,7 +21,7 @@ export default function Scrap({ socket, userScrapData }) {
   socket.on("deleteUserScrap respond from server", (data) => {
     setScrapData(data.dataToSend);
   });
-  socket.on("saveUserScrap respond from server", (data) => {
+  socket.on("scrapDataUpdate", (data) => {
     setScrapData(data.dataToSend);
   });
 
@@ -42,8 +43,7 @@ export default function Scrap({ socket, userScrapData }) {
       date,
       url,
     });
-
-    socket.on("deleteUserScrap respond from server", (data) => {
+    socket.on("deleteUserScrap respond from serve", (data) => {
       setScrapData(data.dataToSend);
     });
   };
@@ -87,35 +87,27 @@ export default function Scrap({ socket, userScrapData }) {
           scrapData &&
           scrapData.map((item, index) => (
             <div key={index}>
-              {index === 0 || item.date !== scrapData[index - 1].date ? (
-                <div>
-                  <div className="text-2xl font-bold">{item.date}</div>
-                  <ul>
-                    {item.keywords.map((keyword, keywordIndex) => (
-                      <li key={`keyword-${keywordIndex}`}>
-                        <Keyword
-                          keyword={keyword}
-                          handleToggleKeywordClick={handleToggleKeywordClick}
-                          deleteKeyword={deleteKeyword}
-                          cookies={cookies}
-                          item={item}
-                        />
-                        {keyword.data.map((title, titleIndex) => (
-                          <div key={`title-${keywordIndex}-${titleIndex}`}>
-                            <Title
-                              title={title}
-                              handleTitleClick={handleTitleClick}
-                              deleteTitle={deleteTitle}
-                              cookies={cookies}
-                              item={item}
-                            />
-                          </div>
-                        ))}
-                      </li>
-                    ))}
-                  </ul>
+              {(index === 0 || item.date !== scrapData[index - 1].date) && (
+                <div className="text-2xl font-bold">{item.date}</div>
+              )}
+              <Keyword
+                keyword={item.keywords.keyword}
+                handleToggleKeywordClick={handleToggleKeywordClick}
+                deleteKeyword={deleteKeyword}
+                cookies={cookies}
+                item={item}
+              />
+              {item.keywords.titles.map((title, titleIndex) => (
+                <div key={`title-${index}-${titleIndex}`}>
+                  <Title
+                    title={title}
+                    handleTitleClick={handleTitleClick}
+                    deleteTitle={deleteTitle}
+                    cookies={cookies}
+                    item={item}
+                  />
                 </div>
-              ) : null}
+              ))}
             </div>
           ))}
       </div>
