@@ -85,23 +85,23 @@ export default function SignIn(prop) {
     <div className="p-6 pb-0">
       <form className="space-y-1" onSubmit={submitHandler}>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-sm font-medium text-gray-900 ">
             Email
           </label>
           <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
             placeholder="name@gmail.com"
             onChange={emailHandler}
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-sm font-medium text-gray-900 ">
             Password
           </label>
           <input
             placeholder="••••••••"
             type={showPassword ? "text" : "password"}
-            className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
             onChange={passwordHandler}
           />
         </div>
@@ -119,16 +119,16 @@ export default function SignIn(prop) {
         <div className="flex items-center justify-between"></div>
         <button
           type="submit"
-          className="w-full text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+          className="w-full duration-150 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
         >
           로그인
         </button>
         {/* <button onClick={a}>dsds</button> */}
-        <p className="pt-2 text-sm font-light text-gray-600  dark:text-gray-400">
+        <p className="pt-2 text-sm font-light text-gray-600  ">
           계정이 없으신가요? {""}
           <button
             onClick={handleLogin}
-            className="font-medium text-orange-600 hover:underline dark:text-orange-500"
+            className="font-medium text-red-600 hover:underline "
           >
             회원가입
           </button>

@@ -32,14 +32,13 @@ export default function Intro() {
   };
   return (
     <div>
-      <div className="grid p-10 space-y-3 justify-items-center bg-orange-400">
+      <div className="grid p-10 space-y-3 justify-items-center bg-red-400">
         <h1 className="mb-4 text-3xl font-semibold text-white">
           TENTEN Search
         </h1>
         <button
           onClick={modalToggle}
-          className="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-2xl"
-          href="/signin"
+          className="bg-red-300 hover:bg-red-500 text-white font-bold py-2 px-4 duration-150 rounded-2xl"
         >
           시작하기
         </button>
