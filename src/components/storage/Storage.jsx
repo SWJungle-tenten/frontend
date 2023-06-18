@@ -41,7 +41,7 @@ export default function Storage() {
         title: "Oops...",
         text: "로그인이 필요합니다.",
       });
-      go("/");
+      // go("/");
     }
   },[data]);
 

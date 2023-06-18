@@ -49,20 +49,20 @@ export default function InviteFriends(prop) {
 
   return (
     <div>
-      <label className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+      <label className="block mb-2 text-sm font-semibold text-gray-900 ">
         친구 초대
       </label>
       <div className="flex items-center justify-between ">
         <input
           onChange={emailHandler}
           value={email}
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-orange-600 focus:border-orange-600 block h-10 w-70 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block h-10 w-70 p-2.5  "
           placeholder="name@gmail.com"
         />
         <button
           type="button"
           onClick={inviteHandle}
-          className=" text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm h-10 px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+          className=" text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm h-10 px-5 py-2.5 "
         >
           초대
         </button>
