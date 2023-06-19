@@ -67,15 +67,20 @@ export default function Scrap({ socket, userScrapData }) {
   };
 
   return (
-    <div className="h-screen flex overflow-auto">
+    <div className="h-screen flex overflow-auto ">
       <div className="px-4 w-2/5 border-2 border-black overflow-auto">
-        <div className="py-3 text-right">
-          <button
-            className="px-4 py-2 bg-blue-500 text-white"
-            onClick={() => setShowKeywords(!showKeywords)}
-          >
-            {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
+        <div className="py-3 flex justify-between items-center">
+          <button className="px-4 py-2 bg-blue-400 text-white">
+            폴더로 보기
           </button>
+          <div>
+            <button
+              className="px-4 py-2 bg-blue-500 text-white"
+              onClick={() => setShowKeywords(!showKeywords)}
+            >
+              {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
+            </button>
+          </div>
         </div>
         {showKeywords &&
           scrapData &&
