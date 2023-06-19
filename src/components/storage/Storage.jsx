@@ -43,6 +43,7 @@ export default function Storage() {
         title: "Oops...",
         text: "로그인이 필요합니다.",
       });
+
       go("/");
     } else {
       const fetchUserNameAndGroups = async () => {
@@ -56,6 +57,7 @@ export default function Storage() {
               }
             }
           );
+
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

@@ -62,11 +62,11 @@ export default function CreateGroup(prop) {
     <div className="p-6  pb-0">
       <form className="space-y-1" onSubmit={submitHandler}>
         <div>
-          <label className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+          <label className="block mb-2 text-sm font-semibold text-gray-900 ">
             그룹 이름
           </label>
           <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 mb-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5 mb-4  "
             placeholder="name"
             onChange={groupNameHandler}
           />
@@ -83,7 +83,7 @@ export default function CreateGroup(prop) {
           <button
             type="submit"
             onClick={createGroup}
-            className="text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm mt-4 px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+            className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm mt-4 px-5 py-2.5 "
           >
             그룹 생성
           </button>

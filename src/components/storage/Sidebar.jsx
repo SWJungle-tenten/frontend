@@ -69,7 +69,7 @@ export default function Sidebar(userName, myGroups) {
         {groups.map((group) => (
           <div
             key={group.id}
-            className="text-black hover:bg-orange-100 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+            className="text-black hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
             onMouseEnter={() => setHoveredId(group.id)}
             onMouseLeave={() => setHoveredId(null)}
           >
@@ -92,7 +92,7 @@ export default function Sidebar(userName, myGroups) {
       <div className="flex justify-center">
         <button
           onClick={groupModalToggle}
-          className="text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+          className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
         >
           그룹 생성
         </button>
@@ -101,7 +101,7 @@ export default function Sidebar(userName, myGroups) {
       <div className="flex justify-center">
         <button
           onClick={inviteModalToggle}
-          className="text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+          className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
         >
           친구 초대
         </button>
@@ -109,7 +109,7 @@ export default function Sidebar(userName, myGroups) {
       <div>
         <button
           onClick={removeGroup}
-          className="text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-semibold rounded-lg text-sm px-5 py-2.5 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus:ring-orange-800"
+          className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
         >
           그룹 제거
         </button>

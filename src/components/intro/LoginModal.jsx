@@ -46,12 +46,12 @@ export default function LoginModal(prop) {
         >
           <button
             onClick={openToggle}
-            className="absolute top-0 right-0 p-3 m-2 text-lg text-gray-400 transition-colors duration-200 transform rounded-full hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus:bg-gray-100 focus:text-gray-600"
+            className="absolute top-1 right-1 px-2 m-2 text-lg text-gray-400 transition-colors duration-200 transform rounded-full hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus:bg-gray-100 focus:text-gray-600"
           >
             X
           </button>
 
-          <div className="font-semibold text-center text-3xl text-orange-400">
+          <div className="font-semibold text-center text-3xl text-red-400">
             {title}
           </div>
             {contents}
