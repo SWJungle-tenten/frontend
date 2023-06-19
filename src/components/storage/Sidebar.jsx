@@ -1,38 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import GroupModal from "../group/GroupModal";
 
-export default function Sidebar() {
-  const [cookies] = useCookies(["accessToken"]);
-  const [userName, setUserName] = useState(null);
-
-  useEffect(() => {
-    const fetchUserName = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/giveUserName`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userToken: cookies.accessToken }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setUserName(data.username);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUserName();
-  }, [cookies.accessToken]);
+export default function Sidebar(userName, myGroups) {
+  console.log("userName, myGroups", userName, myGroups);
 
   // 그룹 생성, 친구초대 모달 오픈 구분
   const [change, setChange] = useState("");
@@ -76,11 +47,7 @@ export default function Sidebar() {
   };
   // 그룹 보이기 & 마우스 올리면 제거 버튼
   const [hoveredId, setHoveredId] = useState(null);
-  const [groups, setGroups] = useState([
-    { id: 1, name: "Group 1" },
-    { id: 2, name: "Group 2" },
-    { id: 3, name: "Group 3" },
-  ]);
+  const [groups, setGroups] = useState(userName.myGroups);
 
   const handleDelete = (id) => {
     const updatedGroups = groups.filter((group) => group.id !== id);
@@ -93,11 +60,10 @@ export default function Sidebar() {
     console.log(`그룹 ${id}를 클릭했습니다.`);
   };
 
-
   return (
     <div>
       <p className="text-3xl font-bold">Sidebar</p>
-      <p className="text-2xl">반가워요 {userName} 님 !!!</p>
+      <p className="text-2xl">반가워요 {userName.userName} 님 !!!</p>
       <div>
         {/* 여기에 그룹들 목록 */}
         {groups.map((group) => (
@@ -108,7 +74,9 @@ export default function Sidebar() {
             onMouseLeave={() => setHoveredId(null)}
           >
             {/* {group.name} */}
-            <button onClick={() => handleGroupClick(group.id)}>{group.name}</button>
+            <button onClick={() => handleGroupClick(group.id)}>
+              {group.groupName}
+            </button>
             {hoveredId === group.id && (
               <button
                 className="pl-2"
