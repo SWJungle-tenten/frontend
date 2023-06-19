@@ -62,7 +62,7 @@ export default function InviteFriends(prop) {
         <button
           type="button"
           onClick={inviteHandle}
-          className=" text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm h-10 px-5 py-2.5 "
+          className=" text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm h-10 px-5 py-2.5 duration-200"
         >
           초대
         </button>

@@ -24,9 +24,12 @@ export default function InviteGroup(prop) {
     // await axios
     //   .post(`${process.env.REACT_APP_SERVER_ADDR}/api/addGroupMember`, {
     //     email: inviteEmail,
-    //     userToken: cookies.accessToken,
     //     // groupName: ,
-    //   })
+    //   }, {
+    //   headers: {
+    //     'Authorization': `Bearer ${cookies.accessToken}`
+    //   },
+    // })
     //   .then((res) => {
     //     console.log(res);
     //     Swal.fire({
@@ -56,7 +59,7 @@ export default function InviteGroup(prop) {
           <button
             onClick={successInvite}
             type="submit"
-            className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm mt-4 px-5 py-2.5 "
+            className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm mt-4 px-5 py-2.5 duration-200"
           >
             친구 초대
           </button>

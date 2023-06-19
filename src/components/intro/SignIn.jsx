@@ -41,7 +41,7 @@ export default function SignIn(prop) {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log(email.current);
+    // console.log(email.current);
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/login`,
@@ -123,7 +123,7 @@ export default function SignIn(prop) {
         <div className="flex items-center justify-between"></div>
         <button
           type="submit"
-          className="w-full duration-150 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
+          className="w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
         >
           로그인
         </button>

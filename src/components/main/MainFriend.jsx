@@ -16,7 +16,7 @@ export default function MainFriend() {
         { id: 12, title: 'Subfolder 1-2', level: 1, children: [] },
       ],
     },
-    { id: 2, title: 'Folder 2', level: 0, children: [] },
+    { id: 2, title: 'Folder 2', level: 0, children: [{id:21 , title: 'folder2-1',level:1,children:[],}] },
     { id: 3, title: 'Folder 3', level: 0, children: [] },
   ]);
   const [isHovered, setIsHovered] = useState(false);
@@ -77,7 +77,7 @@ export default function MainFriend() {
   return (
     <div>
       <h2>Drag and Drop Folder List</h2>
-      <div className={`folder ${isHovered ? 'hovered' : ''}`}>
+      <div className={ `folder ${isHovered ? 'bg-black' : ''}`}>
         {renderList(list)}
       </div>
     </div>
