@@ -118,7 +118,7 @@ export default function SignUp(prop) {
         <div className="flex items-center justify-between"></div>
         <button
           type="submit"
-          className="w-full duration-150 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
+          className="w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 "
         >
           회원가입
         </button>

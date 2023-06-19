@@ -24,13 +24,15 @@ export default function CreateGroup(prop) {
     console.log(inviteEmail);
   };
   const createGroup = async () => {
-    // console.log(cookies.accessToken);
     if (cookies.accessToken) {
       await axios
         .post(`${process.env.REACT_APP_SERVER_ADDR}/api/makeGroup`, {
           members: inviteEmail,
-          userToken: cookies.accessToken,
           groupName: groupName,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${cookies.accessToken}`
+          },
         })
         .then((res) => {
           console.log(res);
@@ -83,7 +85,7 @@ export default function CreateGroup(prop) {
           <button
             type="submit"
             onClick={createGroup}
-            className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm mt-4 px-5 py-2.5 "
+            className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm mt-4 px-5 py-2.5 duration-200"
           >
             그룹 생성
           </button>
