@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../intro/Header";
 
@@ -11,8 +9,6 @@ export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
   const [isLoading, setIsLoading] = useState(true);
   const [userName, setUserName] = useState(null);
-
-  const go = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,23 +34,15 @@ export default function Storage() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (!cookies.accessToken) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "로그인이 필요합니다.",
-      });
 
-      go("/");
-    }
-  });
 
   return (
     <>
       <Header/>
       <div className="flex">
         <div className="flex-grow">
+          {console.log(isLoading)}
+          {console.log(userScrapData)}
           {!isLoading && userScrapData && (
             <Scrap userScrapData={userScrapData} userName={userName} />
           )}

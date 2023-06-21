@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Keyword from "./Keyword";
 import Title from "./Title";
 
@@ -16,24 +16,28 @@ const ScrapDateList = ({
   return (
     <div key={index}>
       {(index === 0 || item.date !== scrapData[index - 1].date) && (
-        <div
-          className="text-2xl font-bold cursor-pointer hover:bg-gray-100 hover:text-gray-900 relative"
-          onClick={() => handleToggleDateClick(item.date)}
-          onMouseEnter={() => setShowDateDelete(true)}
-          onMouseLeave={() => setShowDateDelete(false)}
-        >
-          {item.date}
-          {showDateDelete && (
-            <button
-              className="pl-6"
-              onClick={(e) => {
-                e.stopPropagation();
-                // 삭제 로직 수행 (서버 요청 및 상태 업데이트)
-              }}
-            >
-              X
-            </button>
-          )}
+        <div className="flex">
+          <button
+            className="font-bold hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 "
+            onClick={() => handleToggleDateClick(item.date)}
+            onMouseEnter={() => setShowDateDelete(true)}
+            onMouseLeave={() => setShowDateDelete(false)}
+          >
+            {item.date}
+            {showDateDelete && (
+              <button
+                className="pl-2 items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // 삭제 로직 수행 (서버 요청 및 상태 업데이트)
+                }}
+              >
+                x
+                
+              </button>
+            )}
+          </button>
+          <div></div>
         </div>
       )}
       <Keyword keyword={item.keywords.keyword} item={item} />
