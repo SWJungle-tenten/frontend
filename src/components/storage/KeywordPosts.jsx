@@ -4,8 +4,9 @@ const KeywordPosts = ({ keyword, userScrapData }) => {
   const keywordData = getKeywordData(keyword, userScrapData);
 
   return (
-    <div className="py-4 border-2 border-gray-400 h-screen overflow-auto">
-      <h1 className="px-4 py-2 text-5xl text-center font-bold ">
+    <div className="py-4 h-screen overflow-auto">
+      {/* <h1 className="px-4 py-2 text-5xl text-center font-bold "> */}
+      <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold shadow bg-white">
         {keyword ? `Keyword: ${keyword}` : ``}
       </h1>
       {keywordData && (
@@ -19,7 +20,7 @@ const KeywordPosts = ({ keyword, userScrapData }) => {
                 <iframe
                   title={`iframe-${index}`}
                   src={titleObj.url}
-                  className="w-full h-[70vh] px-4 py-2 border-2 border-gray-400"
+                  className="w-full h-[70vh] border border-gray-400 rounded-md"
                 >
                   <p>이 브라우저는 iframe을 지원하지 않습니다.</p>
                 </iframe>

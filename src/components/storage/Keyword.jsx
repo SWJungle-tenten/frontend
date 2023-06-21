@@ -16,13 +16,12 @@ export default function Keyword({
       onMouseLeave={() => showKeywords && setShowDelete(false)}
     >
       {showKeywords ? (
-        <>
+        <div>
           <button
-            className="mt-2 font-semibold px-4 py-2 text-2xl hover:bg-gray-100 hover:text-gray-900"
+            className="font-semibold hover:bg-red-100 focus:ring-2 focus:outline-non focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2"
             onClick={() => handleToggleKeywordClick(keyword)}
           >
             검색어: {keyword}
-          </button>
           {showDelete && (
             <button
               className="ml-2"
@@ -30,10 +29,13 @@ export default function Keyword({
                 deleteKeyword(keyword, cookies.accessToken, item.date);
               }}
             >
-              x
+              𝗑
             </button>
           )}
-        </>
+          </button>
+          
+          <div></div>
+        </div>
       ) : (
         <p className="mt-2 font-semibold px-4 py-2 text-2xl">
           검색어: {keyword}

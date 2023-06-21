@@ -2,13 +2,13 @@ export default function Detail({ title, userScrapData }) {
   const titleData = getTitleData(title, userScrapData);
 
   return (
-    <div className="py-8 border-2 border-gray-400 h-screen">
+    <div className="p-8 h-screen">
       <p className="px-4 py-2 text-center text-5xl font-bold">{title}</p>
       <div>
         <iframe
           title={title}
           src={titleData ? titleData.url : ""}
-          className="h-[70vh] w-full px-4 py-2 border-spacing-4 border-4 border-gray-400"
+          className="w-full h-[80vh] border border-gray-400 rounded-md"
         >
           <p>This browser does not support iframes.</p>
         </iframe>

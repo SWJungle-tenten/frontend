@@ -4,9 +4,6 @@ import Swal from "sweetalert2";
 
 export default function SignUp(prop) {
   const { handleLogin } = prop;
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [name, setName] = useState("");
   const email = useRef("");
   const password = useRef("");
   const name = useRef("");
@@ -17,22 +14,41 @@ export default function SignUp(prop) {
   };
 
   const emailHandler = (event) => {
-    // setEmail(event.target.value);
     email.current = event.target.value;
   };
   const passwordHandler = (event) => {
-    // setPassword(event.target.value);
     password.current = event.target.value;
-
   };
   const nameHandler = (event) => {
-    // setName(event.target.value);
     name.current = event.target.value;
 
   };
   const submitHandler = async (event) => {
     event.preventDefault();
-
+    if (name.current === ''){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "이름을 입력하세요.",
+      });
+      return
+    }
+    else if (email.current === '' ){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "이메일을 입력하세요.",
+      });
+      return
+    }
+    else if (password.current === ''){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "비밀번호를 입력하세요.",
+      });
+      return
+    }
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/register`,
@@ -44,7 +60,6 @@ export default function SignUp(prop) {
         }
       )
       .then((res) => {
-        // console.log(response);
         handleLogin();
         Swal.fire({
           icon: "success",

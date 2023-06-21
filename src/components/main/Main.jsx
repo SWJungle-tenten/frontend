@@ -3,12 +3,10 @@ import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import MainFriend from "./MainFriend";
 
 export default function Main() {
   const [cookies, setCookie, removeCookie] = useCookies("accessToken");
   const go = useNavigate();
-
   // console.log(cookies.accessToken);
 
   // 잠시 주석 처리
@@ -94,7 +92,6 @@ export default function Main() {
         </div>
       </div>
     <div className="pl-3">
-      <MainFriend />
     </div>
     </>
   );

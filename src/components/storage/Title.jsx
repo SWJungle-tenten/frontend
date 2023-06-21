@@ -9,33 +9,37 @@ export default function Title({
 }) {
   const [showDelete, setShowDelete] = useState(false);
   const titleIndex = item.keywords.titles.findIndex((t) => t === title);
-  const url = titleIndex >= 0 ? item.keywords.urls[titleIndex] : undefined;
+  // const url = titleIndex >= 0 ? item.keywords.urls[titleIndex] : undefined;
 
   return (
-    <div
-      onMouseEnter={() => setShowDelete(true)}
-      onMouseLeave={() => setShowDelete(false)}
-    >
-      <button
-        className="mt-1 font-medium px-4 text-lg hover:bg-gray-100 hover:text-gray-900"
-        onClick={() => handleTitleClick(title)}
-      >
-        {title}
-      </button>
-      {showDelete && (
+    <div className="flex">
+      {/* <div className="hover:bg-gray-500 hover:text-gray-900"> */}
+      <div className="px-1"></div>
+      <div className="flex">
         <button
-          onClick={() => {
-            const titleIndex = item.keywords.titles.findIndex(
-              (t) => t === title
-            );
-            const url = item.keywords.urls[titleIndex];
-            deleteTitle(title, cookies.accessToken, item.date, url);
-          }}
-          className="ml-2"
+          className="mt-1 font-medium  text-lg  hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg p-3 py-0.5 "
+          onClick={() => handleTitleClick(title)}
+          onMouseEnter={() => setShowDelete(true)}
+          onMouseLeave={() => setShowDelete(false)}
         >
-          x
+          {title}
+          {showDelete && (
+            <button
+              onClick={() => {
+                const titleIndex = item.keywords.titles.findIndex(
+                  (t) => t === title
+                );
+                const url = item.keywords.urls[titleIndex];
+                deleteTitle(title, cookies.accessToken, item.date, url);
+              }}
+              className="ml-2 "
+            >
+              x
+            </button>
+          )}
         </button>
-      )}
+        <div></div>
+      </div>
     </div>
   );
 }
