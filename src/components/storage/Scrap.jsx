@@ -165,7 +165,8 @@ export default function Scrap({ userName, userScrapData }) {
 
   return (
     <div className="h-screen flex overflow-auto ">
-      <div className="px-4 w-2/5 border-2 border-black overflow-auto">
+      <div className="px-4 w-2/5 border-2 border-gray-400 bg-gray-100 overflow-auto">
+        <div className="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl"/>
         <div className="py-3 flex justify-between items-center">
           <div className="text-5xl font-bold">{userName}</div>
           <div>

@@ -41,7 +41,22 @@ export default function SignIn(prop) {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    // console.log(email.current);
+    if (email.current === '' ){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "이메일을 입력하세요.",
+      });
+      return
+    }
+    else if (password.current === ''){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "비밀번호를 입력하세요.",
+      });
+      return
+    }
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/login`,
@@ -55,14 +70,13 @@ export default function SignIn(prop) {
         }
       )
       .then((res) => {
-        // console.log("success");
-        // console.log(response.data.token);
+        console.log(res);
         handleCookie(res.data.token);
         go("/main");
       })
       .catch((error) => {
-        console.log("Error");
-        // console.log(error);
+        console.log(error);
+        // console.log("Error");
         if(error.message === "Network Error"){
           return Swal.fire({
             icon: "error",
@@ -78,13 +92,6 @@ export default function SignIn(prop) {
       });
   };
 
-  const alertHandle = () => {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "이메일 또는 비밀번호가 일치하지 않습니다.?",
-    });
-  }
   return (
     <div className="p-6 pb-0">
       <form className="space-y-1" onSubmit={submitHandler}>
@@ -127,43 +134,16 @@ export default function SignIn(prop) {
         >
           로그인
         </button>
-        {/* <button onClick={a}>dsds</button> */}
         <p className="pt-2 text-sm font-light text-gray-600  ">
           계정이 없으신가요? {""}
           <button
             onClick={handleLogin}
             className="font-medium text-red-600 hover:underline "
           >
-            회원가입
+            회원가입하러 가기
           </button>
         </p>
       </form>
-      <div className="flex justify-between pt-2">
-        <button
-          className="border border-black text-black "
-          onClick={() => {
-            removeCookie("accessToken");
-          }}
-        >
-          토큰제거
-        </button>
-        <button
-          className="border border-black text-black "
-          onClick={() => {
-            console.log(cookies.accessToken);
-          }}
-        >
-          토큰찍어
-        </button>
-        <button
-          className="border border-black text-black "
-          onClick={() => go("/main")}
-        >
-          go to main
-        </button>
-        <button onClick={alertHandle}>button</button>
-
-      </div>
     </div>
   );
 }

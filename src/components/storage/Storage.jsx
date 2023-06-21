@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../intro/Header";
 
 export default function Storage() {
   const [userScrapData, setData] = useState(null);
@@ -35,7 +36,7 @@ export default function Storage() {
     };
 
     fetchData();
-  }, [cookies.accessToken]);
+  }, []);
 
   useEffect(() => {
     if (!cookies.accessToken) {
@@ -50,12 +51,15 @@ export default function Storage() {
   });
 
   return (
-    <div className="flex">
-      <div className="flex-grow">
-        {!isLoading && userScrapData && (
-          <Scrap userScrapData={userScrapData} userName={userName} />
-        )}
+    <>
+      <Header/>
+      <div className="flex">
+        <div className="flex-grow">
+          {!isLoading && userScrapData && (
+            <Scrap userScrapData={userScrapData} userName={userName} />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
