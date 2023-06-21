@@ -12,14 +12,15 @@ export default function Keyword({
 
   return (
     <div
-      onMouseEnter={() => showKeywords && setShowDelete(true)}
-      onMouseLeave={() => showKeywords && setShowDelete(false)}
+     
     >
       {showKeywords ? (
         <div>
           <button
             className="font-semibold hover:bg-red-100 focus:ring-2 focus:outline-non focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2"
             onClick={() => handleToggleKeywordClick(keyword)}
+            onMouseEnter={() => showKeywords && setShowDelete(true)}
+            onMouseLeave={() => showKeywords && setShowDelete(false)}
           >
             검색어: {keyword}
           {showDelete && (
