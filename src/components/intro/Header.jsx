@@ -10,7 +10,7 @@ export default function Header() {
   const logout = async () => {
     if (cookies.accessToken) {
       await axios
-        .get(`${process.env.REACT_APP_SERVER_ADDR}/api/logout`, {
+        .get(`https://sangunlee.shop/api/logout`, {
           headers: {
             "x-auth-token": cookies.accessToken,
           },
@@ -40,7 +40,6 @@ export default function Header() {
 
       go("/");
     }
-    console.log(23);
   });
   return (
     <div className="shadow ">

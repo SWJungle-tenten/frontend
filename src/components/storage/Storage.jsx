@@ -14,7 +14,7 @@ export default function Storage() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/keyWordByDate",
+          `https://sangunlee.shop/api/checkStorage`,
           {},
           {
             headers: {
@@ -41,8 +41,6 @@ export default function Storage() {
       <Header/>
       <div className="flex">
         <div className="flex-grow">
-          {console.log(isLoading)}
-          {console.log(userScrapData)}
           {!isLoading && userScrapData && (
             <Scrap userScrapData={userScrapData} userName={userName} />
           )}

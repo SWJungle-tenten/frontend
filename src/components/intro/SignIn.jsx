@@ -59,7 +59,7 @@ export default function SignIn(prop) {
     }
     await axios
       .post(
-        `${process.env.REACT_APP_SERVER_ADDR}/api/login`,
+        `https://sangunlee.shop/api/login`,
         {},
         {
           headers: {

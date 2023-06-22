@@ -82,7 +82,7 @@ export default function Scrap({ userName, userScrapData }) {
         setScrapData(updatedScrapData);
 
         axios
-          .delete("http://localhost:8080/api/deleteKeyWord", {
+          .delete(`https://sangunlee.shop/api/deleteKeyWord`, {
             data: {
               keyWord,
               userToken,
@@ -141,7 +141,7 @@ export default function Scrap({ userName, userScrapData }) {
         setScrapData(updatedScrapData);
 
         axios
-          .delete("http://localhost:8080/api/deleteUserScrap", {
+          .delete(`https://sangunlee.shop/api/deleteUserScrap`, {
             data: {
               title,
               userToken,

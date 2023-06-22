@@ -51,7 +51,7 @@ export default function SignUp(prop) {
     }
     await axios
       .post(
-        `${process.env.REACT_APP_SERVER_ADDR}/api/register`,
+        `https://sangunlee.shop/api/register`,
         { name: name.current, email: email.current, password: password.current },
         {
           headers: {

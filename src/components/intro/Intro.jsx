@@ -12,14 +12,14 @@ export default function Intro() {
   useEffect(() => {
     if (cookies.accessToken) {
       axios
-        .get(`${process.env.REACT_APP_SERVER_ADDR}/api/auth`, {
+        .get(`https://sangunlee.shop/api/auth`, {
           headers: {
             "x-auth-token": cookies.accessToken,
           },
         })
         .then((res) => {
           console.log(res);
-          go("/main");
+          go("/storage");
         })
         .catch((error) => {
           console.log(error);

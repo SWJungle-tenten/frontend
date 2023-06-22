@@ -41,7 +41,7 @@ export default function Main() {
   const logout = async () => {
     if (cookies.accessToken) {
       await axios
-        .get(`${process.env.REACT_APP_SERVER_ADDR}/api/logout`, {
+        .get(`https://sangunlee.shop/api/logout`, {
           headers: {
             "x-auth-token": cookies.accessToken,
           },
