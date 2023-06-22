@@ -49,7 +49,10 @@ export default function Storage() {
           )}
         </div>
         <div className="w-[30%] border overflow-auto">
-          <div className="flex border-gray-300 shadow-lg overflow-auto">
+          <div className="flex-col border-gray-300 shadow-lg overflow-auto">
+            <div>
+              Title
+            </div>
             <Memo />
           </div>
           <button

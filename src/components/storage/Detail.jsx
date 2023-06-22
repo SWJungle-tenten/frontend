@@ -2,7 +2,7 @@ export default function Detail({ title, userScrapData }) {
   const titleData = getTitleData(title, userScrapData);
 
   return (
-    <div className="p-8 h-screen">
+    <div className="p-8 h-[93vh]">
       <p className="px-4 py-2 text-center text-5xl font-bold">{title}</p>
       <div>
         <iframe

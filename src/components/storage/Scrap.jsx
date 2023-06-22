@@ -211,7 +211,7 @@ export default function Scrap({ userName, userScrapData }) {
   };
 
   return (
-    <div className="h-screen flex overflow-auto ">
+    <div className="h-[93vh] flex overflow-auto ">
       <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
         {/* <div className="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl"/> */}
 
