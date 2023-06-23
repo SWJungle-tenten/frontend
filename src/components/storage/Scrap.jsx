@@ -16,7 +16,6 @@ export default function Scrap({ userName, userScrapData }) {
   const [showKeywords, setShowKeywords] = useState(false);
   const [currentDate, setCurrentDate] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
-  const [showDateDelete, setShowDateDelete] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
 
   const handleDeleteKeywordResponse = (data) => {
@@ -82,7 +81,7 @@ export default function Scrap({ userName, userScrapData }) {
         setScrapData(updatedScrapData);
 
         axios
-          .delete("http://localhost:8080/api/deleteKeyWord", {
+          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteKeyWord`, {
             data: {
               keyWord,
               userToken,
@@ -141,7 +140,7 @@ export default function Scrap({ userName, userScrapData }) {
         setScrapData(updatedScrapData);
 
         axios
-          .delete("http://localhost:8080/api/deleteUserScrap", {
+          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteUserScrap`, {
             data: {
               title,
               userToken,
@@ -246,12 +245,11 @@ export default function Scrap({ userName, userScrapData }) {
           scrapData &&
           scrapData.map((item, index) => (
             <ScrapDateList
+              key={index}
               item={item}
               index={index}
               scrapData={scrapData}
               handleToggleDateClick={handleToggleDateClick}
-              setShowDateDelete={setShowDateDelete}
-              showDateDelete={showDateDelete}
               handleTitleClick={handleTitleClick}
               cookies={cookies}
               deleteTitle={deleteTitle}

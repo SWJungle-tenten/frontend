@@ -24,7 +24,7 @@ export default function Title({
         >
           {title}
           {showDelete && (
-            <button
+            <div
               onClick={() => {
                 const titleIndex = item.keywords.titles.findIndex(
                   (t) => t === title
@@ -35,7 +35,7 @@ export default function Title({
               className="ml-2 "
             >
               x
-            </button>
+            </div>
           )}
         </button>
         <div></div>

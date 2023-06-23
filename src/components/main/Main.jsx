@@ -86,7 +86,7 @@ export default function Main() {
           go to storage
         </button>
         <div>
-          <button className="text-black focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 bg-red-100 hover:bg-red-300 duration-200">
+          <button onClick={()=>removeCookie("accessToken")} className="text-black focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5 bg-red-100 hover:bg-red-300 duration-200">
             Button
           </button>
         </div>

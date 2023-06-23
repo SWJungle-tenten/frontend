@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Header from "../intro/Header";
 import Memo from "../../memo/Memo";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import MemoList from "../../memo/MemoList";
 
 export default function Storage() {
@@ -12,13 +12,13 @@ export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
   const [isLoading, setIsLoading] = useState(true);
   const [userName, setUserName] = useState(null);
-  const go = useNavigate();
+  // const go = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/checkStorage",
+          `${process.env.REACT_APP_SERVER_ADDR}/api/checkStorage`,
           {},
           {
             headers: {
@@ -59,8 +59,7 @@ export default function Storage() {
       .then((res) => {
         console.log(res);
         setMemoArray(res.data.memoTitles);
-        console.log(selectedMemo);
-
+        // console.log(selectedMemo);
       })
       .catch((error) => {
         console.log(error);
@@ -96,7 +95,7 @@ export default function Storage() {
 
             {/* <Memo /> */}
           </div>
-          <button
+          {/* <button
             onClick={() => {
               go("/main");
             }}
@@ -107,7 +106,7 @@ export default function Storage() {
             onClick={receiveMemo}
           >
             메모장 보기
-          </button>
+          </button> */}
         </div>
       </div>
     </>
