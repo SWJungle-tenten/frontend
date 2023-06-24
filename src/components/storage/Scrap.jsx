@@ -8,7 +8,7 @@ import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 
-export default function Scrap({ userName, userScrapData }) {
+export default function Scrap({ userName, userScrapData ,handleDragStart}) {
   const [scrapData, setScrapData] = useState(userScrapData);
   const [currentPath, setCurrentPath] = useState(true);
   const [currentKeyword, setCurrentKeyword] = useState({});
@@ -214,7 +214,7 @@ export default function Scrap({ userName, userScrapData }) {
       <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
         {/* <div className="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl"/> */}
 
-        <div className="py-3 flex justify-between items-center">
+        <div className="pt-3 flex justify-between items-center">
           <div className="text-5xl font-bold">{userName}</div>
           <div>
             <button
@@ -253,6 +253,7 @@ export default function Scrap({ userName, userScrapData }) {
               handleTitleClick={handleTitleClick}
               cookies={cookies}
               deleteTitle={deleteTitle}
+              handleDragStart={handleDragStart}
             />
           ))}
       </div>

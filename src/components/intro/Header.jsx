@@ -30,17 +30,17 @@ export default function Header() {
       go("/");
     }
   };
-  useEffect(() => {
-    if (!cookies.accessToken) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "로그인이 필요합니다.",
-      });
+  // useEffect(() => {
+  //   if (!cookies.accessToken) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: "로그인이 필요합니다.",
+  //     });
 
-      go("/");
-    }
-  });
+  //     go("/");
+  //   }
+  // });
   return (
     <div className="shadow ">
       <div className="flex items-center text-3xl p-3 sm:px-6 lg:px-8 justify-between">

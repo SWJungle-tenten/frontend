@@ -6,26 +6,21 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 
-export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
+export default function Memo({
+  selectedMemo,
+  open,
+  memoArray,
+  receiveMemo,
+  draggedElementContent,
+}) {
   const [cookies] = useCookies("accessToken");
-  // const {contents} = prop;
   const editorRef = useRef();
   const titleRef = useRef();
+  // const memoTime = useRef();
 
   const checkTime = () => {
     const date = new Date();
-    console.log(date);
-
-    const formattedDate = new Intl.DateTimeFormat("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-    }).format(date);
-
-    console.log(formattedDate);
+    console.log(date.getTime());
   };
   const goList = () => {
     receiveMemo();
@@ -54,7 +49,7 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
         axios
           .delete(
             `${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`,
-            
+
             {
               data: { memoTitle: selectedMemo },
               headers: {
@@ -75,15 +70,13 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
             console.log(error);
             alert("삭제 오류!");
           });
-
-        
       }
     });
   };
 
   // 메모 저장
   const saveContent = () => {
-    // const data = editorRef.current?.getInstance().getMarkdown();
+
     const data = editorRef.current?.getInstance().getHTML();
 
     if (!titleRef.current) {
@@ -114,7 +107,6 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
           // 알림 필요없을 듯 아니 필요할듯 목록으로 안나가도 될 듯?
           alert("메모 저장 완료!");
           goList();
-
         })
         .catch((error) => {
           console.log(error);
@@ -149,15 +141,13 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
         titleRef.current = selectedMemo;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
+
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  // editorRef.current?.getInstance().setHTML(contentsHTML);
-  // editor.setMarkdown('# HELLO WORLD');
-  // editorRef = ''
   const changeTitle = (event) => {
     titleRef.current = event.target.value;
   };
@@ -166,6 +156,18 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
   // titleRef.current="" 여기에 값을 넣으면 될 듯?
   // 내용 불러오기
   // initialValue에 html형태로 넘기면 됨
+
+  // Drop
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+  const handleDrop = (event) => {
+    console.log(draggedElementContent);
+    const data = editorRef?.current?.getInstance().getHTML();
+    editorRef.current?.getInstance().setHTML(data+draggedElementContent);
+
+  };
+
   return (
     <div className="p-4">
       <div>
@@ -177,34 +179,47 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
             placeholder="Title"
           />
         </div>
-
-        <Editor
-          initialValue=" "
-          // initialValue="<p>내용을 입력하세요!<p>dddd"
-          // placeholder="내용을 입력하세요!!"
-          ref={editorRef}
-          previewStyle="vertical"
-          height="790px"
-          initialEditType="wysiwyg"
-          language="ko-KR"
-          useCommandShortcut={true}
-          hideModeSwitch={true}
-          toolbarItems={[
-            ["heading", "bold", "italic", "strike"],
-            ["hr", "quote"],
-            ["ul", "ol", "task"],
-            ["image", "code"],
-          ]}
-        />
+        <div
+          className="droppable"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <Editor
+            initialValue=" "
+            // initialValue="<p>내용을 입력하세요!<p>dddd"
+            // placeholder="내용을 입력하세요!!"
+            ref={editorRef}
+            previewStyle="vertical"
+            height="790px"
+            initialEditType="wysiwyg"
+            language="ko-KR"
+            useCommandShortcut={true}
+            hideModeSwitch={true}
+            toolbarItems={[
+              ["heading", "bold", "italic", "strike"],
+              ["hr", "quote"],
+              ["ul", "ol", "task"],
+              ["image", "code"],
+            ]}
+          />
+        </div>
         <div className="flex justify-between pt-2">
           <div className="">
             <button
               className="w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5"
-              onClick={()=>open(true)}
+              onClick={() => open(true)}
             >
               목록
             </button>
           </div>
+          {/* <button
+            onClick={() => {
+              console.log(draggedElementContent);
+            }}
+          >
+            ddd
+          </button> */}
+
           {/* <button
             onClick={() => {
               console.log(selectedMemo);
@@ -235,9 +250,13 @@ export default function Memo({ selectedMemo, open, memoArray, receiveMemo }) {
             >
               저장
             </button>
+            {/* <button onClick={temp} className="border px-2">
+              temp
+            </button> */}
           </div>
         </div>
         {/* <button onClick={checkTime}>what time is it now?</button> */}
+        {/* <button onClick={()=>{console.log(selectedMemo)}}>Memo?</button> */}
       </div>
     </div>
   );

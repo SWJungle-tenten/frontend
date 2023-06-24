@@ -38,8 +38,8 @@ export default function Keyword({
           <div></div>
         </div>
       ) : (
-        <p className="mt-2 font-semibold px-4 py-2 text-2xl">
-          검색어: {keyword}
+        <p className="font-semibold px-4 py-2 text-2xl">
+          {keyword}
         </p>
       )}
     </div>
