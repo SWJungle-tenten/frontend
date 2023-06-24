@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Header from "../intro/Header";
 import Memo from "../../memo/Memo";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import MemoList from "../../memo/MemoList";
 
 export default function Storage() {
@@ -12,7 +12,7 @@ export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
   const [isLoading, setIsLoading] = useState(true);
   const [userName, setUserName] = useState(null);
-  const go = useNavigate();
+  // const go = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,17 +39,14 @@ export default function Storage() {
   }, []);
 
   const [selectedMemo, setSelectedMemo] = useState(null);
+  const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
-  // const openHandle = () =>{
-  //   setOpen(!open);
-  // }
   const [memoArray, setMemoArray] = useState([]);
-  const receiveMemo = async()=> {
+  const receiveMemo = async () => {
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/allMemoTitle`,
-        {
-        },
+        {},
         {
           headers: {
             Authorization: `Bearer ${cookies.accessToken}`,
@@ -58,55 +55,59 @@ export default function Storage() {
       )
       .then((res) => {
         console.log(res);
-        setMemoArray(res.data.memoTitles);
+        setMemoArray(res.data.memoData);
         // console.log(selectedMemo);
       })
       .catch((error) => {
         console.log(error);
       });
-    }
-    //memo API
-    useEffect(() => {    
-      receiveMemo();  
-    }, []);
+  };
+  //memo API
+  useEffect(() => {
+    receiveMemo();
+  }, []);
 
-  const [draggedElementContent, setDraggedElementContent] = useState('');
+  const [draggedElementContent, setDraggedElementContent] = useState("");
 
   const handleDragStart = (event) => {
-      setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
-      //outerHTML이랑 event.target이랑 뭔차이?
-      //일단 event.target은 작동 안함 Uncaught TypeError: html.replace is not a function 이라고 뜸
-
-      // console.log(event.target);
-      // console.log(event.target.outerHTML);
-    };
+    setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
+  };
 
   return (
     <>
-    {/* <button onClick={()=>{go("/main")}}>메인으로 가기</button> */}
-    
+      {/* <button onClick={()=>{go("/main")}}>메인으로 가기</button> */}
+      {/* <img onDragStart={handleDragStart} src="https://tentenimg.s3.ap-northeast-2.amazonaws.com/original/1687613938191_blob" alt="2"/> */}
       <Header />
       <div className="flex ">
         <div className="flex-grow w-[70%]">
           {!isLoading && userScrapData && (
-            <Scrap userScrapData={userScrapData} userName={userName} handleDragStart={handleDragStart}/>
+            <Scrap
+              userScrapData={userScrapData}
+              userName={userName}
+              handleDragStart={handleDragStart}
+            />
           )}
         </div>
         <div className="w-[30%] border overflow-auto">
           <div className="flex-col h-[93vh] border-gray-300 shadow-lg overflow-auto">
-            {/* <Memo contents='<h1>asas</h1><h5>dfsdfs</h5>'/> */}
             {openList ? (
               <MemoList
                 memoArray={memoArray}
                 open={setOpenList}
                 setSelectedMemo={setSelectedMemo}
+                setSelectedTitle={setSelectedTitle}
               />
-              ) : (<>
-              <Memo selectedMemo={selectedMemo} open={setOpenList} receiveMemo={receiveMemo} memoArray={memoArray} draggedElementContent={draggedElementContent}/>
+            ) : (
+              <>
+                <Memo
+                  open={setOpenList}
+                  receiveMemo={receiveMemo}
+                  draggedElementContent={draggedElementContent}
+                  selectedMemo={selectedMemo}
+                  selectedTitle={selectedTitle}
+                />
               </>
             )}
-
-            {/* <Memo /> */}
           </div>
           {/* <button
             onClick={() => {

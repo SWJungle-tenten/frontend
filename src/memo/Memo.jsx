@@ -7,28 +7,22 @@ import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 
 export default function Memo({
-  selectedMemo,
   open,
-  memoArray,
   receiveMemo,
   draggedElementContent,
+  selectedMemo,
+  selectedTitle,
 }) {
   const [cookies] = useCookies("accessToken");
   const editorRef = useRef();
   const titleRef = useRef();
-  // const memoTime = useRef();
 
-  const checkTime = () => {
-    const date = new Date();
-    console.log(date.getTime());
-  };
   const goList = () => {
     receiveMemo();
     open(true);
   };
 
   // 메모 삭제
-  // userToken, memoTitle = selectedMemo
   const deleteMemo = () => {
     Swal.fire({
       title: "메모를 삭제하시겠습니까?",
@@ -49,9 +43,8 @@ export default function Memo({
         axios
           .delete(
             `${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`,
-
             {
-              data: { memoTitle: selectedMemo },
+              data: { time: selectedMemo },
               headers: {
                 Authorization: `Bearer ${cookies.accessToken}`,
               },
@@ -79,13 +72,12 @@ export default function Memo({
 
     const data = editorRef.current?.getInstance().getHTML();
 
+    const date = new Date();
+
+    const time = (selectedMemo ? selectedMemo: date.getTime())
+
     if (!titleRef.current) {
       alert("제목을 입력하세요");
-      return;
-    }
-    // 제목이 같으면 업데이트 처리 해야 함
-    if (memoArray.includes(titleRef.current)) {
-      alert("다른 제목을 입력하세요.");
       return;
     }
     if (data) {
@@ -93,6 +85,7 @@ export default function Memo({
         .post(
           `${process.env.REACT_APP_SERVER_ADDR}/api/saveMemo`,
           {
+            time : time,
             memoTitle: titleRef.current,
             memoContents: data,
           },
@@ -126,7 +119,7 @@ export default function Memo({
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/memoContents`,
         {
-          memoTitle: selectedMemo,
+          time: selectedMemo,
         },
         {
           headers: {
@@ -136,9 +129,7 @@ export default function Memo({
       )
       .then((res) => {
         console.log(res);
-        // console.log(res.data.memoContent);
-        // console.log(selectedMemo);
-        titleRef.current = selectedMemo;
+        titleRef.current = selectedTitle;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
 
@@ -162,10 +153,9 @@ export default function Memo({
     event.preventDefault();
   };
   const handleDrop = (event) => {
-    console.log(draggedElementContent);
+    // console.log(draggedElementContent);
     const data = editorRef?.current?.getInstance().getHTML();
     editorRef.current?.getInstance().setHTML(data+draggedElementContent);
-
   };
 
   return (
@@ -174,7 +164,7 @@ export default function Memo({
         <div className="pb-2">
           <input
             className="w-[100%] border rounded h-10 pl-6"
-            defaultValue={selectedMemo}
+            defaultValue={selectedTitle}
             onChange={changeTitle}
             placeholder="Title"
           />
