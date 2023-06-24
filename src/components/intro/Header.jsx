@@ -40,7 +40,6 @@ export default function Header() {
 
       go("/");
     }
-    console.log(23);
   });
   return (
     <div className="shadow ">

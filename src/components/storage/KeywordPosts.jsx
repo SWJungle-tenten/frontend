@@ -4,7 +4,7 @@ const KeywordPosts = ({ keyword, userScrapData }) => {
   const keywordData = getKeywordData(keyword, userScrapData);
 
   return (
-    <div className="py-4 h-screen overflow-auto">
+    <div className="py-4 h-[93vh] overflow-auto">
       {/* <h1 className="px-4 py-2 text-5xl text-center font-bold "> */}
       <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold shadow bg-white">
         {keyword ? `Keyword: ${keyword}` : ``}

@@ -7,24 +7,23 @@ const ScrapDateList = ({
   index,
   scrapData,
   handleToggleDateClick,
-  setShowDateDelete,
-  showDateDelete,
   handleTitleClick,
   cookies,
   deleteTitle,
+  handleDragStart
 }) => {
   return (
     <div key={index}>
       {(index === 0 || item.date !== scrapData[index - 1].date) && (
-        <div className="flex">
+        <div className="flex pt-3">
           <button
-            className="font-bold hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 "
+            onDragStart={handleDragStart}
+            draggable={true}
+            className="font-bold hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-xl px-3 py-1"
             onClick={() => handleToggleDateClick(item.date)}
-            onMouseEnter={() => setShowDateDelete(true)}
-            onMouseLeave={() => setShowDateDelete(false)}
           >
             {item.date}
-            {showDateDelete && (
+            {/* {showDateDelete && (
               <button
                 className="pl-2 items-center"
                 onClick={(e) => {
@@ -35,7 +34,7 @@ const ScrapDateList = ({
                 x
                 
               </button>
-            )}
+            )} */}
           </button>
           <div></div>
         </div>
@@ -49,6 +48,7 @@ const ScrapDateList = ({
             cookies={cookies}
             item={item}
             deleteTitle={deleteTitle}
+            handleDragStart={handleDragStart}
           />
         </div>
       ))}
