@@ -76,7 +76,7 @@ export default function Storage() {
   return (
     <>
       {/* <button onClick={()=>{go("/main")}}>메인으로 가기</button> */}
-      {/* <img onDragStart={handleDragStart} src="https://tentenimg.s3.ap-northeast-2.amazonaws.com/original/1687613938191_blob" alt="2"/> */}
+      <img onDragStart={handleDragStart} src="https://tentenimg.s3.ap-northeast-2.amazonaws.com/original/1687613938191_blob" alt="2"/>
       <Header />
       <div className="flex ">
         <div className="flex-grow w-[70%]">

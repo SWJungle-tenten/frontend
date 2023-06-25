@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 // import Editor from "@toast-ui/react-editor";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import axios from "axios";
@@ -41,15 +43,12 @@ export default function Memo({
       if (result.isConfirmed) {
         // 만약 모달창에서 confirm 버튼을 눌렀다면
         axios
-          .delete(
-            `${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`,
-            {
-              data: { time: selectedMemo },
-              headers: {
-                Authorization: `Bearer ${cookies.accessToken}`,
-              },
-            }
-          )
+          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`, {
+            data: { time: selectedMemo },
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          })
           .then((res) => {
             console.log(res);
             Swal.fire({
@@ -69,12 +68,11 @@ export default function Memo({
 
   // 메모 저장
   const saveContent = () => {
-
     const data = editorRef.current?.getInstance().getHTML();
 
     const date = new Date();
 
-    const time = (selectedMemo ? selectedMemo: date.getTime())
+    const time = selectedMemo ? selectedMemo : date.getTime();
 
     if (!titleRef.current) {
       alert("제목을 입력하세요");
@@ -85,7 +83,7 @@ export default function Memo({
         .post(
           `${process.env.REACT_APP_SERVER_ADDR}/api/saveMemo`,
           {
-            time : time,
+            time: time,
             memoTitle: titleRef.current,
             memoContents: data,
           },
@@ -132,7 +130,6 @@ export default function Memo({
         titleRef.current = selectedTitle;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
-
       })
       .catch((error) => {
         console.log(error);
@@ -155,7 +152,46 @@ export default function Memo({
   const handleDrop = (event) => {
     // console.log(draggedElementContent);
     const data = editorRef?.current?.getInstance().getHTML();
-    editorRef.current?.getInstance().setHTML(data+draggedElementContent);
+    editorRef.current?.getInstance().setHTML(data + draggedElementContent);
+  };
+
+  const toPdf = (name) => {
+    document
+      .querySelector(".ProseMirror.toastui-editor-contents")
+      ?.setAttribute("style", "height: auto !important; ");
+
+    html2canvas(
+      document.querySelector(".ProseMirror.toastui-editor-contents"),{
+        // width:window.innerWidth-1000,
+        // height:,
+        // useCORS:true, 
+      }
+    ).then((canvas) => {
+      let imgData = canvas.toDataURL("image/png");
+
+      let imgWidth = 180;
+      let pageHeight = imgWidth * 1.414;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let margin = 20;
+
+      const doc = new jsPDF("p", "mm", "a4");
+      let position = 0;
+
+      doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 40) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save(`${name}.pdf`);
+    });
+    document
+      .querySelector(".ProseMirror.toastui-editor-contents")
+      ?.setAttribute("style", "height: 100% !important;");
   };
 
   return (
@@ -209,6 +245,43 @@ export default function Memo({
           >
             ddd
           </button> */}
+          <button
+            onClick={() => {
+              console.log(
+                document.querySelector(".ProseMirror.toastui-editor-contents")
+              );
+              document
+                .querySelector(".ProseMirror.toastui-editor-contents")
+                ?.setAttribute("style", "overflow: visible !important");
+              document
+                .querySelector(".ProseMirror.toastui-editor-contents")
+                ?.setAttribute("style", "height: auto !important");
+            }}
+          >
+            ddd
+          </button>
+          <button
+            onClick={() => {
+              console.log(
+                document.querySelector(".ProseMirror.toastui-editor-contents")
+              );
+              document
+                .querySelector(".ProseMirror.toastui-editor-contents")
+                ?.setAttribute("style", "overflow: scroll !important");
+              document
+                .querySelector(".ProseMirror.toastui-editor-contents")
+                ?.setAttribute("style", "height: 100% !important");
+            }}
+          >
+            ddd
+          </button>
+          <button
+            onClick={() => {
+              toPdf(titleRef.current);
+            }}
+          >
+            pdf
+          </button>
 
           {/* <button
             onClick={() => {

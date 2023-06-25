@@ -44,7 +44,7 @@ html .toastui-editor-contents h4 {
 
 html .toastui-editor-contents h3,
 html .toastui-editor-contents h4 {
-  line-height: 25px;
+  line-height: 36px;
 }
 
 html .toastui-editor-contents h5 {
@@ -63,5 +63,5 @@ html .toastui-editor-contents h6 {
 html .toastui-editor-contents {
   margin: 0;
   padding: 0;
-  font-size: 20px;
+  font-size: 23px;
 }
