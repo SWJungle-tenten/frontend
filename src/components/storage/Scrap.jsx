@@ -53,7 +53,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       const updatedScrapData = scrapData.filter((item) => {
         if (item.keywords.keyword === deletedKeyword) {
           item.keywords.titles = item.keywords.titles.filter(
-            (title) => title.keyword !== deletedKeyword
+            (title) => title !== deletedKeyword
           );
         }
         return item.keywords.titles.length > 0;
@@ -64,53 +64,53 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       alert("키워드 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
-
   const handleDeleteUserScrapResponse = (data) => {
     if (data.message === "success") {
       const deletedTitle = data.title;
 
       const updatedScrapData = scrapData.map((item) => {
-        if (item.keywords.titles.some((title) => title === deletedTitle)) {
+        if (item.keywords.titles.includes(deletedTitle)) {
           item.keywords.titles = item.keywords.titles.filter(
-            (title) => title !== deletedTitle
+            (titleItem) => titleItem !== deletedTitle
           );
         }
         return item;
       });
 
-      setScrapData(updatedScrapData);
+      const filteredScrapData = updatedScrapData.filter(
+        (item) => item.keywords.titles.length > 0
+      );
+
+      setScrapData(filteredScrapData);
     } else if (data.message === "error") {
       alert("스크랩 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
-  const deleteKeyword = (keyWord, userToken, date) => {
+
+  const deleteKeyword = (keyword, userToken, date) => {
     Swal.fire({
       title: "검색어를 삭제하시겠습니까?",
       text: "다시 되돌릴 수 없습니다.",
       icon: "warning",
-
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
-
-      reverseButtons: true, // 버튼 순서 거꾸로
+      reverseButtons: true,
     }).then((result) => {
-      // 만약 Promise리턴을 받으면,
       if (result.isConfirmed) {
-        // 만약 모달창에서 confirm 버튼을 눌렀다면
-        const updatedScrapData = scrapData.filter((item) => {
-          return item.keywords.keyword !== keyWord;
-        });
+        const updatedScrapData = scrapData.filter(
+          (item) => item.keywords.keyword !== keyword
+        );
 
         setScrapData(updatedScrapData);
 
         axios
           .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteKeyWord`, {
             data: {
-              keyWord,
+              keyWord: keyword,
               userToken,
               date,
             },
@@ -128,6 +128,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           .catch((error) => {
             console.error(`HTTP error! status: ${error}`);
           });
+
         Swal.fire({
           icon: "success",
           title: "삭제 완료!",
@@ -142,18 +143,14 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       title: "스크랩을 삭제하시겠습니까?",
       text: "다시 되돌릴 수 없습니다.",
       icon: "warning",
-
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "확인",
       cancelButtonText: "취소",
-
-      reverseButtons: true, // 버튼 순서 거꾸로
+      reverseButtons: true,
     }).then((result) => {
-      // 만약 Promise리턴을 받으면,
       if (result.isConfirmed) {
-        // 만약 모달창에서 confirm 버튼을 눌렀다면
         const updatedScrapData = scrapData.map((item) => {
           if (item.keywords.titles.includes(title)) {
             item.keywords.titles = item.keywords.titles.filter(
@@ -163,7 +160,11 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           return item;
         });
 
-        setScrapData(updatedScrapData);
+        const filteredScrapData = updatedScrapData.filter(
+          (item) => item.keywords.titles.length > 0
+        );
+
+        setScrapData(filteredScrapData);
 
         axios
           .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteUserScrap`, {
@@ -196,6 +197,8 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       }
     });
   };
+
+
   const fetchDataKeywords = async () => {
     try {
       setIsLoading(true);
