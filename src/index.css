@@ -69,3 +69,33 @@ html .toastui-editor-contents {
 .logo{
   font-family: 'Product Sans', sans-serif;
 }
+
+@layer components {
+  .btn-red {
+    @apply w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-white{
+    @apply border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200
+  }
+
+  .btn-toggle{
+    @apply font-semibold hover:bg-red-100 focus:ring-2 focus:outline-0 focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8
+  }
+
+  .btn-blue{
+    @apply w-full duration-200 text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-green{
+    @apply w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-yellow{
+    @apply w-full duration-200 text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-title{
+    @apply w-[100%] mt-1 font-normal focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-base relative pl-3 py-0.5 break-keep pr-7 text-start
+  }
+}

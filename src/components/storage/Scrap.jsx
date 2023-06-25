@@ -7,6 +7,7 @@ import ScrapDateList from "./ScrapDateList";
 import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
+import { yellow } from "@mui/material/colors";
 
 export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   const [scrapData, setScrapData] = useState(null);
@@ -74,9 +75,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
 
       const updatedScrapData = scrapData.filter((item) => {
         if (item.keywords.keyword === deletedKeyword) {
-          item.keywords.titles = item.keywords.titles.filter(
-            (title) => title !== deletedKeyword
-          );
+          item.keywords.titles = item.keywords.titles.filter((title) => title !== deletedKeyword);
         }
         return item.keywords.titles.length > 0;
       });
@@ -92,23 +91,18 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
 
       const updatedScrapData = scrapData.map((item) => {
         if (item.keywords.titles.includes(deletedTitle)) {
-          item.keywords.titles = item.keywords.titles.filter(
-            (titleItem) => titleItem !== deletedTitle
-          );
+          item.keywords.titles = item.keywords.titles.filter((titleItem) => titleItem !== deletedTitle);
         }
         return item;
       });
 
-      const filteredScrapData = updatedScrapData.filter(
-        (item) => item.keywords.titles.length > 0
-      );
+      const filteredScrapData = updatedScrapData.filter((item) => item.keywords.titles.length > 0);
 
       setScrapData(filteredScrapData);
     } else if (data.message === "error") {
       alert("스크랩 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
-
 
   const deleteKeyword = (keyword, userToken, date) => {
     Swal.fire({
@@ -123,12 +117,10 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        const updatedScrapData = scrapData.filter(
-          (item) => item.keyword !== keyword
-        );
-  
+        const updatedScrapData = scrapData.filter((item) => item.keyword !== keyword);
+
         setScrapData(updatedScrapData);
-  
+
         axios
           .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteKeyWord`, {
             data: {
@@ -142,7 +134,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           })
           .then((response) => {
             const data = response.data;
-  
+
             if (data.message !== "success") {
               handleDeleteKeywordResponse(data);
             }
@@ -150,7 +142,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           .catch((error) => {
             console.error(`HTTP error! status: ${error}`);
           });
-  
+
         Swal.fire({
           icon: "success",
           title: "삭제 완료!",
@@ -175,16 +167,12 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       if (result.isConfirmed) {
         const updatedScrapData = scrapData.map((item) => {
           if (item.keywords.titles.includes(title)) {
-            item.keywords.titles = item.keywords.titles.filter(
-              (titleItem) => titleItem !== title
-            );
+            item.keywords.titles = item.keywords.titles.filter((titleItem) => titleItem !== title);
           }
           return item;
         });
 
-        const filteredScrapData = updatedScrapData.filter(
-          (item) => item.keywords.titles.length > 0
-        );
+        const filteredScrapData = updatedScrapData.filter((item) => item.keywords.titles.length > 0);
 
         setScrapData(filteredScrapData);
 
@@ -219,7 +207,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       }
     });
   };
-
 
   const handleShowKeywordsClick = () => {
     if (showKeywords) {
@@ -275,16 +262,17 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
     setCurrentPath(null);
   };
 
-
   return (
     <div className="h-[93vh] flex overflow-hidden ">
-      <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
+      <div className="px-4 w-[30%] border-r-2 border-gray-400 bg-gray-50 overflow-auto">
         <div className="pt-3 flex justify-between items-center">
-          <div className="text-5xl font-bold">{userName}</div>
+          <div className="pl-3">
+            <span className="text-xl font-semibold">{userName}</span>님
+          </div>
           <div>
             {isLoading ? null : (
               <button
-                className="w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5"
+                className={`btn-${showKeywords ? "yellow" : "red"} px-5 py-2.5`}
                 onClick={handleShowKeywordsClick}
               >
                 {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
@@ -292,36 +280,34 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
             )}
           </div>
         </div>
-        {showKeywords ? (
-          scrapData &&
-          scrapData.map((item, index) => (
-            <ScrapKeywordList
-              key={index}
-              item={item}
-              handleToggleKeywordClick={handleToggleKeywordClick}
-              deleteKeyword={deleteKeyword}
-              cookies={cookies}
-              currentKeyword={currentKeyword}
-              handleTitleClick={handleTitleClick}
-              deleteTitle={deleteTitle}
-              showKeywords={showKeywords}
-            />
-          ))
-        ) : (
-          scrapData &&
-          scrapData.map((item, index) => (
-            <ScrapDateList
-              key={index}
-              item={item}
-              index={index}
-              scrapData={scrapData}
-              handleToggleDateClick={handleToggleDateClick}
-              handleTitleClick={handleTitleClick}
-              cookies={cookies}
-              deleteTitle={deleteTitle}
-            />
-          ))
-        )}
+        {showKeywords
+          ? scrapData &&
+            scrapData.map((item, index) => (
+              <ScrapKeywordList
+                key={index}
+                item={item}
+                handleToggleKeywordClick={handleToggleKeywordClick}
+                deleteKeyword={deleteKeyword}
+                cookies={cookies}
+                currentKeyword={currentKeyword}
+                handleTitleClick={handleTitleClick}
+                deleteTitle={deleteTitle}
+                showKeywords={showKeywords}
+              />
+            ))
+          : scrapData &&
+            scrapData.map((item, index) => (
+              <ScrapDateList
+                key={index}
+                item={item}
+                index={index}
+                scrapData={scrapData}
+                handleToggleDateClick={handleToggleDateClick}
+                handleTitleClick={handleTitleClick}
+                cookies={cookies}
+                deleteTitle={deleteTitle}
+              />
+            ))}
       </div>
       {scrapData && (currentPath || currentDate || selectedKeyword) && (
         <div className="flex-1 overflow-auto">

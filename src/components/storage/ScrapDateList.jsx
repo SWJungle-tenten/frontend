@@ -12,7 +12,7 @@ const ScrapDateList = ({
   deleteTitle,
 }) => {
   return (
-    <div key={index}>
+    <div key={index} className="border-b pb-5">
       {(index === 0 || item.date !== scrapData[index - 1].date) && (
         <div className="flex pt-3">
           <button
@@ -33,21 +33,23 @@ const ScrapDateList = ({
               </button>
             )} */}
           </button>
-          <div></div>
         </div>
       )}
-      <Keyword keyword={item.keywords.keyword} item={item} />
-      {item.keywords.titles.map((title, titleIndex) => (
-        <div key={`title-${index}-${titleIndex}`}>
-          <Title
-            title={title}
-            handleTitleClick={handleTitleClick}
-            cookies={cookies}
-            item={item}
-            deleteTitle={deleteTitle}
-          />
+      <div className="flex flex-row">
+        <Keyword keyword={item.keywords.keyword} item={item} />
+        <div>
+          {item.keywords.titles.map((title, titleIndex) => (
+            <Title
+              key={`title-${index}-${titleIndex}`}
+              title={title}
+              handleTitleClick={handleTitleClick}
+              cookies={cookies}
+              item={item}
+              deleteTitle={deleteTitle}
+            />
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

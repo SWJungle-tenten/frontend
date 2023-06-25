@@ -22,7 +22,7 @@ export default function SignIn(prop) {
   const handleCookie = (data) => {
     const expireDate = new Date();
     // 동적으로 바꾸기
-    expireDate.setMinutes(expireDate.getMinutes() + 60);
+    expireDate.setMinutes(expireDate.getMinutes() + 600);
     setCookie("accessToken", data, {
       path: "/",
       expires: expireDate,
