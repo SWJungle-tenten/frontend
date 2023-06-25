@@ -14,25 +14,23 @@ export default function Detail({
       {titleData && (
         <div>
           {titleData.map((data, index) => (
-            <div key={index}>
-              <div className="px-4 py-2 text-left text-xl">{data.title}</div>
+            <div key={index} >
               <div>
                 <iframe
                   title={`iframe-${index}`}
                   src={data.url}
                   className="w-full h-[70vh] border border-gray-400 rounded-md"
                 >
-                  <p>이 브라우저는 iframe을 지원하지 않습니다.</p>
                 </iframe>
               </div>
               {data.text &&
                 data.text.map((text, textIndex) => (
-                  <div draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
+                  <div className="hover:opacity-75 italic text-xl border border-gray-300 " draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
                 ))}
               {data.img &&
                 data.img.map((img, imgIndex) => (
-                  <div>
-                    <img onDragStart={handleDragStart}
+                  <div className="hover:opacity-75">
+                    <img  onDragStart={handleDragStart}
                       key={`img-${imgIndex}`}
                       src={img}
                       alt={`Related-${imgIndex}`}
