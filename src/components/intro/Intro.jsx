@@ -18,7 +18,7 @@ export default function Intro() {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           go("/main");
         })
         .catch((error) => {

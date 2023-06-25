@@ -279,7 +279,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
 
 
   return (
-    <div className="h-[93vh] flex overflow-auto ">
+    <div className="h-[93vh] flex overflow-hidden ">
       <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
         <div className="pt-3 flex justify-between items-center">
           <div className="text-5xl font-bold">{userName}</div>
