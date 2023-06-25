@@ -15,3 +15,53 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html .toastui-editor-contents h1 {
+  font-size: 33px;
+  line-height: 28px;
+  border-bottom: 3px double #999;
+  margin: 52px 0 15px 0;
+  padding-bottom: 7px;
+}
+
+html .toastui-editor-contents h2 {
+  font-size: 31px;
+  line-height: 23px;
+  border-bottom: 1px solid #dbdbdb;
+  margin: 20px 0 13px 0;
+  padding-bottom: 7px;
+}
+
+html .toastui-editor-contents h3 {
+  font-size: 29px;
+  margin: 18px 0 2px;
+}
+
+html .toastui-editor-contents h4 {
+  font-size: 27px;
+  margin: 10px 0 2px;
+}
+
+html .toastui-editor-contents h3,
+html .toastui-editor-contents h4 {
+  line-height: 25px;
+}
+
+html .toastui-editor-contents h5 {
+  font-size: 23px;
+}
+
+html .toastui-editor-contents h6 {
+  font-size: 21px;
+}
+
+html .toastui-editor-contents h5,
+html .toastui-editor-contents h6 {
+  line-height: 17px;
+  margin: 9px 0 -4px;
+}
+html .toastui-editor-contents {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}

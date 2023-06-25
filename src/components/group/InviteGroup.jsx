@@ -22,7 +22,7 @@ export default function InviteGroup(prop) {
   const successInvite = async () => {
     // console.log(cookies.accessToken);
     // await axios
-    //   .post(`${process.env.REACT_APP_SERVER_ADDR}/api/addGroupMember`, {
+    //   .post(`https://sangunlee.shop/api/addGroupMember`, {
     //     email: inviteEmail,
     //     // groupName: ,
     //   }, {

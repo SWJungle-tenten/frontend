@@ -2,7 +2,7 @@ export default function Posts({ date, userScrapData }) {
   const dateData = getDateData(date, userScrapData);
 
   return (
-    <div className="py-4 h-screen overflow-auto ">
+    <div className="py-4 h-[93vh] overflow-auto ">
       {date ? (
         <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold shadow bg-white">
           {date}

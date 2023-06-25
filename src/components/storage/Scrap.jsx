@@ -8,7 +8,7 @@ import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 
-export default function Scrap({ userName, userScrapData }) {
+export default function Scrap({ userName, userScrapData ,handleDragStart}) {
   const [scrapData, setScrapData] = useState(userScrapData);
   const [currentPath, setCurrentPath] = useState(true);
   const [currentKeyword, setCurrentKeyword] = useState({});
@@ -16,7 +16,6 @@ export default function Scrap({ userName, userScrapData }) {
   const [showKeywords, setShowKeywords] = useState(false);
   const [currentDate, setCurrentDate] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
-  const [showDateDelete, setShowDateDelete] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
 
   const handleDeleteKeywordResponse = (data) => {
@@ -211,11 +210,11 @@ export default function Scrap({ userName, userScrapData }) {
   };
 
   return (
-    <div className="h-screen flex overflow-auto ">
+    <div className="h-[93vh] flex overflow-auto ">
       <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
         {/* <div className="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl"/> */}
 
-        <div className="py-3 flex justify-between items-center">
+        <div className="pt-3 flex justify-between items-center">
           <div className="text-5xl font-bold">{userName}</div>
           <div>
             <button
@@ -246,15 +245,15 @@ export default function Scrap({ userName, userScrapData }) {
           scrapData &&
           scrapData.map((item, index) => (
             <ScrapDateList
+              key={index}
               item={item}
               index={index}
               scrapData={scrapData}
               handleToggleDateClick={handleToggleDateClick}
-              setShowDateDelete={setShowDateDelete}
-              showDateDelete={showDateDelete}
               handleTitleClick={handleTitleClick}
               cookies={cookies}
               deleteTitle={deleteTitle}
+              handleDragStart={handleDragStart}
             />
           ))}
       </div>

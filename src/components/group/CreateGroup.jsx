@@ -27,7 +27,7 @@ export default function CreateGroup(prop) {
     // console.log(cookies.accessToken);
     if (cookies.accessToken) {
       await axios
-        .post(`${process.env.REACT_APP_SERVER_ADDR}/api/makeGroup`, {
+        .post(`https://sangunlee.shop/api/makeGroup`, {
           members: inviteEmail,
           userToken: cookies.accessToken,
           groupName: groupName,

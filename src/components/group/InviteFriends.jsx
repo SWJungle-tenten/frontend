@@ -15,7 +15,7 @@ export default function InviteFriends(prop) {
       // 중복 확인
       if (!inviteEmail.includes(email)) {
         // await axios
-        //   .post(`${process.env.REACT_APP_SERVER_ADDR}/api/checkEmail`, {
+        //   .post(`https://sangunlee.shop/api/checkEmail`, {
         //     email: email,
         //   })
         //   .then((res) => {
