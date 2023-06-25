@@ -206,11 +206,7 @@ export default function Memo({
             placeholder="Title"
           />
         </div>
-        <div
-          className="droppable"
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
+        <div className="droppable" onDragOver={handleDragOver} onDrop={handleDrop}>
           <Editor
             initialValue=" "
             // initialValue="<p>내용을 입력하세요!<p>dddd"
@@ -222,25 +218,17 @@ export default function Memo({
             language="ko-KR"
             // useCommandShortcut={true}
             hideModeSwitch={true}
-            toolbarItems={[
-              ["heading", "bold", "italic", "strike"],
-              ["hr", "quote"],
-              ["ul", "ol", "task"],
-              ["code"],
-            ]}
+            toolbarItems={[["heading", "bold", "italic", "strike"], ["hr", "quote"], ["ul", "ol", "task"], ["code"]]}
           />
         </div>
 
         <div className="flex justify-between pt-2">
           <div className="flex space-x-2">
-            <button
-              className="w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5"
-              onClick={() => open(true)}
-            >
+            <button className="btn-blue" onClick={() => open(true)}>
               목록
             </button>
             <button
-              className="w-full duration-200 text-white bg-rose-400 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-300 font-semibold rounded-lg text-sm px-5 py-1.5"
+              className="btn-yellow"
               onClick={() => {
                 toPdf(titleRef.current);
               }}
@@ -250,17 +238,11 @@ export default function Memo({
           </div>
           <div className="space-x-2 flex">
             {selectedMemo && (
-              <button
-                className="w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1.5"
-                onClick={deleteMemo}
-              >
+              <button className="btn-red" onClick={deleteMemo}>
                 삭제
               </button>
             )}
-            <button
-              className="w-full duration-200 text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-1.5"
-              onClick={saveContent}
-            >
+            <button className="btn-green" onClick={saveContent}>
               저장
             </button>
           </div>

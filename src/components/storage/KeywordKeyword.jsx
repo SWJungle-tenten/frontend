@@ -1,40 +1,36 @@
 import React, { useState } from "react";
+import FolderIcon from "@mui/icons-material/Folder";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+export default function KeywordKeyword({ keyword, handleToggleKeywordClick, deleteKeyword, cookies, showKeywords }) {
+  const [showDelete, setShowDelete] = useState(false);
 
-export default function KeywordKeyword({
-    keyword,
-    handleToggleKeywordClick,
-    deleteKeyword,
-    cookies,
-    showKeywords,
-  }) {
-    const [showDelete, setShowDelete] = useState(false);
-  
-    return (
-      <div>
-        {showKeywords ? (
-          <div>
-            <button
-              className="font-semibold hover:bg-red-100 focus:ring-2 focus:outline-non focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2"
-              onClick={() => handleToggleKeywordClick(keyword)}
-              onMouseEnter={() => showKeywords && setShowDelete(true)}
-              onMouseLeave={() => showKeywords && setShowDelete(false)}
-            >
-              {keyword}
-              {showDelete && (
-                <button
-                  className="ml-2"
-                  onClick={() => {
-                    deleteKeyword(keyword, cookies.accessToken);
-                  }}
-                >
-                  𝗑
-                </button>
-              )}
-            </button>
-          </div>
-        ) : (
-          <p className="font-semibold px-4 py-2 text-2xl">{keyword}</p>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {showKeywords ? (
+        <div>
+          <button
+            className="btn-toggle w-full flex flex-row"
+            onClick={() => handleToggleKeywordClick(keyword)}
+            onMouseEnter={() => showKeywords && setShowDelete(true)}
+            onMouseLeave={() => showKeywords && setShowDelete(false)}
+          >
+            <FolderIcon className="text-amber-400 mr-3 mt-1.5" />
+            <p>{keyword}</p>
+            {showDelete && (
+              <button
+                className="ml-2"
+                onClick={() => {
+                  deleteKeyword(keyword, cookies.accessToken);
+                }}
+              >
+                <DeleteOutlineOutlinedIcon />
+              </button>
+            )}
+          </button>
+        </div>
+      ) : (
+        <p className="font-semibold px-4 py-2 text-2xl">{keyword}</p>
+      )}
+    </div>
+  );
+}

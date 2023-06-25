@@ -42,7 +42,7 @@ export default function Header() {
     }
   });
   return (
-    <div className="shadow ">
+    <div className="shadow z-10 mb-0.5">
       <div className="flex items-center text-3xl p-3 sm:px-6 lg:px-8 justify-between">
         <div className="logo">
           <span className="text-google-blue">G</span>
@@ -53,10 +53,7 @@ export default function Header() {
           <span className="text-black">ing Helper</span>
         </div>
         <div className="">
-          <button
-            onClick={logout}
-            className="bg- border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200 "
-          >
+          <button onClick={logout} className="btn-white">
             로그아웃
           </button>
         </div>
