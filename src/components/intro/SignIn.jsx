@@ -76,7 +76,6 @@ export default function SignIn(prop) {
       })
       .catch((error) => {
         console.log(error);
-        // console.log("Error");
         if(error.message === "Network Error"){
           return Swal.fire({
             icon: "error",

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-// import Editor from "@toast-ui/react-editor";
+import React, { useEffect, useRef } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { Editor } from "@toast-ui/react-editor";
@@ -94,8 +93,6 @@ export default function Memo({
           }
         )
         .then((res) => {
-          // console.log(res);
-          // 알림 필요없을 듯 아니 필요할듯 목록으로 안나가도 될 듯?
           Swal.fire({
             icon: "success",
             title: "저장 완료!",
@@ -154,7 +151,6 @@ export default function Memo({
     event.preventDefault();
   };
   const handleDrop = (event) => {
-    // console.log(draggedElementContent);
     const data = editorRef.current?.getInstance().getHTML();
     editorRef.current?.getInstance().setHTML(data + draggedElementContent);
   };
@@ -198,7 +194,6 @@ export default function Memo({
       .querySelector(".ProseMirror.toastui-editor-contents")
       ?.setAttribute("style", "height: 100% !important;");
   };
-
 
   return (
     <div className="p-4">
@@ -245,38 +240,14 @@ export default function Memo({
               목록
             </button>
             <button
-            className="w-full duration-200 text-white bg-rose-400 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-300 font-semibold rounded-lg text-sm px-5 py-1.5"
-            onClick={() => {
-              toPdf(titleRef.current);
-            }}
-          >
-            PDF
-          </button>
+              className="w-full duration-200 text-white bg-rose-400 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-300 font-semibold rounded-lg text-sm px-5 py-1.5"
+              onClick={() => {
+                toPdf(titleRef.current);
+              }}
+            >
+              PDF
+            </button>
           </div>
-          {/* <button
-            onClick={() => {
-              console.log(draggedElementContent);
-            }}
-          >
-            ddd
-          </button> */}
-          
-
-          {/* <button
-            onClick={() => {
-              console.log(selectedMemo);
-            }}
-          >
-            제목세팅값
-          </button>
-          <button
-            onClick={() => {
-              console.log(titleRef.current);
-            }}
-          >
-            Ref.current
-          </button>
-          <button onClick={receiveMemo}>제목</button> */}
           <div className="space-x-2 flex">
             {selectedMemo && (
               <button
@@ -292,13 +263,8 @@ export default function Memo({
             >
               저장
             </button>
-            {/* <button onClick={temp} className="border px-2">
-              temp
-            </button> */}
           </div>
         </div>
-        {/* <button onClick={checkTime}>what time is it now?</button> */}
-        {/* <button onClick={()=>{console.log(selectedMemo)}}>Memo?</button> */}
       </div>
     </div>
   );
