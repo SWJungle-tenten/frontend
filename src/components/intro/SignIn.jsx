@@ -70,13 +70,12 @@ export default function SignIn(prop) {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         handleCookie(res.data.token);
         go("/storage");
       })
       .catch((error) => {
         console.log(error);
-        // console.log("Error");
         if(error.message === "Network Error"){
           return Swal.fire({
             icon: "error",

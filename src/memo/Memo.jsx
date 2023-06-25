@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-// import Editor from "@toast-ui/react-editor";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import axios from "axios";
@@ -41,17 +42,14 @@ export default function Memo({
       if (result.isConfirmed) {
         // 만약 모달창에서 confirm 버튼을 눌렀다면
         axios
-          .delete(
-            `${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`,
-            {
-              data: { time: selectedMemo },
-              headers: {
-                Authorization: `Bearer ${cookies.accessToken}`,
-              },
-            }
-          )
+          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`, {
+            data: { time: selectedMemo },
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             Swal.fire({
               icon: "success",
               title: "삭제 완료!",
@@ -69,12 +67,11 @@ export default function Memo({
 
   // 메모 저장
   const saveContent = () => {
-
     const data = editorRef.current?.getInstance().getHTML();
 
     const date = new Date();
 
-    const time = (selectedMemo ? selectedMemo: date.getTime())
+    const time = selectedMemo ? selectedMemo : date.getTime();
 
     if (!titleRef.current) {
       alert("제목을 입력하세요");
@@ -85,7 +82,7 @@ export default function Memo({
         .post(
           `${process.env.REACT_APP_SERVER_ADDR}/api/saveMemo`,
           {
-            time : time,
+            time: time,
             memoTitle: titleRef.current,
             memoContents: data,
           },
@@ -96,9 +93,11 @@ export default function Memo({
           }
         )
         .then((res) => {
-          console.log(res);
-          // 알림 필요없을 듯 아니 필요할듯 목록으로 안나가도 될 듯?
-          alert("메모 저장 완료!");
+          Swal.fire({
+            icon: "success",
+            title: "저장 완료!",
+            text: "메모를 저장했습니다.",
+          });
           goList();
         })
         .catch((error) => {
@@ -128,11 +127,10 @@ export default function Memo({
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         titleRef.current = selectedTitle;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
-
       })
       .catch((error) => {
         console.log(error);
@@ -153,9 +151,48 @@ export default function Memo({
     event.preventDefault();
   };
   const handleDrop = (event) => {
-    // console.log(draggedElementContent);
-    const data = editorRef?.current?.getInstance().getHTML();
-    editorRef.current?.getInstance().setHTML(data+draggedElementContent);
+    const data = editorRef.current?.getInstance().getHTML();
+    editorRef.current?.getInstance().setHTML(data + draggedElementContent);
+  };
+
+  const toPdf = (name) => {
+    document
+      .querySelector(".ProseMirror.toastui-editor-contents")
+      ?.setAttribute("style", "height: auto !important; ");
+
+    html2canvas(
+      document.querySelector(".ProseMirror.toastui-editor-contents"),
+      {
+        // width:window.innerWidth-1000,
+        // height:,
+        // useCORS:true,
+      }
+    ).then((canvas) => {
+      let imgData = canvas.toDataURL("image/png");
+
+      let imgWidth = 180;
+      let pageHeight = imgWidth * 1.414;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let margin = 20;
+
+      const doc = new jsPDF("p", "mm", "a4");
+      let position = 0;
+
+      doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 40) {
+        position = heightLeft - imgHeight - 40;
+        doc.addPage();
+        doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save(`${name}.pdf`);
+    });
+    document
+      .querySelector(".ProseMirror.toastui-editor-contents")
+      ?.setAttribute("style", "height: 100% !important;");
   };
 
   return (
@@ -180,51 +217,37 @@ export default function Memo({
             // placeholder="내용을 입력하세요!!"
             ref={editorRef}
             previewStyle="vertical"
-            height="790px"
+            height="620px"
             initialEditType="wysiwyg"
             language="ko-KR"
-            useCommandShortcut={true}
+            // useCommandShortcut={true}
             hideModeSwitch={true}
             toolbarItems={[
               ["heading", "bold", "italic", "strike"],
               ["hr", "quote"],
               ["ul", "ol", "task"],
-              ["image", "code"],
+              ["code"],
             ]}
           />
         </div>
+
         <div className="flex justify-between pt-2">
-          <div className="">
+          <div className="flex space-x-2">
             <button
               className="w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5"
               onClick={() => open(true)}
             >
               목록
             </button>
+            <button
+              className="w-full duration-200 text-white bg-rose-400 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-300 font-semibold rounded-lg text-sm px-5 py-1.5"
+              onClick={() => {
+                toPdf(titleRef.current);
+              }}
+            >
+              PDF
+            </button>
           </div>
-          {/* <button
-            onClick={() => {
-              console.log(draggedElementContent);
-            }}
-          >
-            ddd
-          </button> */}
-
-          {/* <button
-            onClick={() => {
-              console.log(selectedMemo);
-            }}
-          >
-            제목세팅값
-          </button>
-          <button
-            onClick={() => {
-              console.log(titleRef.current);
-            }}
-          >
-            Ref.current
-          </button>
-          <button onClick={receiveMemo}>제목</button> */}
           <div className="space-x-2 flex">
             {selectedMemo && (
               <button
@@ -240,13 +263,8 @@ export default function Memo({
             >
               저장
             </button>
-            {/* <button onClick={temp} className="border px-2">
-              temp
-            </button> */}
           </div>
         </div>
-        {/* <button onClick={checkTime}>what time is it now?</button> */}
-        {/* <button onClick={()=>{console.log(selectedMemo)}}>Memo?</button> */}
       </div>
     </div>
   );

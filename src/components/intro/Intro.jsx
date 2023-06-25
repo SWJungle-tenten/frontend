@@ -18,8 +18,8 @@ export default function Intro() {
           },
         })
         .then((res) => {
-          console.log(res);
-          go("/main");
+          // console.log(res);
+          go("/storage");
         })
         .catch((error) => {
           console.log(error);
@@ -54,7 +54,6 @@ export default function Intro() {
                 </button>
               </div>
             </article>
-            {/* <h1 className="drop-shadow-lg text-5xl font-semibold text-gray-800 dark:text-white sm:text-5xl md:text-6xl relative text-center pt-24 "> */}
           </div>
         </div>
       </section>
@@ -62,11 +61,6 @@ export default function Intro() {
       <div className="absolute top-[30rem] bg-red-400 w-full pt-[10rem] pb-[21rem]">
         <div className="gap-4 p-10 space-y-10 xl:grid xl:grid-cols-3">
           <div className="flex flex-col justify-center ">
-            {/* <img
-              src="https://img.icons8.com/ios/100/000000/search--v1.png"
-              alt="like"
-              className="w-30 h-30 mx-auto"
-            /> */}
             <p></p>
             <p></p>
           </div>
@@ -74,7 +68,6 @@ export default function Intro() {
           <div className="flex flex-col justify-center "></div>
         </div>
       </div>
-
       <LoginModal openToggle={modalToggle} open={open} />
     </div>
   );
