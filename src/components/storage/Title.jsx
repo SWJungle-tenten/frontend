@@ -6,7 +6,6 @@ export default function Title({
   deleteTitle,
   cookies,
   item,
-  handleDragStart,
 }) {
   const [showDelete, setShowDelete] = useState(false);
   const titleIndex = item.keywords.titles.findIndex((t) => t === title);
@@ -22,9 +21,6 @@ export default function Title({
           onClick={() => handleTitleClick(title)}
           onMouseEnter={() => setShowDelete(true)}
           onMouseLeave={() => setShowDelete(false)}
-          // 부분 스크랩으로 넘기면 됨
-          onDragStart={handleDragStart}
-          draggable={true}
         >
           {title}
           {showDelete && (
