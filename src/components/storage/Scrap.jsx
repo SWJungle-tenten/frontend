@@ -202,6 +202,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   };
   const fetchDataKeywords = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
         {},
@@ -217,16 +218,22 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
     } catch (error) {
       console.error(`HTTP error! status: ${error}`);
     }
+    setIsLoading(false);
   };
 
   const handleShowKeywordsClick = async () => {
     if (showKeywords) {
-      setScrapData(originalScrapData); // 버튼을 다시 누르면 원래 데이터를 사용
+      setSelectedKeyword(null);
+      setScrapData(originalScrapData);
     } else {
-      await fetchDataKeywords(); // 버튼을 누르면 새로운 데이터를 받아옴
+      setCurrentDate(null);
+      setCurrentTitle(null);
+      await fetchDataKeywords();
     }
     setShowKeywords(!showKeywords);
   };
+
+
   const handleTitleClick = (title) => {
     if (title === currentTitle) {
       setCurrentTitle(null);
@@ -274,8 +281,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   return (
     <div className="h-[93vh] flex overflow-auto ">
       <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
-        {/* <div className="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl"/> */}
-
         <div className="pt-3 flex justify-between items-center">
           <div className="text-5xl font-bold">{userName}</div>
           <div>
@@ -289,7 +294,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
             )}
           </div>
         </div>
-        {showKeywords &&
+        {showKeywords ? (
           scrapData &&
           scrapData.map((item, index) => (
             <ScrapKeywordList
@@ -303,8 +308,8 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               deleteTitle={deleteTitle}
               showKeywords={showKeywords}
             />
-          ))}
-        {!showKeywords &&
+          ))
+        ) : (
           scrapData &&
           scrapData.map((item, index) => (
             <ScrapDateList
@@ -317,9 +322,10 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               cookies={cookies}
               deleteTitle={deleteTitle}
             />
-          ))}
+          ))
+        )}
       </div>
-     {scrapData && (currentPath || currentDate || selectedKeyword) && (
+      {scrapData && (currentPath || currentDate || selectedKeyword) && (
         <div className="flex-1 overflow-auto">
           {currentTitle ? (
             <Detail

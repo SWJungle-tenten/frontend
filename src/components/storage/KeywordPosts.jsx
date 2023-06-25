@@ -8,6 +8,7 @@ const KeywordPosts = ({
 }) => {
   const keywordData = getKeywordData(keyword, userScrapData);
   console.log("keywordData", keywordData);
+
   return (
     <div className="py-4 h-[93vh] overflow-auto">
       <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold shadow bg-white">
@@ -18,13 +19,15 @@ const KeywordPosts = ({
           {keywordData.map((data, index) => (
             <div key={`keyword-post-${index}`}>
               <div className="px-4 py-2 text-left text-xl">{data.title}</div>
-              <iframe
-                title={`iframe-${index}`}
-                src={data.url}
-                className="w-full h-[70vh] border border-gray-400 rounded-md"
-              >
-                <p>이 브라우저는 iframe을 지원하지 않습니다.</p>
-              </iframe>
+              {data.url.length > 0 ? (
+                <iframe
+                  title={`iframe-${index}`}
+                  src={data.url}
+                  className="w-full h-[70vh] border border-gray-400 rounded-md"
+                >
+                  <p>이 브라우저는 iframe을 지원하지 않습니다.</p>
+                </iframe>
+              ) : null}
               {data.text &&
                 data.text.map((text, textIndex) => (
                   <div
@@ -61,7 +64,7 @@ function getKeywordData(keyword, userScrapData) {
         return date.titles.map((title, i) => {
           return {
             title: title,
-            url: date.urls[i],
+            url: date.urls[i] ? date.urls[i] : [],
             img: date.img[i] ? date.img[i] : null,
             text: date.texts[i] ? date.texts[i] : null,
           };
