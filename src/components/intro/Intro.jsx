@@ -36,17 +36,15 @@ export default function Intro() {
         <div className="max-w-screen-xl mx-auto">
           <div className="grid grid-cols-1 gap-0 items-center lg:grid-cols-6 xl:grid-cols-5">
             <article className="flex flex-col p-20 pl-10 pb-10 items-center lg:items-start lg:col-span-4 xl:col-span-3 mt-24 false">
-              <h1 className="font-semibold text-center md:text-left mb-4 md:whitespace-nowrap text-6xl md:text-7xl -ml-2 drop-shadow-lg">
-                <span className="text-blue-500">G</span>
-                <span className="text-red-500">o</span>
-                <span className="text-yellow-500">o</span>
-                <span className="text-blue-500">g</span>
-                <span className="text-green-500">l</span>
+              <h1 className="logo font-semibold text-center md:text-left mb-4 md:whitespace-nowrap text-6xl md:text-7xl -ml-2 drop-shadow-lg">
+                <span className="text-google-blue">G</span>
+                <span className="text-google-red">o</span>
+                <span className="text-google-yellow">o</span>
+                <span className="text-google-blue">g</span>
+                <span className="text-google-green">l</span>
                 <span className="text-black">ing Helper</span>
               </h1>
-              <h2 className="mb-4 leading-tight text-center md:text-left text-xl sm:text-2xl">
-                검색을 간편하게!
-              </h2>
+              <h2 className="mb-4 leading-tight text-center md:text-left text-xl sm:text-2xl">검색을 간편하게!</h2>
               <div className="w-full flex gap-4 flex-row items-center justify-center lg:justify-start ">
                 <button
                   onClick={modalToggle}
