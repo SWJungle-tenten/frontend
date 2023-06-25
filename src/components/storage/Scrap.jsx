@@ -102,11 +102,11 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
     }).then((result) => {
       if (result.isConfirmed) {
         const updatedScrapData = scrapData.filter(
-          (item) => item.keywords.keyword !== keyword
+          (item) => item.keyword !== keyword
         );
-
+  
         setScrapData(updatedScrapData);
-
+  
         axios
           .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteKeyWord`, {
             data: {
@@ -120,7 +120,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           })
           .then((response) => {
             const data = response.data;
-
+  
             if (data.message !== "success") {
               handleDeleteKeywordResponse(data);
             }
@@ -128,7 +128,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           .catch((error) => {
             console.error(`HTTP error! status: ${error}`);
           });
-
+  
         Swal.fire({
           icon: "success",
           title: "삭제 완료!",
