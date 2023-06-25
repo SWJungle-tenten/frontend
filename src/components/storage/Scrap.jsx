@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import Posts from "./Posts";
 import Detail from "./Detail";
@@ -8,13 +8,9 @@ import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 
-export default function Scrap({
-  userName,
-  userScrapData,
-  handleDragStart,
-  setDraggedElementContent,
-}) {
-  const [scrapData, setScrapData] = useState(userScrapData);
+export default function Scrap({ handleDragStart, setDraggedElementContent }) {
+  const [scrapData, setScrapData] = useState(null);
+  const [originalScrapData, setOriginalScrapData] = useState(null);
   const [currentPath, setCurrentPath] = useState(true);
   const [currentKeyword, setCurrentKeyword] = useState({});
   const [currentTitle, setCurrentTitle] = useState(null);
@@ -22,6 +18,34 @@ export default function Scrap({
   const [currentDate, setCurrentDate] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDataStorage = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_ADDR}/api/checkStorage`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          }
+        );
+        console.log("response", response.data.dataToSend);
+        setScrapData(response.data.dataToSend);
+        setOriginalScrapData(response.data.dataToSend); 
+        setUserName(response.data.username);
+      } catch (error) {
+        console.error(`HTTP error! status: ${error}`);
+      }
+      setIsLoading(false);
+    };
+
+    fetchDataStorage();
+  }, []);
 
   const handleDeleteKeywordResponse = (data) => {
     if (data.message === "success") {
@@ -176,6 +200,39 @@ export default function Scrap({
       }
     });
   };
+  const fetchDataKeywords = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.accessToken}`,
+          },
+        }
+      );
+
+      setScrapData(response.data.dataToSend); 
+      console.log("response.data.dataToSend", response.data.dataToSend);
+    } catch (error) {
+      console.error(`HTTP error! status: ${error}`);
+    }
+    setIsLoading(false);
+  };
+
+  const handleShowKeywordsClick = async () => {
+    if (showKeywords) {
+      setSelectedKeyword(null);
+      setScrapData(originalScrapData);
+    } else {
+      setCurrentDate(null);
+      setCurrentTitle(null);
+      await fetchDataKeywords();
+    }
+    setShowKeywords(!showKeywords);
+  };
+
 
   const handleTitleClick = (title) => {
     if (title === currentTitle) {
@@ -187,7 +244,6 @@ export default function Scrap({
       setCurrentTitle(title);
     }
   };
-
   const handleToggleDateClick = (date) => {
     if (currentDate === date) {
       setCurrentDate(null);
@@ -196,42 +252,49 @@ export default function Scrap({
       setCurrentPath(null);
     } else {
       setCurrentDate(date);
+      setCurrentKeyword(null);
+      setCurrentTitle(null);
+      setCurrentPath(null);
     }
   };
+
   const handleToggleKeywordClick = (keyword) => {
-    if (currentKeyword) {
-      setCurrentKeyword({
-        ...currentKeyword,
-        [keyword]: !currentKeyword[keyword],
-      });
-      setSelectedKeyword(keyword);
+    if (currentKeyword[keyword]) {
+      setCurrentKeyword((prevState) => ({
+        ...prevState,
+        [keyword]: false,
+      }));
+      setSelectedKeyword(null);
     } else {
-      setCurrentKeyword({
+      setCurrentKeyword((prevState) => ({
+        ...prevState,
         [keyword]: true,
-      });
+      }));
       setSelectedKeyword(keyword);
     }
     setCurrentTitle(null);
+    setCurrentDate(null);
+    setCurrentPath(null);
   };
+
 
   return (
     <div className="h-[93vh] flex overflow-auto ">
       <div className="px-4 w-[30%] border-r-2 border-y-2 rounded-tr-xl rounded-br-xl border-gray-400 bg-gray-50 overflow-auto">
-        {/* <div className="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex rounded-tr-3xl rounded-br-3xl"/> */}
-
         <div className="pt-3 flex justify-between items-center">
           <div className="text-5xl font-bold">{userName}</div>
           <div>
-            <button
-              // className="px-4 py-2 bg-blue-500 text-white"
-              className="w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5"
-              onClick={() => setShowKeywords(!showKeywords)}
-            >
-              {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
-            </button>
+            {isLoading ? null : (
+              <button
+                className="w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2.5"
+                onClick={handleShowKeywordsClick}
+              >
+                {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
+              </button>
+            )}
           </div>
         </div>
-        {showKeywords &&
+        {showKeywords ? (
           scrapData &&
           scrapData.map((item, index) => (
             <ScrapKeywordList
@@ -245,8 +308,8 @@ export default function Scrap({
               deleteTitle={deleteTitle}
               showKeywords={showKeywords}
             />
-          ))}
-        {!showKeywords &&
+          ))
+        ) : (
           scrapData &&
           scrapData.map((item, index) => (
             <ScrapDateList
@@ -258,13 +321,12 @@ export default function Scrap({
               handleTitleClick={handleTitleClick}
               cookies={cookies}
               deleteTitle={deleteTitle}
-              handleDragStart={handleDragStart}
-              setDraggedElementContent={setDraggedElementContent}
             />
-          ))}
+          ))
+        )}
       </div>
       {scrapData && (currentPath || currentDate || selectedKeyword) && (
-        <div className="flex-1 ">
+        <div className="flex-1 overflow-auto">
           {currentTitle ? (
             <Detail
               title={currentTitle}
@@ -279,14 +341,14 @@ export default function Scrap({
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
-          ) : (
+          ) : currentDate ? (
             <Posts
               date={currentDate}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
-          )}
+          ) : null}
         </div>
       )}
     </div>
