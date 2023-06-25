@@ -8,35 +8,8 @@ import Memo from "../../memo/Memo";
 import MemoList from "../../memo/MemoList";
 
 export default function Storage() {
-  const [userScrapData, setData] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userName, setUserName] = useState(null);
   // const go = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/checkStorage`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.accessToken}`,
-            },
-          }
-        );
-
-        setData(response.data.dataToSend);
-        setUserName(response.data.username);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(`HTTP error! status: ${error}`);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState();
@@ -80,10 +53,8 @@ export default function Storage() {
       <Header />
       <div className="flex ">
         <div className="flex-grow w-[70%]">
-          {!isLoading && userScrapData && (
+          {(
             <Scrap
-              userScrapData={userScrapData}
-              userName={userName}
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
