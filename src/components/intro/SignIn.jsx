@@ -70,7 +70,7 @@ export default function SignIn(prop) {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         handleCookie(res.data.token);
         go("/storage");
       })

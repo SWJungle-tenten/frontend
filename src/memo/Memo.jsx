@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import Editor from "@toast-ui/react-editor";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -50,7 +50,7 @@ export default function Memo({
             },
           })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             Swal.fire({
               icon: "success",
               title: "삭제 완료!",
@@ -94,9 +94,13 @@ export default function Memo({
           }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // 알림 필요없을 듯 아니 필요할듯 목록으로 안나가도 될 듯?
-          alert("메모 저장 완료!");
+          Swal.fire({
+            icon: "success",
+            title: "저장 완료!",
+            text: "메모를 저장했습니다.",
+          });
           goList();
         })
         .catch((error) => {
@@ -126,7 +130,7 @@ export default function Memo({
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         titleRef.current = selectedTitle;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
@@ -151,7 +155,7 @@ export default function Memo({
   };
   const handleDrop = (event) => {
     // console.log(draggedElementContent);
-    const data = editorRef?.current?.getInstance().getHTML();
+    const data = editorRef.current?.getInstance().getHTML();
     editorRef.current?.getInstance().setHTML(data + draggedElementContent);
   };
 
@@ -161,10 +165,11 @@ export default function Memo({
       ?.setAttribute("style", "height: auto !important; ");
 
     html2canvas(
-      document.querySelector(".ProseMirror.toastui-editor-contents"),{
+      document.querySelector(".ProseMirror.toastui-editor-contents"),
+      {
         // width:window.innerWidth-1000,
         // height:,
-        // useCORS:true, 
+        // useCORS:true,
       }
     ).then((canvas) => {
       let imgData = canvas.toDataURL("image/png");
@@ -182,7 +187,7 @@ export default function Memo({
       heightLeft -= pageHeight;
 
       while (heightLeft >= 40) {
-        position = heightLeft - imgHeight;
+        position = heightLeft - imgHeight - 40;
         doc.addPage();
         doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
@@ -193,6 +198,7 @@ export default function Memo({
       .querySelector(".ProseMirror.toastui-editor-contents")
       ?.setAttribute("style", "height: 100% !important;");
   };
+
 
   return (
     <div className="p-4">
@@ -216,27 +222,36 @@ export default function Memo({
             // placeholder="내용을 입력하세요!!"
             ref={editorRef}
             previewStyle="vertical"
-            height="790px"
+            height="620px"
             initialEditType="wysiwyg"
             language="ko-KR"
-            useCommandShortcut={true}
+            // useCommandShortcut={true}
             hideModeSwitch={true}
             toolbarItems={[
               ["heading", "bold", "italic", "strike"],
               ["hr", "quote"],
               ["ul", "ol", "task"],
-              ["image", "code"],
+              ["code"],
             ]}
           />
         </div>
+
         <div className="flex justify-between pt-2">
-          <div className="">
+          <div className="flex space-x-2">
             <button
               className="w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5"
               onClick={() => open(true)}
             >
               목록
             </button>
+            <button
+            className="w-full duration-200 text-white bg-rose-400 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-rose-300 font-semibold rounded-lg text-sm px-5 py-1.5"
+            onClick={() => {
+              toPdf(titleRef.current);
+            }}
+          >
+            PDF
+          </button>
           </div>
           {/* <button
             onClick={() => {
@@ -245,43 +260,7 @@ export default function Memo({
           >
             ddd
           </button> */}
-          <button
-            onClick={() => {
-              console.log(
-                document.querySelector(".ProseMirror.toastui-editor-contents")
-              );
-              document
-                .querySelector(".ProseMirror.toastui-editor-contents")
-                ?.setAttribute("style", "overflow: visible !important");
-              document
-                .querySelector(".ProseMirror.toastui-editor-contents")
-                ?.setAttribute("style", "height: auto !important");
-            }}
-          >
-            ddd
-          </button>
-          <button
-            onClick={() => {
-              console.log(
-                document.querySelector(".ProseMirror.toastui-editor-contents")
-              );
-              document
-                .querySelector(".ProseMirror.toastui-editor-contents")
-                ?.setAttribute("style", "overflow: scroll !important");
-              document
-                .querySelector(".ProseMirror.toastui-editor-contents")
-                ?.setAttribute("style", "height: 100% !important");
-            }}
-          >
-            ddd
-          </button>
-          <button
-            onClick={() => {
-              toPdf(titleRef.current);
-            }}
-          >
-            pdf
-          </button>
+          
 
           {/* <button
             onClick={() => {
