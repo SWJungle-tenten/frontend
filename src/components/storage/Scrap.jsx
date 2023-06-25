@@ -34,7 +34,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
             },
           }
         );
-        console.log("response", response.data.dataToSend);
         setScrapData(response.data.dataToSend);
         setOriginalScrapData(response.data.dataToSend); 
         setUserName(response.data.username);
@@ -78,7 +77,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
         }
         return item;
       });
-      console.log("updatedScrapData", updatedScrapData);
 
       setScrapData(updatedScrapData);
     } else if (data.message === "error") {
@@ -122,7 +120,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           })
           .then((response) => {
             const data = response.data;
-            console.log("datakeyword", data);
 
             if (data.message !== "success") {
               handleDeleteKeywordResponse(data);
@@ -182,7 +179,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           })
           .then((response) => {
             const data = response.data;
-            console.log("datatitle", data);
 
             if (data.message !== "success") {
               handleDeleteUserScrapResponse(data);
@@ -214,7 +210,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       );
 
       setScrapData(response.data.dataToSend); 
-      console.log("response.data.dataToSend", response.data.dataToSend);
     } catch (error) {
       console.error(`HTTP error! status: ${error}`);
     }

@@ -19,25 +19,22 @@ export default function Posts({
         <ul className="h-full overflow-auto p-8 pr-10">
           {dateData.map((data, index) => (
             <div className="pb-6" key={index}>
-              {console.log("data234", data)}
-              <div className="px-4 py-2 text-left text-xl">{data.title}</div>
+              <div className="px-4 py-2 text-left text-3xl font-serif font-semibold">{data.title}</div>
               <div>
                 <iframe
                   title={`iframe-${index}`}
                   src={data.url}
                   className="w-full h-[70vh] border border-gray-400 rounded-md"
                 >
-                  <p>이 브라우저는 iframe을 지원하지 않습니다.</p>
                 </iframe>
               </div>
-              {console.log("data", data)}
               {data.text &&
                 data.text.map((text, textIndex) => (
-                  <div draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
+                  <div className="hover:opacity-75 italic text-xl border border-gray-300 " draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
                 ))}
               {data.img &&
                 data.img.map((img, imgIndex) => (
-                  <div>
+                  <div className="hover:opacity-75">
                     <img onDragStart={handleDragStart}
                       key={`img-${imgIndex}`}
                       src={img}
