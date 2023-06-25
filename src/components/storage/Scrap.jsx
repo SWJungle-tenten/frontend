@@ -20,6 +20,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [keywordData, setKeywordData] = useState(null);
 
   useEffect(() => {
     const fetchDataStorage = async () => {
@@ -35,7 +36,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           }
         );
         setScrapData(response.data.dataToSend);
-        setOriginalScrapData(response.data.dataToSend); 
+        setOriginalScrapData(response.data.dataToSend);
         setUserName(response.data.username);
       } catch (error) {
         console.error(`HTTP error! status: ${error}`);
@@ -43,7 +44,28 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       setIsLoading(false);
     };
 
+    const fetchDataKeywords = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          }
+        );
+
+        setKeywordData(response.data.dataToSend);
+      } catch (error) {
+        console.error(`HTTP error! status: ${error}`);
+      }
+      setIsLoading(false);
+    };
+
     fetchDataStorage();
+    fetchDataKeywords();
   }, []);
 
   const handleDeleteKeywordResponse = (data) => {
@@ -199,39 +221,17 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   };
 
 
-  const fetchDataKeywords = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken}`,
-          },
-        }
-      );
-
-      setScrapData(response.data.dataToSend); 
-    } catch (error) {
-      console.error(`HTTP error! status: ${error}`);
-    }
-    setIsLoading(false);
-  };
-
-  const handleShowKeywordsClick = async () => {
+  const handleShowKeywordsClick = () => {
     if (showKeywords) {
       setSelectedKeyword(null);
       setScrapData(originalScrapData);
     } else {
       setCurrentDate(null);
       setCurrentTitle(null);
-      await fetchDataKeywords();
+      setScrapData(keywordData);
     }
     setShowKeywords(!showKeywords);
   };
-
-
   const handleTitleClick = (title) => {
     if (title === currentTitle) {
       setCurrentTitle(null);
