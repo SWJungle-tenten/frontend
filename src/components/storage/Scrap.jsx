@@ -237,7 +237,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       setCurrentTitle(title);
     }
   };
-
   const handleToggleDateClick = (date) => {
     if (currentDate === date) {
       setCurrentDate(null);
@@ -246,23 +245,31 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       setCurrentPath(null);
     } else {
       setCurrentDate(date);
+      setCurrentKeyword(null);
+      setCurrentTitle(null);
+      setCurrentPath(null);
     }
   };
+
   const handleToggleKeywordClick = (keyword) => {
-    if (currentKeyword) {
-      setCurrentKeyword({
-        ...currentKeyword,
-        [keyword]: !currentKeyword[keyword],
-      });
-      setSelectedKeyword(keyword);
+    if (currentKeyword[keyword]) {
+      setCurrentKeyword((prevState) => ({
+        ...prevState,
+        [keyword]: false,
+      }));
+      setSelectedKeyword(null);
     } else {
-      setCurrentKeyword({
+      setCurrentKeyword((prevState) => ({
+        ...prevState,
         [keyword]: true,
-      });
+      }));
       setSelectedKeyword(keyword);
     }
     setCurrentTitle(null);
+    setCurrentDate(null);
+    setCurrentPath(null);
   };
+
 
   return (
     <div className="h-[93vh] flex overflow-auto ">
@@ -312,7 +319,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
             />
           ))}
       </div>
-      {scrapData && (currentPath || currentDate || selectedKeyword) && (
+     {scrapData && (currentPath || currentDate || selectedKeyword) && (
         <div className="flex-1 overflow-auto">
           {currentTitle ? (
             <Detail
@@ -328,14 +335,14 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
-          ) : (
+          ) : currentDate ? (
             <Posts
               date={currentDate}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
-          )}
+          ) : null}
         </div>
       )}
     </div>
