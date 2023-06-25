@@ -85,6 +85,7 @@ export default function Storage() {
               userScrapData={userScrapData}
               userName={userName}
               handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
             />
           )}
         </div>

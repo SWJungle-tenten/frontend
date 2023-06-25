@@ -10,15 +10,12 @@ const ScrapDateList = ({
   handleTitleClick,
   cookies,
   deleteTitle,
-  handleDragStart
 }) => {
   return (
     <div key={index}>
       {(index === 0 || item.date !== scrapData[index - 1].date) && (
         <div className="flex pt-3">
           <button
-            onDragStart={handleDragStart}
-            draggable={true}
             className="font-bold hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-xl px-3 py-1"
             onClick={() => handleToggleDateClick(item.date)}
           >
@@ -48,7 +45,6 @@ const ScrapDateList = ({
             cookies={cookies}
             item={item}
             deleteTitle={deleteTitle}
-            handleDragStart={handleDragStart}
           />
         </div>
       ))}

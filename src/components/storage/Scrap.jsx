@@ -8,7 +8,12 @@ import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 
-export default function Scrap({ userName, userScrapData ,handleDragStart}) {
+export default function Scrap({
+  userName,
+  userScrapData,
+  handleDragStart,
+  setDraggedElementContent,
+}) {
   const [scrapData, setScrapData] = useState(userScrapData);
   const [currentPath, setCurrentPath] = useState(true);
   const [currentKeyword, setCurrentKeyword] = useState({});
@@ -254,17 +259,33 @@ export default function Scrap({ userName, userScrapData ,handleDragStart}) {
               cookies={cookies}
               deleteTitle={deleteTitle}
               handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
             />
           ))}
       </div>
       {scrapData && (currentPath || currentDate || selectedKeyword) && (
         <div className="flex-1 ">
           {currentTitle ? (
-            <Detail title={currentTitle} userScrapData={scrapData} />
+            <Detail
+              title={currentTitle}
+              userScrapData={scrapData}
+              handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
+            />
           ) : selectedKeyword ? (
-            <KeywordPosts keyword={selectedKeyword} userScrapData={scrapData} />
+            <KeywordPosts
+              keyword={selectedKeyword}
+              userScrapData={scrapData}
+              handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
+            />
           ) : (
-            <Posts date={currentDate} userScrapData={scrapData} />
+            <Posts
+              date={currentDate}
+              userScrapData={scrapData}
+              handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
+            />
           )}
         </div>
       )}

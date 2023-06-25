@@ -1,6 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const KeywordPosts = ({ keyword, userScrapData }) => {
+const KeywordPosts = ({
+  keyword,
+  userScrapData,
+  setDraggedElementContent,
+  handleDragStart,
+}) => {
   const keywordData = getKeywordData(keyword, userScrapData);
   console.log("keywordData", keywordData);
   return (
@@ -22,18 +27,20 @@ const KeywordPosts = ({ keyword, userScrapData }) => {
                   <p>이 브라우저는 iframe을 지원하지 않습니다.</p>
                 </iframe>
               </div> */}
-              {data.text && data.text.map((text, textIndex) => (
-                <div key={`text-${textIndex}`}>{text}</div>
-              ))}
-              {data.img && data.img.map((img, imgIndex) => (
-                <div>
-                <img 
-                  key={`img-${imgIndex}`} 
-                  src={img} 
-                  alt={`Related-${imgIndex}`} 
-                />
-                </div>
-              ))}
+              {data.text &&
+                data.text.map((text, textIndex) => (
+                  <div draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
+                ))}
+              {data.img &&
+                data.img.map((img, imgIndex) => (
+                  <div>
+                    <img onDragStart={handleDragStart}
+                      key={`img-${imgIndex}`}
+                      src={img}
+                      alt={`Related-${imgIndex}`}
+                    />
+                  </div>
+                ))}
             </div>
           ))}
         </ul>
@@ -47,11 +54,11 @@ function getKeywordData(keyword, userScrapData) {
   for (const item of userScrapData) {
     if (item.keywords.keyword === keyword) {
       const datas = item.keywords.titles.map((title, i) => {
-        return { 
-          title: title, 
+        return {
+          title: title,
           url: item.keywords.urls[i],
           img: item.keywords.img ? item.keywords.img[i] : null,
-          text: item.keywords.texts ? item.keywords.texts[i] : null
+          text: item.keywords.texts ? item.keywords.texts[i] : null,
         };
       });
       keywordData.push(...datas);

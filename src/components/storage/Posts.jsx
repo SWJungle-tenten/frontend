@@ -1,4 +1,9 @@
-export default function Posts({ date, userScrapData }) {
+export default function Posts({
+  date,
+  userScrapData,
+  setDraggedElementContent,
+  handleDragStart,
+}) {
   const dateData = getDateData(date, userScrapData);
 
   return (
@@ -15,9 +20,7 @@ export default function Posts({ date, userScrapData }) {
           {dateData.map((data, index) => (
             <div className="pb-6" key={index}>
               {console.log("data234", data)}
-              <div className="px-4 py-2 text-left text-xl">
-                {data.title}
-              </div>
+              <div className="px-4 py-2 text-left text-xl">{data.title}</div>
               <div>
                 <iframe
                   title={`iframe-${index}`}
@@ -28,18 +31,20 @@ export default function Posts({ date, userScrapData }) {
                 </iframe>
               </div>
               {console.log("data", data)}
-              {data.text && data.text.map((text, textIndex) => (
-                <div key={`text-${textIndex}`}>{text}</div>
-              ))}
-              {data.img && data.img.map((img, imgIndex) => (
-                <div>
-                <img
-                  key={`img-${imgIndex}`} 
-                  src={img} 
-                  alt={`Image-${imgIndex}`} 
-                />
-                </div>
-              ))}
+              {data.text &&
+                data.text.map((text, textIndex) => (
+                  <div draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
+                ))}
+              {data.img &&
+                data.img.map((img, imgIndex) => (
+                  <div>
+                    <img onDragStart={handleDragStart}
+                      key={`img-${imgIndex}`}
+                      src={img}
+                      alt={`Image-${imgIndex}`}
+                    />
+                  </div>
+                ))}
             </div>
           ))}
         </ul>
@@ -48,14 +53,13 @@ export default function Posts({ date, userScrapData }) {
   );
 }
 
-
 function getDateData(date, userScrapData) {
   let dateData = [];
   for (const item of userScrapData) {
     if (item.date === date) {
       const data = item.keywords.titles.map((title, i) => {
-        return { 
-          title: title, 
+        return {
+          title: title,
           url: item.keywords.urls[i],
           text: item.keywords.texts ? item.keywords.texts[i] : null,
           img: item.keywords.img ? item.keywords.img[i] : null,
