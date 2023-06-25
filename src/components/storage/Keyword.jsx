@@ -22,7 +22,7 @@ export default function Keyword({
             onMouseEnter={() => showKeywords && setShowDelete(true)}
             onMouseLeave={() => showKeywords && setShowDelete(false)}
           >
-            검색어: {keyword}
+            {keyword}
           {showDelete && (
             <button
               className="ml-2"
