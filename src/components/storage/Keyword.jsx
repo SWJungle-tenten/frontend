@@ -26,7 +26,7 @@ export default function Keyword({ keyword, handleToggleKeywordClick, deleteKeywo
           </button>
         </div>
       ) : (
-        <p className="font-normal pl-4 pr-2 pb-2 text-xl w-24">{keyword}</p>
+        <p className="font-normal pl-4 pt-1 text-xl ">{keyword}</p>
       )}
     </div>
   );

@@ -35,9 +35,11 @@ const ScrapDateList = ({
           </button>
         </div>
       )}
-      <div className="flex flex-row">
+      <div className="ml-2">
         <Keyword keyword={item.keywords.keyword} item={item} />
-        <div>
+      <div className="flex flex-row">
+        <div className="w-10"></div>
+        <div className="w-[100%]">
           {item.keywords.titles.map((title, titleIndex) => (
             <Title
               key={`title-${index}-${titleIndex}`}
@@ -48,6 +50,7 @@ const ScrapDateList = ({
               deleteTitle={deleteTitle}
             />
           ))}
+        </div>
         </div>
       </div>
     </div>

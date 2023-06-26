@@ -9,22 +9,23 @@ export default function KeywordKeyword({ keyword, handleToggleKeywordClick, dele
       {showKeywords ? (
         <div>
           <button
-            className="btn-toggle w-full flex flex-row"
+            className="btn-toggle w-full flex flex-row relative"
             onClick={() => handleToggleKeywordClick(keyword)}
             onMouseEnter={() => showKeywords && setShowDelete(true)}
             onMouseLeave={() => showKeywords && setShowDelete(false)}
           >
             <FolderIcon className="text-amber-400 mr-3 mt-1.5" />
-            <p>{keyword}</p>
+            {keyword}
             {showDelete && (
-              <button
-                className="ml-2"
+              <div
+                className="ml-2 absolute right-0 top-[0.125rem]
+                bg-transparent border-none focus:outline-none  mr-1 text-red-400"
                 onClick={() => {
                   deleteKeyword(keyword, cookies.accessToken);
                 }}
               >
                 <DeleteOutlineOutlinedIcon />
-              </button>
+              </div>
             )}
           </button>
         </div>
