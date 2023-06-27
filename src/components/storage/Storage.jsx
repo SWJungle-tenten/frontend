@@ -28,7 +28,6 @@ export default function Storage() {
         }
       )
       .then((res) => {
-        // console.log(res);
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
@@ -58,7 +57,12 @@ export default function Storage() {
       <Header />
       <div className="flex">
         <div className="flex-grow w-[70%]">
-          {<Scrap handleDragStart={handleDragStart} setDraggedElementContent={setDraggedElementContent} />}
+          {
+            <Scrap
+              handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
+            />
+          }
         </div>
         <div className="w-[30%] border-l overflow-auto viewsize relative">
           <div className="flex p-4 pb-0 space-x-2 absolute bottom-3 flex-row w-full justify-between">

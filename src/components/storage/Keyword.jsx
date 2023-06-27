@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-export default function Keyword({ keyword, handleToggleKeywordClick, deleteKeyword, cookies, item, showKeywords }) {
+export default function Keyword({
+  keyword,
+  handleToggleKeywordClick,
+  deleteKeyword,
+  cookies,
+  item,
+  showKeywords,
+}) {
   const [showDelete, setShowDelete] = useState(false);
   return (
     <div>
