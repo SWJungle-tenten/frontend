@@ -5,7 +5,7 @@ export default function Detail({
   handleDragStart,
 }) {
   const titleData = getTitleData(title, userScrapData);
-  console.log("titledata", titleData);
+  // console.log("titledata", titleData);
   const data = titleData[0] || {};
   return (
     <div className="p-8 h-[93vh]">
@@ -38,6 +38,7 @@ export default function Detail({
             <img
               onDragStart={handleDragStart}
               src={img}
+              crossOrigin="anonymous"
               alt={`Related-${imgIndex}`}
             />
           </div>
