@@ -8,6 +8,7 @@ import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 import { yellow } from "@mui/material/colors";
+import KeywordDetail from "./KeywordDetail";
 
 export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   const [scrapData, setScrapData] = useState(null);
@@ -75,7 +76,9 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
 
       const updatedScrapData = scrapData.filter((item) => {
         if (item.keywords.keyword === deletedKeyword) {
-          item.keywords.titles = item.keywords.titles.filter((title) => title !== deletedKeyword);
+          item.keywords.titles = item.keywords.titles.filter(
+            (title) => title !== deletedKeyword
+          );
         }
         return item.keywords.titles.length > 0;
       });
@@ -91,12 +94,16 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
 
       const updatedScrapData = scrapData.map((item) => {
         if (item.keywords.titles.includes(deletedTitle)) {
-          item.keywords.titles = item.keywords.titles.filter((titleItem) => titleItem !== deletedTitle);
+          item.keywords.titles = item.keywords.titles.filter(
+            (titleItem) => titleItem !== deletedTitle
+          );
         }
         return item;
       });
 
-      const filteredScrapData = updatedScrapData.filter((item) => item.keywords.titles.length > 0);
+      const filteredScrapData = updatedScrapData.filter(
+        (item) => item.keywords.titles.length > 0
+      );
 
       setScrapData(filteredScrapData);
     } else if (data.message === "error") {
@@ -117,7 +124,9 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        const updatedScrapData = scrapData.filter((item) => item.keyword !== keyword);
+        const updatedScrapData = scrapData.filter(
+          (item) => item.keyword !== keyword
+        );
 
         setScrapData(updatedScrapData);
 
@@ -167,12 +176,16 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       if (result.isConfirmed) {
         const updatedScrapData = scrapData.map((item) => {
           if (item.keywords.titles.includes(title)) {
-            item.keywords.titles = item.keywords.titles.filter((titleItem) => titleItem !== title);
+            item.keywords.titles = item.keywords.titles.filter(
+              (titleItem) => titleItem !== title
+            );
           }
           return item;
         });
 
-        const filteredScrapData = updatedScrapData.filter((item) => item.keywords.titles.length > 0);
+        const filteredScrapData = updatedScrapData.filter(
+          (item) => item.keywords.titles.length > 0
+        );
 
         setScrapData(filteredScrapData);
 
@@ -222,24 +235,18 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   const handleTitleClick = (title) => {
     if (title === currentTitle) {
       setCurrentTitle(null);
-      setCurrentPath(null);
       setCurrentDate(null);
     } else {
-      setCurrentPath(`/storage/${currentKeyword}/${title}`);
       setCurrentTitle(title);
     }
   };
   const handleToggleDateClick = (date) => {
     if (currentDate === date) {
       setCurrentDate(null);
-      setCurrentKeyword(null);
       setCurrentTitle(null);
-      setCurrentPath(null);
     } else {
       setCurrentDate(date);
-      setCurrentKeyword(null);
       setCurrentTitle(null);
-      setCurrentPath(null);
     }
   };
 
@@ -259,7 +266,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
     }
     setCurrentTitle(null);
     setCurrentDate(null);
-    setCurrentPath(null);
   };
 
   return (
@@ -309,25 +315,32 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               />
             ))}
       </div>
-      {scrapData && (currentPath || currentDate || selectedKeyword) && (
+      {scrapData && (currentTitle || currentDate || selectedKeyword) && (
         <div className="flex-1 overflow-auto">
-          {currentTitle ? (
+          {!showKeywords && currentTitle && !selectedKeyword ? (
             <Detail
               title={currentTitle}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
-          ) : selectedKeyword ? (
+          ) : showKeywords && !currentTitle && selectedKeyword ? (
             <KeywordPosts
               keyword={selectedKeyword}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}
             />
-          ) : currentDate ? (
+          ) : !showKeywords && currentDate && !selectedKeyword ? (
             <Posts
               date={currentDate}
+              userScrapData={scrapData}
+              handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
+            />
+          ) : showKeywords && currentTitle ? (
+            <KeywordDetail
+              title={currentTitle}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
               setDraggedElementContent={setDraggedElementContent}

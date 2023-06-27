@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-export default function Title({ title, handleTitleClick, deleteTitle, cookies, item }) {
+export default function Title({
+  title,
+  handleTitleClick,
+  deleteTitle,
+  cookies,
+  item,
+}) {
   const [showDelete, setShowDelete] = useState(false);
   const titleIndex = item.keywords.titles.findIndex((t) => t === title);
-  // const url = titleIndex >= 0 ? item.keywords.urls[titleIndex] : undefined;
 
   return (
     <div className="flex py-1 ml-2">
@@ -17,21 +22,22 @@ export default function Title({ title, handleTitleClick, deleteTitle, cookies, i
           onMouseLeave={() => setShowDelete(false)}
         >
           {title}
-        {showDelete && (
-          <div
-            onClick={() => {
-              const titleIndex = item.keywords.titles.findIndex((t) => t === title);
-              const url = item.keywords.urls[titleIndex];
-              deleteTitle(title, cookies.accessToken, item.date, url);
-            }}
-            className="absolute right-0 top-[0.125rem]
+          {showDelete && (
+            <div
+              onClick={() => {
+                const titleIndex = item.keywords.titles.findIndex(
+                  (t) => t === title
+                );
+                const url = item.keywords.urls[titleIndex];
+                deleteTitle(title, cookies.accessToken, item.date, url);
+              }}
+              className="absolute right-0 top-[0.125rem]
              bg-transparent border-none focus:outline-none  mr-1 text-red-400"
-          >
-            <DeleteOutlineOutlinedIcon className=" text-red-400" />
-          </div>
-        )}
+            >
+              <DeleteOutlineOutlinedIcon className=" text-red-400" />
+            </div>
+          )}
         </button>
-
       </div>
     </div>
   );
