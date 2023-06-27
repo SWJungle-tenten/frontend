@@ -3,15 +3,14 @@ import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Header from "../intro/Header";
-import Memo from "../../memo/Memo";
-import MemoList from "../../memo/MemoList";
+import Memo from "../memo/Memo";
+import MemoList from "../memo/MemoList";
 
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
 
 export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
-
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
@@ -36,7 +35,9 @@ export default function Storage() {
   };
   //memo API
   useEffect(() => {
-    receiveMemo();
+    if (cookies.accessToken) {
+      receiveMemo();
+    }
   }, []);
 
   const [draggedElementContent, setDraggedElementContent] = useState("");
