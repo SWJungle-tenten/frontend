@@ -3,41 +3,14 @@ import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Header from "../intro/Header";
-import Memo from "../../memo/Memo";
-// import { useNavigate } from "react-router-dom";
-import MemoList from "../../memo/MemoList";
+import Memo from "../memo/Memo";
+import MemoList from "../memo/MemoList";
+
+import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
+import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
 
 export default function Storage() {
-  const [userScrapData, setData] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userName, setUserName] = useState(null);
-  // const go = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          `https://sangunlee.shop/api/checkStorage`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.accessToken}`,
-            },
-          }
-        );
-
-        setData(response.data.dataToSend);
-        setUserName(response.data.username);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(`HTTP error! status: ${error}`);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
@@ -54,9 +27,7 @@ export default function Storage() {
         }
       )
       .then((res) => {
-        console.log(res);
         setMemoArray(res.data.memoData);
-        // console.log(selectedMemo);
       })
       .catch((error) => {
         console.log(error);
@@ -64,32 +35,61 @@ export default function Storage() {
   };
   //memo API
   useEffect(() => {
-    receiveMemo();
+    if (cookies.accessToken) {
+      receiveMemo();
+    }
   }, []);
 
   const [draggedElementContent, setDraggedElementContent] = useState("");
 
   const handleDragStart = (event) => {
     setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
+    // console.log(event.target.outerHTML);
+  };
+
+  const handleNewMemo = () => {
+    setSelectedTitle("");
+    setSelectedMemo("");
+    setOpenList();
   };
 
   return (
     <>
-      {/* <button onClick={()=>{go("/main")}}>메인으로 가기</button> */}
-      {/* <img onDragStart={handleDragStart} src="https://tentenimg.s3.ap-northeast-2.amazonaws.com/original/1687613938191_blob" alt="2"/> */}
       <Header />
-      <div className="flex ">
+      <div className="flex">
         <div className="flex-grow w-[70%]">
-          {!isLoading && userScrapData && (
+          {
             <Scrap
-              userScrapData={userScrapData}
-              userName={userName}
               handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
             />
-          )}
+          }
         </div>
-        <div className="w-[30%] border overflow-auto">
-          <div className="flex-col h-[93vh] border-gray-300 shadow-lg overflow-auto">
+        <div className="w-[30%] border-l overflow-auto viewsize relative">
+          <div className="flex p-4 pb-0 space-x-2 absolute bottom-3 flex-row w-full justify-between">
+            <div className="flex flex-row">
+              <button
+                className="btn-yellow px-1.5 mr-2"
+                onClick={() => {
+                  document.querySelector(".viewsize").style.width = "70%";
+                }}
+              >
+                <ZoomOutMapIcon />
+              </button>
+              <button
+                className="btn-green px-1.5"
+                onClick={() => {
+                  document.querySelector(".viewsize").style.width = "30%";
+                }}
+              >
+                <ZoomInMapIcon />
+              </button>
+            </div>
+            <button className="btn-blue w-fit" onClick={handleNewMemo}>
+              새 메모 만들기
+            </button>
+          </div>
+          <div className="flex-col border-gray-300 overflow-auto">
             {openList ? (
               <MemoList
                 memoArray={memoArray}
@@ -109,18 +109,6 @@ export default function Storage() {
               </>
             )}
           </div>
-          {/* <button
-            onClick={() => {
-              go("/main");
-            }}
-          >
-            메인으로 이동
-          </button>
-          <button
-            onClick={receiveMemo}
-          >
-            메모장 보기
-          </button> */}
         </div>
       </div>
     </>

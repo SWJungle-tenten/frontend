@@ -22,7 +22,7 @@ export default function SignIn(prop) {
   const handleCookie = (data) => {
     const expireDate = new Date();
     // 동적으로 바꾸기
-    expireDate.setMinutes(expireDate.getMinutes() + 60);
+    expireDate.setMinutes(expireDate.getMinutes() + 600);
     setCookie("accessToken", data, {
       path: "/",
       expires: expireDate,
@@ -70,13 +70,12 @@ export default function SignIn(prop) {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         handleCookie(res.data.token);
         go("/storage");
       })
       .catch((error) => {
         console.log(error);
-        // console.log("Error");
         if(error.message === "Network Error"){
           return Swal.fire({
             icon: "error",

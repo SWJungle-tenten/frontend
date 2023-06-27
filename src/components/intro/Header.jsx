@@ -42,22 +42,18 @@ export default function Header() {
     }
   });
   return (
-    <div className="shadow ">
+    <div className="shadow z-10 mb-0.5">
       <div className="flex items-center text-3xl p-3 sm:px-6 lg:px-8 justify-between">
-        <div>
-          <span className="text-blue-500">G</span>
-          <span className="text-red-500">o</span>
-          <span className="text-yellow-500">o</span>
-          <span className="text-blue-500">g</span>
-          <span className="text-green-500">l</span>
-          <span className="text-black">ing Helper</span>          
+        <div className="logo">
+          <span className="text-google-blue">G</span>
+          <span className="text-google-red">o</span>
+          <span className="text-google-yellow">o</span>
+          <span className="text-google-blue">g</span>
+          <span className="text-google-green">l</span>
+          <span className="text-black">ing Helper</span>
         </div>
-        {/* <div className="absolute right-0 top-0 px-6 pt-2"> */}
         <div className="">
-          <button
-            onClick={logout}
-            className="bg- border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200 "
-          >
+          <button onClick={logout} className="btn-white">
             로그아웃
           </button>
         </div>

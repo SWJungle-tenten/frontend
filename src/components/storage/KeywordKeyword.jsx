@@ -1,39 +1,42 @@
 import React, { useState } from "react";
-
-export default function Keyword({
+import FolderIcon from "@mui/icons-material/Folder";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+export default function KeywordKeyword({
   keyword,
   handleToggleKeywordClick,
   deleteKeyword,
   cookies,
-  item,
   showKeywords,
 }) {
   const [showDelete, setShowDelete] = useState(false);
+
   return (
     <div>
       {showKeywords ? (
         <div>
           <button
-            className="btn-toggle"
+            className="btn-toggle w-full flex flex-row relative"
             onClick={() => handleToggleKeywordClick(keyword)}
             onMouseEnter={() => showKeywords && setShowDelete(true)}
             onMouseLeave={() => showKeywords && setShowDelete(false)}
           >
+            <FolderIcon className="text-amber-400 mr-3 mt-1.5" />
             {keyword}
             {showDelete && (
-              <button
-                className="ml-2"
+              <div
+                className="ml-2 absolute right-0 top-[0.125rem]
+                bg-transparent border-none focus:outline-none  mr-1 text-red-400"
                 onClick={() => {
-                  deleteKeyword(keyword, cookies.accessToken, item.date);
+                  deleteKeyword(keyword, cookies.accessToken);
                 }}
               >
-                𝗑
-              </button>
+                <DeleteOutlineOutlinedIcon />
+              </div>
             )}
           </button>
         </div>
       ) : (
-        <p className="font-normal pl-4 pt-1 text-xl ">{keyword}</p>
+        <p className="font-semibold px-4 py-2 text-2xl">{keyword}</p>
       )}
     </div>
   );

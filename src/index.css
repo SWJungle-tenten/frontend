@@ -18,7 +18,7 @@ code {
 
 html .toastui-editor-contents h1 {
   font-size: 33px;
-  line-height: 28px;
+  line-height: 44px;
   border-bottom: 3px double #999;
   margin: 52px 0 15px 0;
   padding-bottom: 7px;
@@ -26,7 +26,7 @@ html .toastui-editor-contents h1 {
 
 html .toastui-editor-contents h2 {
   font-size: 31px;
-  line-height: 23px;
+  line-height: 40px;
   border-bottom: 1px solid #dbdbdb;
   margin: 20px 0 13px 0;
   padding-bottom: 7px;
@@ -44,7 +44,7 @@ html .toastui-editor-contents h4 {
 
 html .toastui-editor-contents h3,
 html .toastui-editor-contents h4 {
-  line-height: 25px;
+  line-height: 36px;
 }
 
 html .toastui-editor-contents h5 {
@@ -57,11 +57,45 @@ html .toastui-editor-contents h6 {
 
 html .toastui-editor-contents h5,
 html .toastui-editor-contents h6 {
-  line-height: 17px;
+  line-height: 30px;
   margin: 9px 0 -4px;
 }
 html .toastui-editor-contents {
   margin: 0;
   padding: 0;
-  font-size: 20px;
+  font-size: 23px;
+}
+
+.logo{
+  font-family: 'Product Sans', sans-serif;
+}
+
+@layer components {
+  .btn-red {
+    @apply w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-white{
+    @apply border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200
+  }
+
+  .btn-toggle{
+    @apply font-semibold hover:bg-red-100 focus:ring-2 focus:outline-0 focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8
+  }
+
+  .btn-blue{
+    @apply w-[110%] duration-200 text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-green{
+    @apply w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-yellow{
+    @apply w-full duration-200 text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  }
+
+  .btn-title{
+    @apply w-[100%]  font-normal focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-base relative pl-3 py-1 break-keep pr-6 text-start
+  }
 }
