@@ -7,17 +7,13 @@ export default function Detail({
   const titleData = getTitleData(title, userScrapData);
   const data = titleData[0] || {};
   return (
-    <div className="p-8 h-[93vh]">
+    <div className="p-8 h-[93vh] overflow-scroll">
       <p className="px-4 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold break-keep">
         {data.title}
       </p>
       {data.url && (
         <div>
-          <iframe
-            title={`iframe-${data.title}`}
-            src={data.url}
-            className="iframe"
-          ></iframe>
+          <iframe title={`iframe-${data.title}`} src={data.url} className="iframe"></iframe>
         </div>
       )}
       {data.text &&
@@ -33,20 +29,20 @@ export default function Detail({
             </div>
           </div>
         ))}
-         <div className="flex flex-row flex-wrap w-full gap-[19px] pb-16">
-          {data.img &&
-            data.img.map((img, imgIndex) => (
-              <div className="tooltip" data-tip="드래그해서 이미지를 메모에 추가해보세요">
-                <img
-                  className="cursor-grab border rounded-lg	hover:brightness-50 active:cursor-grabbing"
-                  onDragStart={handleDragStart}
-                  key={`img-${imgIndex}`}
-                  src={img}
-                  alt={`Related-${imgIndex}`}
-                />
-              </div>
-            ))}
-         </div>
+      <div className="flex flex-row flex-wrap w-full gap-[19px] pb-16">
+        {data.img &&
+          data.img.map((img, imgIndex) => (
+            <div className="tooltip" data-tip="드래그해서 이미지를 메모에 추가해보세요">
+              <img
+                className="cursor-grab border rounded-lg	hover:brightness-50 active:cursor-grabbing"
+                onDragStart={handleDragStart}
+                key={`img-${imgIndex}`}
+                src={img}
+                alt={`Related-${imgIndex}`}
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
