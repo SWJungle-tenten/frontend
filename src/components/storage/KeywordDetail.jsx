@@ -8,8 +8,10 @@ const KeywordDetail = ({
 }) => {
   const keywordData = getKeywordData(title, userScrapData);
   return (
-    <div className="p-8 h-[93vh] overflow-scroll">
-      <p className="px-4 py-2 text-center text-4xl font-bold break-keep">{title}</p>
+    <div className="p-8 h-[93vh]">
+      <p className="px-4 py-2 text-center text-4xl font-bold break-keep">
+        {title}
+      </p>
       {keywordData && (
         <div>
           {keywordData.url && (
@@ -23,7 +25,12 @@ const KeywordDetail = ({
           )}
           {keywordData.imgs.map((img, imgIndex) => (
             <div className="hover:opacity-75" key={`img-${imgIndex}`}>
-              <img onDragStart={handleDragStart} src={img} crossOrigin="anonymous" alt={`Related-${imgIndex}`} />
+              <img
+                onDragStart={handleDragStart}
+                src={img}
+                crossOrigin="anonymous"
+                alt={`Related-${imgIndex}`}
+              />
             </div>
           ))}
           {keywordData.texts.map((text, textIndex) => (
