@@ -9,26 +9,21 @@ const KeywordPosts = ({
   const keywordData = getKeywordData(keyword, userScrapData);
 
   return (
-    <div className="py-4 h-[93vh] overflow-auto">
-      <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold shadow bg-white">
-        {keyword ? `${keyword}` : ""}
-      </h1>
+    <div className="py-4 h-[93vh]">
+      <h1 className="top-0 px-4 py-2 text-5xl text-center font-bold shadow bg-white">{keyword ? `${keyword}` : ""}</h1>
       {keywordData && (
         <ul className="h-full overflow-auto p-6">
           {keywordData.map((data, index) => (
             <div key={`keyword-post-${index}`}>
-              <div className="px-4 py-2 text-left text-3xl font-serif font-semibold">{data.title}</div>
+              <div className="px-4 py-2 text-left text-3xl font-semibold">{data.title}</div>
               {data.url.length > 0 ? (
-                <iframe
-                  title={`iframe-${index}`}
-                  src={data.url}
-                  className="w-full h-[70vh] border border-gray-400 rounded-md"
-                >
-                </iframe>
+                <iframe title={`iframe-${index}`} src={data.url} className="iframe"></iframe>
               ) : null}
+
               {data.text &&
                 data.text.map((text, textIndex) => (
-                  <div className="hover:opacity-75 italic text-xl border border-gray-300 " 
+                  <div
+                    className="hover:opacity-75 italic text-xl border border-gray-300 "
                     draggable={true}
                     onDragStart={handleDragStart}
                     key={`text-${index}-${textIndex}`}
@@ -39,11 +34,7 @@ const KeywordPosts = ({
               {data.img &&
                 data.img.map((img, imgIndex) => (
                   <div className="hover:opacity-75" key={`img-${index}-${imgIndex}`}>
-                    <img
-                      onDragStart={handleDragStart}
-                      src={img}
-                      alt={`Related-${imgIndex}`}
-                    />
+                    <img onDragStart={handleDragStart} src={img} alt={`Related-${imgIndex}`} />
                   </div>
                 ))}
             </div>

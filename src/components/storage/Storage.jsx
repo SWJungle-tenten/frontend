@@ -44,7 +44,6 @@ export default function Storage() {
 
   const handleDragStart = (event) => {
     setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
-    console.log(event.target.outerHTML);
   };
 
   const handleNewMemo = () => {
@@ -61,7 +60,7 @@ export default function Storage() {
           {<Scrap handleDragStart={handleDragStart} setDraggedElementContent={setDraggedElementContent} />}
         </div>
         <div className="w-[30%] border-l overflow-auto viewsize relative">
-          <div className="flex p-4 pb-0 space-x-2 absolute bottom-3 flex-row w-full justify-between">
+          <div className="flex p-4 pb-3 space-x-2 absolute bottom-3 flex-row w-full justify-between">
             <div className="flex flex-row">
               <button
                 className="btn-yellow px-1.5 mr-2"

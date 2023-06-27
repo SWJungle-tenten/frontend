@@ -83,6 +83,11 @@ html .toastui-editor-contents {
     @apply font-semibold hover:bg-red-100 focus:ring-2 focus:outline-0 focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8
   }
 
+  .btn-toggle-yellow{
+    @apply font-semibold hover:bg-amber-100 focus:ring-2 focus:outline-0 focus:ring-amber-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8
+  }
+
+
   .btn-blue{
     @apply w-full duration-200 text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-1.5
   }
@@ -96,6 +101,15 @@ html .toastui-editor-contents {
   }
 
   .btn-title{
-    @apply w-[100%]  font-normal focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-base relative pl-3 py-1 break-keep pr-6 text-start
+    @apply w-[100%] font-normal focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-base relative pl-3 py-1 break-keep pr-6 text-start
   }
+
+  .drag-tooltip{
+    @apply w-full h-full text-center break-keep absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-slate-500 leading-[100%]
+  }
+
+  .iframe{
+    @apply w-full h-[70vh] drop-shadow-md rounded-md mb-5 border
+  }
+
 }
