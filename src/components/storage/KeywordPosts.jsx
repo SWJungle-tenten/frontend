@@ -15,9 +15,15 @@ const KeywordPosts = ({
         <ul className="h-full overflow-auto p-6">
           {keywordData.map((data, index) => (
             <div key={`keyword-post-${index}`}>
-              <div className="px-4 py-2 text-left text-3xl font-semibold">{data.title}</div>
+              <div className="px-4 py-2 text-left text-3xl font-semibold">
+                {data.title}
+              </div>
               {data.url.length > 0 ? (
-                <iframe title={`iframe-${index}`} src={data.url} className="iframe"></iframe>
+                <iframe
+                  title={`iframe-${index}`}
+                  src={data.url}
+                  className="iframe"
+                ></iframe>
               ) : null}
 
               {data.text &&
@@ -33,8 +39,16 @@ const KeywordPosts = ({
                 ))}
               {data.img &&
                 data.img.map((img, imgIndex) => (
-                  <div className="hover:opacity-75" key={`img-${index}-${imgIndex}`}>
-                    <img onDragStart={handleDragStart} src={img} alt={`Related-${imgIndex}`} />
+                  <div
+                    className="hover:opacity-75"
+                    key={`img-${index}-${imgIndex}`}
+                  >
+                    <img
+                      onDragStart={handleDragStart}
+                      src={img}
+                      crossOrigin="anonymous"
+                      alt={`Related-${imgIndex}`}
+                    />
                   </div>
                 ))}
             </div>

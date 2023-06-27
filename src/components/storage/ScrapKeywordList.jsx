@@ -23,11 +23,6 @@ export default function ScrapKeywordList({
     showKeywords && handleToggleKeywordClick(keyword);
   };
 
-  // item.keyword가 존재하는지 확인
-  if (!item || !item.keyword) {
-    return null;
-  }
-
   return (
     <ul>
       <li>
@@ -42,13 +37,12 @@ export default function ScrapKeywordList({
           selectedKeyword === item.keyword &&
           item.dates.map((date, dateIndex) => (
             <div key={`date-${dateIndex}`}>
-              {currentKeyword &&
-                currentKeyword[item.keyword] &&
+              {currentKeyword[item.keyword] &&
                 date.titles.map((title, titleIndex) => (
                   <KeywordTitle
                     key={`title-${titleIndex}`}
                     title={title}
-                    handleTitleClick={handleTitleClick}
+                    handleTitleClick={() => handleTitleClick(title)}
                     deleteTitle={deleteTitle}
                     cookies={cookies}
                     date={date}

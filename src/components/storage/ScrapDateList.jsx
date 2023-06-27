@@ -13,18 +13,6 @@ const ScrapDateList = ({ item, index, scrapData, handleToggleDateClick, handleTi
             onClick={() => handleToggleDateClick(item.date)}
           >
             {item.date}
-            {/* {showDateDelete && (
-              <button
-                className="pl-2 items-center"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // 삭제 로직 수행 (서버 요청 및 상태 업데이트)
-                }}
-              >
-                x
-                
-              </button>
-            )} */}
           </button>
         </div>
       )}

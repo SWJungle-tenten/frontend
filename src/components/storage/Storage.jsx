@@ -3,15 +3,14 @@ import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Header from "../intro/Header";
-import Memo from "../../memo/Memo";
-import MemoList from "../../memo/MemoList";
+import Memo from "../memo/Memo";
+import MemoList from "../memo/MemoList";
 
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
 
 export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
-
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
@@ -28,7 +27,6 @@ export default function Storage() {
         }
       )
       .then((res) => {
-        // console.log(res);
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
@@ -37,7 +35,9 @@ export default function Storage() {
   };
   //memo API
   useEffect(() => {
-    receiveMemo();
+    if (cookies.accessToken) {
+      receiveMemo();
+    }
   }, []);
 
   const [draggedElementContent, setDraggedElementContent] = useState("");
@@ -57,7 +57,12 @@ export default function Storage() {
       <Header />
       <div className="flex">
         <div className="flex-grow w-[70%]">
-          {<Scrap handleDragStart={handleDragStart} setDraggedElementContent={setDraggedElementContent} />}
+          {
+            <Scrap
+              handleDragStart={handleDragStart}
+              setDraggedElementContent={setDraggedElementContent}
+            />
+          }
         </div>
         <div className="w-[30%] border-l overflow-auto viewsize relative">
           <div className="flex p-4 pb-3 space-x-2 absolute bottom-3 flex-row w-full justify-between">

@@ -13,9 +13,15 @@ export default function Posts({
         <ul className="h-full overflow-auto p-8 pr-10">
           {dateData.map((data, index) => (
             <div className="pb-6" key={index}>
-              <div className="px-4 py-2 text-left text-3xl font-semibold">{data.title}</div>
+              <div className="px-4 py-2 text-left text-3xl font-semibold">
+                {data.title}
+              </div>
               <div>
-                <iframe title={`iframe-${index}`} src={data.url} className="iframe"></iframe>
+                <iframe
+                  title={`iframe-${index}`}
+                  src={data.url}
+                  className="iframe"
+                ></iframe>
               </div>
               {data.text &&
                 data.text.map((text, textIndex) => (
@@ -31,7 +37,13 @@ export default function Posts({
               {data.img &&
                 data.img.map((img, imgIndex) => (
                   <div className="hover:opacity-75">
-                    <img onDragStart={handleDragStart} key={`img-${imgIndex}`} src={img} alt={`Img-${imgIndex}`} />
+                    <img
+                      onDragStart={handleDragStart}
+                      key={`img-${imgIndex}`}
+                      src={img}
+                      crossOrigin="anonymous"
+                      alt={`Imag-${imgIndex}`}
+                    />
                   </div>
                 ))}
             </div>

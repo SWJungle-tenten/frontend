@@ -110,8 +110,11 @@ export default function Memo({
     if (selectedMemo) {
       receiveContent();
     }
+    else{
+    editorRef.current?.getInstance().setHTML(" ");
+    }
   }, [selectedMemo]);
-
+  
   // 메모 받아와서 셋팅
   const receiveContent = async () => {
     await axios
@@ -155,17 +158,76 @@ export default function Memo({
     editorRef.current?.getInstance().setHTML(data + draggedElementContent);
   };
 
-  const toPdf = (name) => {
+  const toPdf = async (name) => {
     document
       .querySelector(".ProseMirror.toastui-editor-contents")
       ?.setAttribute("style", "height: auto !important; ");
+      //-------------------
+      // const convertToBase64 = (url) => {
+      //   return new Promise((resolve, reject) => {
+      //     fetch(url)
+      //       .then((response) => response.blob())
+      //       .then((blob) => {
+      //         const reader = new FileReader();
+      //         reader.onloadend = () => {
+      //           const base64String = reader.result;
+      //           resolve(base64String);
+      //           setBase64Image(base64String);
+      //         };
+      //         reader.onerror = reject;
+      //         reader.readAsDataURL(blob);
+      //       })
+      //       .catch((error) => reject(error));
+      //   });
+      // };
+    
+      // const editorContents = document.querySelector(".ProseMirror.toastui-editor-contents");
+      // const imgTags = editorContents.querySelectorAll("img");
+    
+      // // const base64ImagesPromises = Array.from(imgTags).map((img) => {
+      // //   const imageUrl = img.src;
+      // //   return convertToBase64(imageUrl);
+      // // });
+      // const base64ImagesPromises = Array.from(imgTags).map((img) => {
+      //   const imageUrl = img.src;
+      //   // console.log(img);
+      //   if (imageUrl.startsWith("data:image")) {
+      //     // 이미지가 base64로 변환된 경우, 원래의 S3 URL로 변경
+      //     return Promise.resolve(imageUrl);
+      //   } else {
+      //     // 이미지가 S3 URL인 경우, base64로 변환
+      //     return convertToBase64(imageUrl);
+      //   }
+      // });
+    
+      // const base64Images = await Promise.all(base64ImagesPromises);
+    
+      // imgTags.forEach((img, index) => {
+      //   if (img.classList.contains("ProseMirror-separator")) {
+      //     img.remove();
+      //   }
+      //   // console.log(img);
+      //   img.dataset.originalSrc = img.src; // 원래의 S3 URL을 저장해둡니다.
+      //   img.src = base64Images[index];
+      
+      // });
 
     html2canvas(
       document.querySelector(".ProseMirror.toastui-editor-contents"),
       {
-        // width:window.innerWidth-1000,
-        // height:,
-        // useCORS:true,
+        // ignoreElements: (element) => {
+        //   // class가 "ProseMirror-separator"인 img 요소는 캡처에서 제외
+        //   if (element.tagName === "IMG" && element.classList.contains("ProseMirror-separator")) {
+        //     return true;
+        //   }
+        //   return false;
+        // },
+        logging: true,
+        letterRendering: 1, 
+        allowTaint : true, 
+        useCORS: true ,
+        // 테두리
+        // backgroundColor: "transparent",
       }
     ).then((canvas) => {
       let imgData = canvas.toDataURL("image/png");
@@ -190,6 +252,13 @@ export default function Memo({
       }
       doc.save(`${name}.pdf`);
     });
+    // // s3로 다시 바꾸기!
+    // imgTags.forEach((img, index) => {
+    //   // console.log(img.dataset.originalSrc);
+    //   img.src = img.dataset.originalSrc;
+    // });
+
+
     document
       .querySelector(".ProseMirror.toastui-editor-contents")
       ?.setAttribute("style", "height: 100% !important;");
@@ -197,6 +266,7 @@ export default function Memo({
 
   return (
     <div className="p-4">
+      {/* <button onClick={()=> console.log(editorRef.current?.getInstance().getHTML())}>dddd</button> */}
       <div>
         <div className="pb-2">
           <input
@@ -206,7 +276,11 @@ export default function Memo({
             placeholder="Title"
           />
         </div>
-        <div className="droppable" onDragOver={handleDragOver} onDrop={handleDrop}>
+        <div
+          className="droppable"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
           <Editor
             initialValue=" "
             // initialValue="<p>내용을 입력하세요!<p>dddd"
@@ -218,10 +292,14 @@ export default function Memo({
             language="ko-KR"
             // useCommandShortcut={true}
             hideModeSwitch={true}
-            toolbarItems={[["heading", "bold", "italic", "strike"], ["hr", "quote"], ["ul", "ol", "task"], ["code"]]}
+            toolbarItems={[
+              ["heading", "bold", "italic", "strike"],
+              ["hr", "quote"],
+              ["ul", "ol", "task"],
+              ["code"],
+            ]}
           />
         </div>
-
         <div className="flex justify-between pt-2">
           <div className="flex space-x-2">
             <button className="btn-blue" onClick={() => open(true)}>

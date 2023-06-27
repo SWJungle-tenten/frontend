@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import FolderIcon from "@mui/icons-material/Folder";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-export default function KeywordKeyword({ keyword, handleToggleKeywordClick, deleteKeyword, cookies, showKeywords }) {
+export default function KeywordKeyword({
+  keyword,
+  handleToggleKeywordClick,
+  deleteKeyword,
+  cookies,
+  showKeywords,
+}) {
   const [showDelete, setShowDelete] = useState(false);
 
   return (
