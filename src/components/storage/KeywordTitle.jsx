@@ -12,8 +12,8 @@ export default function KeywordTitle({
   const [showDelete, setShowDelete] = useState(false);
 
   return (
-    <div className="flex py-1 ml-2">
-      <div className="flex flex-row bg-red-50 hover:bg-red-100 rounded-lg w-full relative">
+    <div className="flex py-1">
+      <div className="flex flex-row bg-amber-50 hover:bg-amber-100 rounded-lg w-full relative">
         <button
           className="btn-title "
           onClick={handleTitleClick}
