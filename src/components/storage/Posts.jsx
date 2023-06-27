@@ -47,7 +47,8 @@ export default function Posts({
                       onDragStart={handleDragStart}
                       key={`img-${imgIndex}`}
                       src={img}
-                      alt={`Image-${imgIndex}`}
+                      crossOrigin="anonymous"
+                      alt={`Imag-${imgIndex}`}
                     />
                   </div>
                 ))}

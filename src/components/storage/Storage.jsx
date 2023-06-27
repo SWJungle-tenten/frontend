@@ -43,7 +43,7 @@ export default function Storage() {
 
   const handleDragStart = (event) => {
     setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
-    console.log(event.target.outerHTML);
+    // console.log(event.target.outerHTML);
   };
 
   const handleNewMemo = () => {

@@ -14,30 +14,32 @@ export default function Title({
   return (
     <div className="flex py-1 ml-2">
       {/* <div className="hover:bg-gray-500 hover:text-gray-900"> */}
-      <div className="flex flex-row bg-red-50 hover:bg-red-100 rounded-lg w-full ">
+      <div className="flex flex-row bg-red-50 hover:bg-red-100 rounded-lg w-full relative">
         <button
-          className="btn-title relative"
+          className="btn-title "
           onClick={() => handleTitleClick(title)}
           onMouseEnter={() => setShowDelete(true)}
           onMouseLeave={() => setShowDelete(false)}
         >
           {title}
-          {showDelete && (
-            <div
-              onClick={() => {
-                const titleIndex = item.keywords.titles.findIndex(
-                  (t) => t === title
-                );
-                const url = item.keywords.urls[titleIndex];
-                deleteTitle(title, cookies.accessToken, item.date, url);
-              }}
-              className="absolute right-0 top-[0.125rem]
-             bg-transparent border-none focus:outline-none  mr-1 text-red-400"
-            >
-              <DeleteOutlineOutlinedIcon className=" text-red-400" />
-            </div>
-          )}
         </button>
+        {showDelete && (
+          <button
+            onClick={() => {
+              const titleIndex = item.keywords.titles.findIndex(
+                (t) => t === title
+              );
+              const url = item.keywords.urls[titleIndex];
+              deleteTitle(title, cookies.accessToken, item.date, url);
+            }}
+            onMouseEnter={() => setShowDelete(true)}
+            onMouseLeave={() => setShowDelete(false)}
+            className="absolute right-0 top-[0.125rem]
+             bg-transparent border-none focus:outline-none  mr-1 text-red-400"
+          >
+            <DeleteOutlineOutlinedIcon className=" text-red-400" />
+          </button>
+        )}
       </div>
     </div>
   );

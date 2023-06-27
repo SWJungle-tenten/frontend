@@ -20,7 +20,7 @@
     "sweetalert2": "^11.7.12"
   },
   "scripts": {
-    "start": " set NODE_ENV = dev && react-scripts start ",
+    "start": "GENERATE_SOURCEMAP=false set NODE_ENV = dev && react-scripts start ",
     "build": "react-scripts build"
   },
   "eslintConfig": {

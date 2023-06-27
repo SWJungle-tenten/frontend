@@ -47,6 +47,7 @@ const KeywordPosts = ({
                     <img
                       onDragStart={handleDragStart}
                       src={img}
+                      crossOrigin="anonymous"
                       alt={`Related-${imgIndex}`}
                     />
                   </div>

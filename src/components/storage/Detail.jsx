@@ -40,6 +40,7 @@ export default function Detail({
                       onDragStart={handleDragStart}
                       key={`img-${imgIndex}`}
                       src={img}
+                      crossOrigin="anonymous"
                       alt={`Related-${imgIndex}`}
                     />
                   </div>
