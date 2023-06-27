@@ -54,14 +54,16 @@ function getKeywordData(title, userScrapData) {
   let keywordData = {
     texts: [],
     imgs: [],
-    url: ""
+    url: "",
   };
 
   for (const item of userScrapData) {
     if (item.dates && Array.isArray(item.dates)) {
       for (const date of item.dates) {
         if (date.titles && Array.isArray(date.titles)) {
-          const titleIndex = date.titles.findIndex((itemTitle) => itemTitle === title);
+          const titleIndex = date.titles.findIndex(
+            (itemTitle) => itemTitle === title
+          );
           if (titleIndex !== -1) {
             keywordData.texts.push(...date.texts[titleIndex]);
             keywordData.imgs.push(...date.img[titleIndex]);
