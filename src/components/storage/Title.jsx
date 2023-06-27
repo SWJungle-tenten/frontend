@@ -10,7 +10,6 @@ export default function Title({
 }) {
   const [showDelete, setShowDelete] = useState(false);
   const titleIndex = item.keywords.titles.findIndex((t) => t === title);
-  // const url = titleIndex >= 0 ? item.keywords.urls[titleIndex] : undefined;
 
   return (
     <div className="flex py-1 ml-2">

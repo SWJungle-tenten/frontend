@@ -14,23 +14,30 @@ export default function Detail({
       {titleData && (
         <div>
           {titleData.map((data, index) => (
-            <div key={index} >
+            <div key={index}>
               <div>
                 <iframe
                   title={`iframe-${index}`}
                   src={data.url}
                   className="w-full h-[70vh] border border-gray-400 rounded-md"
-                >
-                </iframe>
+                ></iframe>
               </div>
               {data.text &&
                 data.text.map((text, textIndex) => (
-                  <div className="hover:opacity-75 italic text-xl border border-gray-300 " draggable={true} onDragStart={handleDragStart} key={`text-${textIndex}`}>{text}</div>
+                  <div
+                    className="hover:opacity-75 italic text-xl border border-gray-300 "
+                    draggable={true}
+                    onDragStart={handleDragStart}
+                    key={`text-${textIndex}`}
+                  >
+                    {text}
+                  </div>
                 ))}
               {data.img &&
                 data.img.map((img, imgIndex) => (
                   <div className="hover:opacity-75">
-                    <img  onDragStart={handleDragStart}
+                    <img
+                      onDragStart={handleDragStart}
                       key={`img-${imgIndex}`}
                       src={img}
                       crossOrigin="anonymous"
