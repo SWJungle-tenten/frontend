@@ -224,6 +224,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   const handleShowKeywordsClick = () => {
     if (showKeywords) {
       setSelectedKeyword(null);
+      setCurrentKeyword({});
       setScrapData(originalScrapData);
     } else {
       setCurrentDate(null);
