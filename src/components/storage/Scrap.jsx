@@ -30,7 +30,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
         setIsLoading(true);
         try {
           const response = await axios.post(
-            `${process.env.REACT_APP_SERVER_ADDR}/api/checkStorage`,
+            `https://sangunlee.shop/api/checkStorage`,
             {},
             {
               headers: {
@@ -51,7 +51,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           try {
             setIsLoading(true);
             const response = await axios.post(
-              `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
+              `https://sangunlee.shop/api/checkKeyword`,
               {},
               {
                 headers: {

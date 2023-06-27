@@ -42,7 +42,7 @@ export default function Memo({
       if (result.isConfirmed) {
         // 만약 모달창에서 confirm 버튼을 눌렀다면
         axios
-          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteMemo`, {
+          .delete(`https://sangunlee.shop/api/deleteMemo`, {
             data: { time: selectedMemo },
             headers: {
               Authorization: `Bearer ${cookies.accessToken}`,
@@ -80,7 +80,7 @@ export default function Memo({
     if (data) {
       axios
         .post(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/saveMemo`,
+          `https://sangunlee.shop/api/saveMemo`,
           {
             time: time,
             memoTitle: titleRef.current,
@@ -119,7 +119,7 @@ export default function Memo({
   const receiveContent = async () => {
     await axios
       .post(
-        `${process.env.REACT_APP_SERVER_ADDR}/api/memoContents`,
+        `https://sangunlee.shop/api/memoContents`,
         {
           time: selectedMemo,
         },
