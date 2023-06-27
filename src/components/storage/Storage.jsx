@@ -3,8 +3,8 @@ import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Header from "../intro/Header";
-import Memo from "../../memo/Memo";
-import MemoList from "../../memo/MemoList";
+import Memo from "../memo/Memo";
+import MemoList from "../memo/MemoList";
 
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";

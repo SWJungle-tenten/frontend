@@ -25,49 +25,51 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   const [keywordData, setKeywordData] = useState(null);
 
   useEffect(() => {
-    const fetchDataStorage = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/checkStorage`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.accessToken}`,
-            },
-          }
-        );
-        setScrapData(response.data.dataToSend);
-        setOriginalScrapData(response.data.dataToSend);
-        setUserName(response.data.username);
-      } catch (error) {
-        console.error(`HTTP error! status: ${error}`);
-      }
-      setIsLoading(false);
-    };
-
-    const fetchDataKeywords = async () => {
-      try {
+    if (cookies.accessToken) {
+      const fetchDataStorage = async () => {
         setIsLoading(true);
-        const response = await axios.post(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.accessToken}`,
-            },
+        try {
+          const response = await axios.post(
+            `${process.env.REACT_APP_SERVER_ADDR}/api/checkStorage`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.accessToken}`,
+              },
+            }
+          );
+          setScrapData(response.data.dataToSend);
+          setOriginalScrapData(response.data.dataToSend);
+          setUserName(response.data.username);
+        } catch (error) {
+          console.error(`HTTP error! status: ${error}`);
+        }
+        setIsLoading(false);
+      };
+
+      const fetchDataKeywords = async () => {
+          try {
+            setIsLoading(true);
+            const response = await axios.post(
+              `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${cookies.accessToken}`,
+                },
+              }
+            );
+
+            setKeywordData(response.data.dataToSend);
+          } catch (error) {
+            console.error(`HTTP error! status: ${error}`);
           }
-        );
+          setIsLoading(false);
+        }
 
-        setKeywordData(response.data.dataToSend);
-      } catch (error) {
-        console.error(`HTTP error! status: ${error}`);
-      }
-      setIsLoading(false);
-    };
-
-    fetchDataStorage();
-    fetchDataKeywords();
+        fetchDataStorage();
+        fetchDataKeywords();
+    }
   }, []);
 
   const handleDeleteKeywordResponse = (data) => {
