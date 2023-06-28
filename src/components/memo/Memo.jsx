@@ -11,8 +11,10 @@ export default function Memo({
   open,
   receiveMemo,
   draggedElementContent,
+  setDraggedElementContent,
   selectedMemo,
   selectedTitle,
+
 }) {
   const [cookies] = useCookies("accessToken");
   const editorRef = useRef();
@@ -156,6 +158,7 @@ export default function Memo({
   const handleDrop = (event) => {
     const data = editorRef.current?.getInstance().getHTML();
     editorRef.current?.getInstance().setHTML(data + draggedElementContent);
+    setDraggedElementContent("");
   };
 
   const toPdf = async (name) => {
@@ -265,9 +268,9 @@ export default function Memo({
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-auto">
       {/* <button onClick={()=> console.log(editorRef.current?.getInstance().getHTML())}>dddd</button> */}
-      <div>
+      <div className="overflow-auto">
         <div className="pb-2">
           <input
             className="w-[100%] border rounded h-10 pl-6"
@@ -277,7 +280,7 @@ export default function Memo({
           />
         </div>
         <div
-          className="droppable"
+          className="droppable overflow-auto"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
@@ -287,7 +290,7 @@ export default function Memo({
             // placeholder="내용을 입력하세요!!"
             ref={editorRef}
             previewStyle="vertical"
-            height="620px"
+            height="540px"
             initialEditType="wysiwyg"
             language="ko-KR"
             // useCommandShortcut={true}
@@ -306,7 +309,7 @@ export default function Memo({
               목록
             </button>
             <button
-              className="btn-yellow"
+              className="btn-yellow hidden sm:block"
               onClick={() => {
                 toPdf(titleRef.current);
               }}

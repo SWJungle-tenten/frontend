@@ -56,7 +56,7 @@ export default function Storage() {
   return (
     <>
       <Header />
-      <div className="flex">
+      <div className="flex over overflow-auto">
         <div className="flex-grow w-[70%]">
           {
             <Scrap
@@ -66,8 +66,8 @@ export default function Storage() {
           }
         </div>
         <div className="w-[30%] border-l overflow-auto viewsize relative">
-          <div className="flex p-4 pb-0 space-x-2 absolute bottom-3 flex-row w-full justify-between">
-            <div className="flex flex-row">
+          <div className="flex p-4 pb-0 space-x-2  flex-row w-full justify-between">
+            <div className="hidden sm:flex flex-row">
               <button
                 className="btn-yellow px-1.5 mr-2"
                 onClick={() => {
@@ -103,6 +103,7 @@ export default function Storage() {
                   open={setOpenList}
                   receiveMemo={receiveMemo}
                   draggedElementContent={draggedElementContent}
+                  setDraggedElementContent={setDraggedElementContent}
                   selectedMemo={selectedMemo}
                   selectedTitle={selectedTitle}
                 />

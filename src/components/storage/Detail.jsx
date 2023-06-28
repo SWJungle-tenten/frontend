@@ -8,7 +8,7 @@ export default function Detail({
   // console.log("titledata", titleData);
   const data = titleData[0] || {};
   return (
-    <div className="p-8 h-[93vh]">
+    <div className="p-8">
       <p className="px-4 py-2 text-center text-4xl font-bold break-keep">
         {data.title}
       </p>
