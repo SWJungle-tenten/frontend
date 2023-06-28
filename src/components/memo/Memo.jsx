@@ -111,7 +111,7 @@ export default function Memo({
           goList();
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   };
@@ -146,7 +146,7 @@ export default function Memo({
         editorRef.current?.getInstance().setHTML(contentsHTML);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

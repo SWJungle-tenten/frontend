@@ -30,7 +30,7 @@ export default function Storage() {
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
   //memo API
@@ -76,7 +76,7 @@ export default function Storage() {
         setsearchResultArray(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }
   

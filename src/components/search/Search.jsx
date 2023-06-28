@@ -7,7 +7,8 @@ export default function Search({ searchResultArray, handleDragStart ,searchRef})
         <div className="px-4 pb-4 text-left text-3xl font-semibold break-keep">
             "{searchRef.current}" 검색결과
         </div>
-        {searchResultArray &&
+        
+        {searchResultArray && searchResultArray.length > 0 ?( 
           searchResultArray.map((result, index) => (
             <div
               className="tooltip px-1"
@@ -23,7 +24,12 @@ export default function Search({ searchResultArray, handleDragStart ,searchRef})
                 {result}
               </div>
             </div>
-          ))}
+          ))):(
+            <div className="text-3xl text-center p-6">
+                검색 결과가 없습니다
+            </div>
+          )
+        }
       </div>
     </div>
   );
