@@ -7,13 +7,18 @@ import ScrapDateList from "./ScrapDateList";
 import axios from "axios";
 import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
-import { yellow } from "@mui/material/colors";
 import KeywordDetail from "./KeywordDetail";
+import Search from "../search/Search";
 
-export default function Scrap({ handleDragStart, setDraggedElementContent }) {
+export default function Scrap({
+  handleDragStart,
+  searchContents,
+  setSearchContents,
+  searchResultArray,
+  searchRef
+}) {
   const [scrapData, setScrapData] = useState(null);
   const [originalScrapData, setOriginalScrapData] = useState(null);
-  const [currentPath, setCurrentPath] = useState(true);
   const [currentKeyword, setCurrentKeyword] = useState({});
   const [currentTitle, setCurrentTitle] = useState(null);
   const [showKeywords, setShowKeywords] = useState(false);
@@ -60,15 +65,15 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               }
             );
 
-            setKeywordData(response.data.dataToSend);
-          } catch (error) {
-            console.error(`HTTP error! status: ${error}`);
-          }
-          setIsLoading(false);
+          setKeywordData(response.data.dataToSend);
+        } catch (error) {
+          console.error(`HTTP error! status: ${error}`);
         }
+        setIsLoading(false);
+      };
 
-        fetchDataStorage();
-        fetchDataKeywords();
+      fetchDataStorage();
+      fetchDataKeywords();
     }
   }, []);
 
@@ -224,6 +229,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   };
 
   const handleShowKeywordsClick = () => {
+    setSearchContents(false);
     if (showKeywords) {
       setSelectedKeyword(null);
       setCurrentKeyword({});
@@ -236,6 +242,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
     setShowKeywords(!showKeywords);
   };
   const handleTitleClick = (title) => {
+    setSearchContents(false);
     if (title === currentTitle) {
       setCurrentTitle(null);
       setCurrentDate(null);
@@ -244,6 +251,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
     }
   };
   const handleToggleDateClick = (date) => {
+    setSearchContents(false);
     if (currentDate === date) {
       setCurrentDate(null);
       setCurrentTitle(null);
@@ -254,6 +262,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   };
 
   const handleToggleKeywordClick = (keyword) => {
+    setSearchContents(false);
     if (currentKeyword[keyword]) {
       setCurrentKeyword((prevState) => ({
         ...prevState,
@@ -318,35 +327,38 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               />
             ))}
       </div>
-      {scrapData && (currentTitle || currentDate || selectedKeyword) && (
-        <div className="flex-1 overflow-auto">
-          {!showKeywords && currentTitle && !selectedKeyword ? (
-            <Detail
-              title={currentTitle}
-              userScrapData={scrapData}
-              handleDragStart={handleDragStart}
-            />
-          ) : showKeywords && !currentTitle && selectedKeyword ? (
-            <KeywordPosts
-              keyword={selectedKeyword}
-              userScrapData={scrapData}
-              handleDragStart={handleDragStart}
-            />
-          ) : !showKeywords && currentDate && !selectedKeyword ? (
-            <Posts
-              date={currentDate}
-              userScrapData={scrapData}
-              handleDragStart={handleDragStart}
-            />
-          ) : showKeywords && currentTitle ? (
-            <KeywordDetail
-              title={currentTitle}
-              userScrapData={scrapData}
-              handleDragStart={handleDragStart}
-            />
-          ) : null}
-        </div>
-      )}
+      {scrapData &&
+        (searchContents || currentTitle || currentDate || selectedKeyword) && (
+          <div className="flex-1 overflow-auto">
+            {searchContents ? (
+              <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef}/>
+            ) : !showKeywords && currentTitle && !selectedKeyword ? (
+              <Detail
+                title={currentTitle}
+                userScrapData={scrapData}
+                handleDragStart={handleDragStart}
+              />
+            ) : !showKeywords && currentDate && !selectedKeyword ? (
+              <Posts
+                date={currentDate}
+                userScrapData={scrapData}
+                handleDragStart={handleDragStart}
+              />
+            ) : showKeywords && currentTitle ? (
+              <KeywordDetail
+                title={currentTitle}
+                userScrapData={scrapData}
+                handleDragStart={handleDragStart}
+              />
+            ) : showKeywords && !currentTitle && selectedKeyword ? (
+              <KeywordPosts
+                keyword={selectedKeyword}
+                userScrapData={scrapData}
+                handleDragStart={handleDragStart}
+              />
+            ) : null}
+          </div>
+        )}
     </div>
   );
 }

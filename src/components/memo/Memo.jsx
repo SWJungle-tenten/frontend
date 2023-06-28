@@ -60,8 +60,12 @@ export default function Memo({
             goList();
           })
           .catch((error) => {
-            console.log(error);
-            alert("삭제 오류!");
+            // console.log(error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "삭제 오류!",
+            });
           });
       }
     });
@@ -76,7 +80,11 @@ export default function Memo({
     const time = selectedMemo ? selectedMemo : date.getTime();
 
     if (!titleRef.current) {
-      alert("제목을 입력하세요");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "제목을 입력하세요.",
+      });
       return;
     }
     if (data) {
@@ -103,7 +111,7 @@ export default function Memo({
           goList();
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   };
@@ -138,7 +146,7 @@ export default function Memo({
         editorRef.current?.getInstance().setHTML(contentsHTML);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -269,7 +277,6 @@ export default function Memo({
 
   return (
     <div className="p-4 overflow-auto">
-      {/* <button onClick={()=> console.log(editorRef.current?.getInstance().getHTML())}>dddd</button> */}
       <div className="overflow-auto">
         <div className="pb-2">
           <input
@@ -303,7 +310,7 @@ export default function Memo({
             ]}
           />
         </div>
-        <div className="flex justify-between py-2">
+        <div className="flex justify-between py-2 pr-1">
           <div className="flex space-x-2">
             <button className="btn-blue" onClick={() => open(true)}>
               목록

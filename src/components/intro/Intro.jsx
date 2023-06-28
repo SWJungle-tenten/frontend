@@ -22,7 +22,7 @@ export default function Intro() {
           go("/storage");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }, []);

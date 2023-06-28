@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -30,7 +30,7 @@ export default function Storage() {
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
   //memo API
@@ -53,15 +53,46 @@ export default function Storage() {
     setOpenList();
   };
 
+  // search
+  
+  const [searchContents,setSearchContents] = useState();
+  const [searchResultArray, setsearchResultArray] = useState([]);
+  const searchRef = useRef();
+  const receiveSearchContents = async(search) => {
+    setSearchContents(true);
+    await axios
+      .post(
+        `https://sangunlee.shop/api/searchData`,
+        { search:search },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res);
+        // console.log(res.data);
+        setsearchResultArray(res.data);
+      })
+      .catch((error) => {
+        // console.log(error);
+      });
+  }
+  
+
   return (
     <>
-      <Header />
+      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef}/>
       <div className="flex">
         <div className="flex-grow w-[70%]">
           {
             <Scrap
               handleDragStart={handleDragStart}
-              setDraggedElementContent={setDraggedElementContent}
+              searchContents={searchContents}
+              setSearchContents={setSearchContents}
+              searchResultArray={searchResultArray}
+              searchRef={searchRef}
             />
           }
         </div>

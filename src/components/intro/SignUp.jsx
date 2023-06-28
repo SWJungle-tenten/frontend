@@ -75,7 +75,7 @@ export default function SignUp(prop) {
             text: "이미 존재하는 Email 입니다.",
           });
         }
-        console.log("Error");
+        // console.log("Error");
         Swal.fire({
           icon: "error",
           title: "Oops...",
