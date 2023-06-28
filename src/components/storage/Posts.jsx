@@ -19,14 +19,14 @@ export default function Posts({
         <ul className="h-full overflow-auto p-8 pr-10">
           {dateData.map((data, index) => (
             <div className="pb-6" key={index}>
-              <div className="px-4 py-2 text-left text-3xl font-serif font-semibold">
+              <div className="px-4 py-2 text-left text-3xl font-semibold break-keep">
                 {data.title}
               </div>
               <div>
                 <iframe
                   title={`iframe-${index}`}
                   src={data.url}
-                  className="w-full h-[70vh] border border-gray-400 rounded-md"
+                  className="iframe"
                 ></iframe>
               </div>
               {data.text &&

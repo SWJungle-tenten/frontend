@@ -17,32 +17,44 @@ export default function Detail({
           <iframe
             title={`iframe-${data.title}`}
             src={data.url}
-            className="w-full h-[70vh] border border-gray-400 rounded-md"
+            className="iframe"
           ></iframe>
         </div>
       )}
       {data.text &&
         data.text.map((text, textIndex) => (
           <div
-            className="hover:opacity-75 italic text-xl border border-gray-300"
-            draggable={true}
-            onDragStart={handleDragStart}
-            key={`text-${textIndex}`}
+            className="tooltip px-1"
+            data-tip="드래그해서 텍스트를 메모에 추가해보세요"
           >
-            {text}
-          </div>
-        ))}
-      {data.img &&
-        data.img.map((img, imgIndex) => (
-          <div className="hover:opacity-75" key={`img-${imgIndex}`}>
-            <img
+            <div
+              className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2"
+              draggable={true}
               onDragStart={handleDragStart}
-              src={img}
-              crossOrigin="anonymous"
-              alt={`Related-${imgIndex}`}
-            />
+              key={`text-${textIndex}`}
+            >
+              {text}
+            </div>
           </div>
         ))}
+      <div className="flex flex-row flex-wrap w-full gap-[19px] pb-16">
+        {data.img &&
+          data.img.map((img, imgIndex) => (
+            <div
+              className="tooltip"
+              data-tip="드래그해서 이미지를 메모에 추가해보세요"
+              key={`img-${imgIndex}`}
+            >
+              <img
+                className="cursor-grab border rounded-lg hover:brightness-50 active:cursor-grabbing"
+                onDragStart={handleDragStart}
+                src={img}
+                crossOrigin="anonymous"
+                alt={`Related-${imgIndex}`}
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

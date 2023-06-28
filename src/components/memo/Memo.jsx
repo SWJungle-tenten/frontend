@@ -303,7 +303,7 @@ export default function Memo({
             ]}
           />
         </div>
-        <div className="flex justify-between pt-2">
+        <div className="flex justify-between py-2">
           <div className="flex space-x-2">
             <button className="btn-blue" onClick={() => open(true)}>
               목록
