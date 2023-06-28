@@ -272,8 +272,8 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
   };
 
   return (
-    <div className="h-[93vh] flex overflow-hidden ">
-      <div className="px-4 w-[30%] border-r-2 border-gray-400 bg-gray-50 overflow-auto">
+    <div className="h-[93vh] flex ">
+      <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
         <div className="pt-3 flex justify-between items-center">
           <div className="pl-3">
             <span className="text-xl font-semibold">{userName}</span>님
@@ -325,28 +325,24 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               title={currentTitle}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
-              setDraggedElementContent={setDraggedElementContent}
             />
           ) : showKeywords && !currentTitle && selectedKeyword ? (
             <KeywordPosts
               keyword={selectedKeyword}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
-              setDraggedElementContent={setDraggedElementContent}
             />
           ) : !showKeywords && currentDate && !selectedKeyword ? (
             <Posts
               date={currentDate}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
-              setDraggedElementContent={setDraggedElementContent}
             />
           ) : showKeywords && currentTitle ? (
             <KeywordDetail
               title={currentTitle}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
-              setDraggedElementContent={setDraggedElementContent}
             />
           ) : null}
         </div>
