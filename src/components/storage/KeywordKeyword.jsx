@@ -15,7 +15,7 @@ export default function KeywordKeyword({
       {showKeywords ? (
         <div>
           <button
-            className="btn-toggle w-full flex flex-row relative"
+            className="btn-toggle-yellow w-full flex flex-row relative"
             onClick={() => handleToggleKeywordClick(keyword)}
             onMouseEnter={() => showKeywords && setShowDelete(true)}
             onMouseLeave={() => showKeywords && setShowDelete(false)}

@@ -4,47 +4,56 @@ const KeywordDetail = ({
   title,
   userScrapData,
   handleDragStart,
-  setDraggedElementContent,
 }) => {
   const keywordData = getKeywordData(title, userScrapData);
   return (
-    <div className="p-8 h-[93vh]">
-      <p className="px-4 py-2 text-center text-4xl font-bold break-keep">
+    <div className="p-8 overflow-auto">
+      <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold break-keep">
         {title}
       </p>
-      {keywordData && (
+      {keywordData.url && (
         <div>
-          {keywordData.url && (
-            <div>
-              <iframe
-                title={`iframe-${title}`}
-                src={keywordData.url}
-                className="w-full h-[70vh] border border-gray-400 rounded-md"
-              ></iframe>
-            </div>
-          )}
-          {keywordData.imgs.map((img, imgIndex) => (
-            <div className="hover:opacity-75" key={`img-${imgIndex}`}>
-              <img
-                onDragStart={handleDragStart}
-                src={img}
-                crossOrigin="anonymous"
-                alt={`Related-${imgIndex}`}
-              />
-            </div>
-          ))}
-          {keywordData.texts.map((text, textIndex) => (
-            <div
-              className="hover:opacity-75 italic text-xl border border-gray-300"
-              draggable={true}
-              onDragStart={handleDragStart}
-              key={`text-${textIndex}`}
-            >
-              {text}
-            </div>
-          ))}
+          <iframe
+            title={`iframe-${title}`}
+            src={keywordData.url}
+            className="iframe"
+          ></iframe>
         </div>
       )}
+      {keywordData.texts.map((text, textIndex) => (
+        <div
+          className="tooltip px-1"
+          data-tip="드래그해서 텍스트를 메모에 추가해보세요"
+          key={textIndex}
+        >
+          <div
+            className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2"
+            draggable={true}
+            onDragStart={handleDragStart}
+            key={`text-${textIndex}`}
+          >
+            {text}
+          </div>
+        </div>
+      ))}
+      <div className="flex flex-row flex-wrap w-full gap-[19px] pb-14">
+        {keywordData.imgs.map((img, imgIndex) => (
+          <div
+            className="tooltip"
+            data-tip="드래그해서 이미지를 메모에 추가해보세요"
+            key={`img-${imgIndex}`}
+          >
+            <img
+              className="cursor-grab border rounded-lg hover:brightness-50 active:cursor-grabbing"
+              onDragStart={handleDragStart}
+              src={img}
+              crossOrigin="anonymous"
+              alt={`Related-${imgIndex}`}
+              key={`img-${imgIndex}`}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
