@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 
-export default function Header({receiveSearchContents,searchRef }) {
+export default function Header({ receiveSearchContents, searchRef }) {
   const [cookies, setCookie, removeCookie] = useCookies("accessToken");
   const go = useNavigate();
   const logout = async () => {
@@ -60,10 +60,25 @@ export default function Header({receiveSearchContents,searchRef }) {
         </div>
         <div className="w-[50%]">
           <div className="flex text-sm border rounded-lg focus:ring-blue-300">
-            <input className="w-[100%] h-10 pl-4 focus:ring-2 rounded-lg focus:outline-none"
-                onChange={changeSearchContents}
-                placeholder="Search"/>
-            <button onClick={()=> {receiveSearchContents(searchRef.current)}} className="w-16 duration-200 focus:ring-2 focus:ring-black focus:outline-none rounded-lg " > <SearchIcon/></button>
+            <input
+              className="w-[100%] h-10 pl-4 focus:ring-2 rounded-lg focus:outline-none"
+              onChange={changeSearchContents}
+              onKeyDown={(event) => {
+                if (event.keyCode === 13) {
+                  receiveSearchContents(searchRef.current);
+                }
+              }}
+              placeholder="Search"
+            />
+            <button
+              onClick={() => {
+                receiveSearchContents(searchRef.current);
+              }}
+              className="w-16 duration-200 focus:ring-2 focus:ring-black focus:outline-none rounded-lg "
+            >
+              {" "}
+              <SearchIcon />
+            </button>
           </div>
         </div>
         <div className="">
