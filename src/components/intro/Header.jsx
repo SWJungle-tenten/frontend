@@ -62,6 +62,12 @@ export default function Header({receiveSearchContents,searchRef }) {
           <div className="flex text-sm border rounded-lg focus:ring-blue-300">
             <input className="w-[100%] h-10 pl-4 focus:ring-2 rounded-lg focus:outline-none"
                 onChange={changeSearchContents}
+                onKeyDown={(event) => {
+                  if (event.keyCode === 13) { 
+                    receiveSearchContents(searchRef.current);
+                  }
+                }}
+          
                 placeholder="Search"/>
             <button onClick={()=> {receiveSearchContents(searchRef.current)}} className="w-16 duration-200 focus:ring-2 focus:ring-black focus:outline-none rounded-lg " > <SearchIcon/></button>
           </div>
