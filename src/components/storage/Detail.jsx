@@ -1,14 +1,13 @@
 export default function Detail({
   title,
   userScrapData,
-  setdraggedElementContent,
   handleDragStart,
 }) {
   const titleData = getTitleData(title, userScrapData);
   // console.log("titledata", titleData);
   const data = titleData[0] || {};
   return (
-    <div className="p-8 overflow-scroll">
+    <div className="p-8 overflow-auto">
       <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold break-keep">
         {data.title}
       </p>
@@ -26,6 +25,7 @@ export default function Detail({
           <div
             className="tooltip px-1"
             data-tip="드래그해서 텍스트를 메모에 추가해보세요"
+            key={textIndex}
           >
             <div
               className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2"
@@ -37,9 +37,9 @@ export default function Detail({
             </div>
           </div>
         ))}
-      <div className="flex flex-row flex-wrap w-full gap-[19px] pb-16">
-        {data.img &&
-          data.img.map((img, imgIndex) => (
+      {data.img&& data.img.length > 0 && (
+        <div className="flex flex-row flex-wrap w-full gap-[19px] pb-14">
+          {data.img.map((img, imgIndex) => (
             <div
               className="tooltip"
               data-tip="드래그해서 이미지를 메모에 추가해보세요"
@@ -51,10 +51,12 @@ export default function Detail({
                 src={img}
                 crossOrigin="anonymous"
                 alt={`Related-${imgIndex}`}
+                key={`img-${imgIndex}`}
               />
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

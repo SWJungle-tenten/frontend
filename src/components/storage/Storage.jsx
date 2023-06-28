@@ -56,7 +56,7 @@ export default function Storage() {
   return (
     <>
       <Header />
-      <div className="flex over overflow-auto">
+      <div className="flex">
         <div className="flex-grow w-[70%]">
           {
             <Scrap

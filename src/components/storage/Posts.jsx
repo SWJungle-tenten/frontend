@@ -1,9 +1,4 @@
-export default function Posts({
-  date,
-  userScrapData,
-  setDraggedElementContent,
-  handleDragStart,
-}) {
+export default function Posts({ date, userScrapData, handleDragStart }) {
   const dateData = getDateData(date, userScrapData);
 
   return (
@@ -32,26 +27,40 @@ export default function Posts({
               {data.text &&
                 data.text.map((text, textIndex) => (
                   <div
-                    className="hover:opacity-75 italic text-xl border border-gray-300 "
-                    draggable={true}
-                    onDragStart={handleDragStart}
-                    key={`text-${textIndex}`}
+                    className="tooltip px-1"
+                    data-tip="드래그해서 텍스트를 메모에 추가해보세요"
+                    key={textIndex}
                   >
-                    {text}
-                  </div>
-                ))}
-              {data.img &&
-                data.img.map((img, imgIndex) => (
-                  <div className="hover:opacity-75">
-                    <img
+                    <div
+                      className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2"
+                      draggable={true}
                       onDragStart={handleDragStart}
-                      key={`img-${imgIndex}`}
-                      src={img}
-                      crossOrigin="anonymous"
-                      alt={`Imag-${imgIndex}`}
-                    />
+                      key={`text-${textIndex}`}
+                    >
+                      {text}
+                    </div>
                   </div>
                 ))}
+              {data.img && data.img.length > 0 && (
+                <div className="flex flex-row flex-wrap w-full gap-[19px] pb-14">
+                  {data.img.map((img, imgIndex) => (
+                    <div
+                      className="tooltip"
+                      data-tip="드래그해서 이미지를 메모에 추가해보세요"
+                      key={`img-${imgIndex}`}
+                    >
+                      <img
+                        className="cursor-grab border rounded-lg hover:brightness-50 active:cursor-grabbing"
+                        onDragStart={handleDragStart}
+                        key={`img-${imgIndex}`}
+                        src={img}
+                        crossOrigin="anonymous"
+                        alt={`Imag-${imgIndex}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </ul>

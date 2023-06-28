@@ -17,7 +17,7 @@ code {
 }
 
 html .toastui-editor-contents h1 {
-  font-size: 33px;
+  font-size: 30px;
   line-height: 44px;
   border-bottom: 3px double #999;
   margin: 52px 0 15px 0;
@@ -25,7 +25,7 @@ html .toastui-editor-contents h1 {
 }
 
 html .toastui-editor-contents h2 {
-  font-size: 31px;
+  font-size: 28px;
   line-height: 40px;
   border-bottom: 1px solid #dbdbdb;
   margin: 20px 0 13px 0;
@@ -33,12 +33,12 @@ html .toastui-editor-contents h2 {
 }
 
 html .toastui-editor-contents h3 {
-  font-size: 29px;
+  font-size: 26px;
   margin: 18px 0 2px;
 }
 
 html .toastui-editor-contents h4 {
-  font-size: 27px;
+  font-size: 24px;
   margin: 10px 0 2px;
 }
 
@@ -48,11 +48,11 @@ html .toastui-editor-contents h4 {
 }
 
 html .toastui-editor-contents h5 {
-  font-size: 23px;
+  font-size: 22px;
 }
 
 html .toastui-editor-contents h6 {
-  font-size: 21px;
+  font-size: 20px;
 }
 
 html .toastui-editor-contents h5,
@@ -63,7 +63,7 @@ html .toastui-editor-contents h6 {
 html .toastui-editor-contents {
   margin: 0;
   padding: 0;
-  font-size: 23px;
+  font-size: 18px;
 }
 
 .logo {

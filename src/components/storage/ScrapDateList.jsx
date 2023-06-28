@@ -40,8 +40,9 @@ const ScrapDateList = ({
           <div className="w-[100%]">
             {item.keywords.titles.map((title, titleIndex) =>
               !index && !titleIndex ? (
-                <div className="relative">
-                  <div className="tooltip tooltip-right absolute left-[-18px]" data-tip="스크랩한 링크의 제목이에요">
+                <div className="relative" key={titleIndex}>
+                  <div className="tooltip tooltip-right absolute left-[-18px]" data-tip="스크랩한 링크의 제목이에요"
+                  key={titleIndex}>
                     <InfoOutlinedIcon className="text-google-green self-center mt-1" fontSize="small" />
                   </div>
                   <Title
