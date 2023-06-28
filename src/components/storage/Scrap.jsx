@@ -192,7 +192,7 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
         setScrapData(filteredScrapData);
 
         axios
-          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteUserScrap`, {
+          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteTitle`, {
             data: {
               title,
               userToken,
