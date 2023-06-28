@@ -4,15 +4,15 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -66,36 +66,48 @@ html .toastui-editor-contents {
   font-size: 23px;
 }
 
-.logo{
-  font-family: 'Product Sans', sans-serif;
+.logo {
+  font-family: "Product Sans", sans-serif;
 }
 
 @layer components {
   .btn-red {
-    @apply w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1.5
+    @apply w-full duration-200 text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1.5;
   }
 
-  .btn-white{
-    @apply border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200
+  .btn-white {
+    @apply border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200;
   }
 
-  .btn-toggle{
-    @apply font-semibold hover:bg-red-100 focus:ring-2 focus:outline-0 focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8
+  .btn-toggle {
+    @apply font-semibold hover:bg-red-100 focus:ring-2 focus:outline-0 focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8;
   }
 
-  .btn-blue{
-    @apply w-[110%] duration-200 text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  .btn-toggle-yellow {
+    @apply font-semibold hover:bg-amber-100 focus:ring-2 focus:outline-0 focus:ring-amber-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8;
   }
 
-  .btn-green{
-    @apply w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  .btn-blue {
+    @apply w-[110%] duration-200 text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-1.5;
   }
 
-  .btn-yellow{
-    @apply w-full duration-200 text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-semibold rounded-lg text-sm px-5 py-1.5
+  .btn-green {
+    @apply w-full duration-200 text-white bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-semibold rounded-lg text-sm px-5 py-1.5;
   }
 
-  .btn-title{
-    @apply w-[100%]  font-normal focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-base relative pl-3 py-1 break-keep pr-6 text-start
+  .btn-yellow {
+    @apply w-full duration-200 text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-semibold rounded-lg text-sm px-5 py-1.5;
+  }
+
+  .btn-title {
+    @apply w-[100%] font-normal focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-base relative pl-3 py-1 break-keep pr-6 text-start;
+  }
+
+  .drag-tooltip {
+    @apply w-full h-full text-center break-keep absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-slate-500 leading-[100%];
+  }
+
+  .iframe {
+    @apply w-full h-[70vh] drop-shadow-md rounded-md mb-5 border;
   }
 }

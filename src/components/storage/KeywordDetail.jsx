@@ -8,7 +8,7 @@ const KeywordDetail = ({
 }) => {
   const keywordData = getKeywordData(title, userScrapData);
   return (
-    <div className="p-8 h-[93vh]">
+    <div className="p-8 overflow-scroll">
       <p className="px-4 py-2 text-center text-4xl font-bold break-keep">
         {title}
       </p>
