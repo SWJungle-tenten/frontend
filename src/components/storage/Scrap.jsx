@@ -48,27 +48,27 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
       };
 
       const fetchDataKeywords = async () => {
-          try {
-            setIsLoading(true);
-            const response = await axios.post(
-              `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
-              {},
-              {
-                headers: {
-                  Authorization: `Bearer ${cookies.accessToken}`,
-                },
-              }
-            );
+        try {
+          setIsLoading(true);
+          const response = await axios.post(
+            `${process.env.REACT_APP_SERVER_ADDR}/api/checkKeyword`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.accessToken}`,
+              },
+            }
+          );
 
-            setKeywordData(response.data.dataToSend);
-          } catch (error) {
-            console.error(`HTTP error! status: ${error}`);
-          }
-          setIsLoading(false);
+          setKeywordData(response.data.dataToSend);
+        } catch (error) {
+          console.error(`HTTP error! status: ${error}`);
         }
+        setIsLoading(false);
+      };
 
-        fetchDataStorage();
-        fetchDataKeywords();
+      fetchDataStorage();
+      fetchDataKeywords();
     }
   }, []);
 
@@ -326,12 +326,6 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
             />
-          ) : showKeywords && !currentTitle && selectedKeyword ? (
-            <KeywordPosts
-              keyword={selectedKeyword}
-              userScrapData={scrapData}
-              handleDragStart={handleDragStart}
-            />
           ) : !showKeywords && currentDate && !selectedKeyword ? (
             <Posts
               date={currentDate}
@@ -341,6 +335,12 @@ export default function Scrap({ handleDragStart, setDraggedElementContent }) {
           ) : showKeywords && currentTitle ? (
             <KeywordDetail
               title={currentTitle}
+              userScrapData={scrapData}
+              handleDragStart={handleDragStart}
+            />
+          ) : showKeywords && !currentTitle && selectedKeyword ? (
+            <KeywordPosts
+              keyword={selectedKeyword}
               userScrapData={scrapData}
               handleDragStart={handleDragStart}
             />
