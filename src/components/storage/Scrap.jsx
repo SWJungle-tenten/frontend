@@ -20,7 +20,7 @@ export default function Scrap({
   searchRef,
   showKeywords,
   setShowKeywords,
-  setSearchShowList
+  setSearchShowList,
 }) {
   const DATE = "DATE";
   const KEYWORD = "KEYWORD";
@@ -204,28 +204,28 @@ export default function Scrap({
 
         setScrapData(filteredScrapData);
         if (cookies.accessToken) {
-        axios
-          .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteTitle`, {
-            data: {
-              title,
-              userToken,
-              date,
-              url,
-            },
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          })
-          .then((response) => {
-            const data = response.data;
+          axios
+            .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteTitle`, {
+              data: {
+                title,
+                userToken,
+                date,
+                url,
+              },
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            })
+            .then((response) => {
+              const data = response.data;
 
-            if (data.message !== "success") {
-              handleDeleteUserScrapResponse(data);
-            }
-          })
-          .catch((error) => {
-            console.error(`HTTP error! status: ${error}`);
-          });
+              if (data.message !== "success") {
+                handleDeleteUserScrapResponse(data);
+              }
+            })
+            .catch((error) => {
+              console.error(`HTTP error! status: ${error}`);
+            });
         }
         Swal.fire({
           icon: "success",
@@ -323,24 +323,75 @@ export default function Scrap({
 
   return (
     <div className="h-[93vh] flex ">
-      <div className="fixed left-1 top-[50%]">
-        <div className="flex-col">
-          <div>
+      {/* left-[0.032rem]  */}
+      <div className="fixed 
+      left-0
+      top-[65%]">
+        <div className="flex -rotate-90 origin-top-left border-2 border-black rounded-b-lg ">
+
             <button
               onClick={() => {
-                handleShowKeywordsClick(DATE);
+                handleShowKeywordsClick(IMAGE);
               }}
+              className={`px-2 py-1 rounded-es-md w-16 ${
+                showKeywords === IMAGE ? "bg-green-300" : ""
+              }`}
             >
-              date
+              이미지
             </button>
-          </div>
-          <div>
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(TEXT);
+              }}
+              className={`px-2 py-1 w-16 border-x-2 border-black ${
+                showKeywords === TEXT ? "bg-yellow-300" : ""
+              }`}
+            >
+              텍스트
+            </button>
             <button
               onClick={() => {
                 handleShowKeywordsClick(KEYWORD);
               }}
+              className={`px-2 py-1 w-16 border-r-2 border-black ${
+                showKeywords === KEYWORD ? "bg-red-300" : ""
+              }`}
             >
-              keyword
+              검색어
+            </button>
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(DATE);
+              }}
+              className={`px-2 py-1 rounded-ee-md w-16 ${
+                showKeywords === DATE ? "bg-blue-300" : ""
+              }`}
+            >
+              날짜
+            </button>
+
+          {/* <div className="" >
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(DATE);
+              }}
+              className={`px-2 py-1 rounded-s-md  ${
+                showKeywords === DATE ? "bg-blue-600" : "bg-blue-200"
+              }`}
+            >
+              날짜
+            </button>
+          </div>
+          <div className="">
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(KEYWORD);
+              }}
+              className={`px-2 py-1  ${
+                showKeywords === KEYWORD ? "bg-red-600" : "bg-red-200"
+              }`}
+            >
+              검색어
             </button>
           </div>
           <div>
@@ -348,8 +399,11 @@ export default function Scrap({
               onClick={() => {
                 handleShowKeywordsClick(TEXT);
               }}
+              className={`px-2 py-1 ${
+                showKeywords === TEXT ? "bg-yellow-600" : "bg-yellow-200"
+              }`}
             >
-              text
+              텍스트
             </button>
           </div>
           <div>
@@ -357,16 +411,19 @@ export default function Scrap({
               onClick={() => {
                 handleShowKeywordsClick(IMAGE);
               }}
+              className={`px-2 py-1 rounded-e-md ${
+                showKeywords === IMAGE ? "bg-green-600" : "bg-green-200"
+              }`}
             >
-              image
+              이미지
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       {showKeywords === TEXT ? (
-        <CollectionText handleDragStart={handleDragStart}/>
+        <CollectionText handleDragStart={handleDragStart} />
       ) : showKeywords === IMAGE ? (
-        <CollectionImage handleDragStart={handleDragStart}/>
+        <CollectionImage handleDragStart={handleDragStart} />
       ) : (
         <>
           <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">

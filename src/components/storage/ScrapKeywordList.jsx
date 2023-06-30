@@ -24,7 +24,7 @@ export default function ScrapKeywordList({
   };
 
   return (
-    <ul>
+    <ul className="pl-6">
       <li>
         <KeywordKeyword
           keyword={item.keyword}

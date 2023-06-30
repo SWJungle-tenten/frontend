@@ -17,7 +17,7 @@ const ScrapDateList = ({
       {(index === 0 || item.date !== scrapData[index - 1].date) && (
         <div className="flex border-t pt-3 border-slate-300">
           <button
-            className="font-bold hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-xl px-3 py-1 underline decoration-double decoration-2 decoration-red-300"
+            className="font-bold hover:bg-red-100 focus:ring-2 focus:outline-none focus:ring-red-300 rounded-lg text-xl px-3 py-1 underline decoration-double decoration-2 decoration-red-300 ml-3"
             onClick={() => handleToggleDateClick(item.date)}
           >
             {item.date}
