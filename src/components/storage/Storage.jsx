@@ -58,8 +58,10 @@ export default function Storage() {
   const [searchContents,setSearchContents] = useState();
   const [searchResultArray, setsearchResultArray] = useState([]);
   const searchRef = useRef();
+  const [searchLoading,setSearchLoading] = useState(true);
   const receiveSearchContents = async(search) => {
     setSearchContents(true);
+    setSearchLoading(true);
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
@@ -78,12 +80,13 @@ export default function Storage() {
       .catch((error) => {
         // console.log(error);
       });
+    setSearchLoading(false);
   }
   
 
   return (
     <>
-      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef}/>
+      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef} />
       <div className="flex">
         <div className="flex-grow w-[70%]">
           {
@@ -93,6 +96,7 @@ export default function Storage() {
               setSearchContents={setSearchContents}
               searchResultArray={searchResultArray}
               searchRef={searchRef}
+              searchLoading={searchLoading}
             />
           }
         </div>

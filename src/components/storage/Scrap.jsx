@@ -17,23 +17,25 @@ export default function Scrap({
   searchContents,
   setSearchContents,
   searchResultArray,
-  searchRef
+  searchRef,
+  searchLoading,
 }) {
-  const [scrapData, setScrapData] = useState(null);
-  const [originalScrapData, setOriginalScrapData] = useState(null);
-  const [currentKeyword, setCurrentKeyword] = useState({});
-  const [currentTitle, setCurrentTitle] = useState(null);
-  const [showKeywords, setShowKeywords] = useState(false);
-  const [currentDate, setCurrentDate] = useState(null);
-  const [cookies] = useCookies(["accessToken"]);
-  const [selectedKeyword, setSelectedKeyword] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [keywordData, setKeywordData] = useState(null);
   const DATE = "DATE";
   const KEYWORD = "KEYWORD";
   const TEXT = "TEXT";
   const IMAGE = "IMAGE";
+  const [scrapData, setScrapData] = useState(null);
+  const [originalScrapData, setOriginalScrapData] = useState(null);
+  const [currentKeyword, setCurrentKeyword] = useState({});
+  const [currentTitle, setCurrentTitle] = useState(null);
+  const [showKeywords, setShowKeywords] = useState(DATE);
+  const [currentDate, setCurrentDate] = useState(null);
+  const [cookies] = useCookies(["accessToken"]);
+  const [selectedKeyword, setSelectedKeyword] = useState(null);
+  // const [userName, setUserName] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [keywordData, setKeywordData] = useState(null);
+  
 
   useEffect(() => {
     if (cookies.accessToken) {
@@ -51,7 +53,7 @@ export default function Scrap({
           );
           setScrapData(response.data.dataToSend);
           setOriginalScrapData(response.data.dataToSend);
-          setUserName(response.data.username);
+          // setUserName(response.data.username);
         } catch (error) {
           console.error(`HTTP error! status: ${error}`);
         }
@@ -351,12 +353,11 @@ export default function Scrap({
       : showKeywords === IMAGE ? <CollectionImage/>
       :(<>
       <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
-        <div className="pt-3 flex justify-between items-center">
+        {/* <div className="pt-3 flex justify-between items-center"> */}
+        {/* <div className="">
           <div className="pl-3">
-            <span className="text-xl font-semibold">{userName}</span> 님
           </div>
-          <div>
-            {isLoading ? null : (
+            {isLoading ? <div className="">로딩중</div> : (
               <div className="flex ">
               <button
                 className="btn-yellow px-5 py-2.5"
@@ -370,17 +371,18 @@ export default function Scrap({
               >
                 검색어
                 </button>
-              {/* <button
+              <button
                 className={`btn-${showKeywords ? "yellow" : "red"} px-5 py-2.5`}
                 onClick={handleShowKeywordsClick}
               >
                 {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
-              </button> */}
+              </button>
             </div>
             )}
-          </div>
-        </div>
-        {showKeywords === KEYWORD
+        </div> */}
+        {isLoading? <div>로딩중</div>
+        :
+        (showKeywords === KEYWORD
           ? scrapData &&
             scrapData.map((item, index) => (
               <ScrapKeywordList
@@ -407,13 +409,15 @@ export default function Scrap({
                 cookies={cookies}
                 deleteTitle={deleteTitle}
               />
-            ))}
+              )))
+            }
       </div>
       {scrapData &&
         (searchContents || currentTitle || currentDate || selectedKeyword) && (
           <div className="flex-1 overflow-auto">
             {searchContents ? (
-              <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef}/>
+              <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef}
+              searchLoading={searchLoading}/>
             ) : showKeywords === DATE && currentTitle && !selectedKeyword ? (
               <Detail
                 title={currentTitle}
