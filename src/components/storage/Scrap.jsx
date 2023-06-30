@@ -9,6 +9,8 @@ import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 import KeywordDetail from "./KeywordDetail";
 import Search from "../search/Search";
+import CollectionImage from "./tap/CollectionImage";
+import CollectionText from "./tap/CollectionText";
 
 export default function Scrap({
   handleDragStart,
@@ -28,6 +30,10 @@ export default function Scrap({
   const [userName, setUserName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [keywordData, setKeywordData] = useState(null);
+  const DATE = "DATE";
+  const KEYWORD = "KEYWORD";
+  const TEXT = "TEXT";
+  const IMAGE = "IMAGE";
 
   useEffect(() => {
     if (cookies.accessToken) {
@@ -228,18 +234,52 @@ export default function Scrap({
     });
   };
 
-  const handleShowKeywordsClick = () => {
+  const handleShowKeywordsClick = (key) => {
+    // prop 을 넣어서 스위치
+    // true 일 때 날짜였고 false 일 때 검색어였음
+    // false 일 때 날짜 리스트가 나옴 
+    // 이거 지금 반대로 생각해야함 set으로 show키워드가 반영되기 전에 일어나는 함수들임
+
+    // setSearchContents(false);
+    // if (key === DATE) {
+
+    //   setSelectedKeyword(null);
+    //   setCurrentKeyword({});
+    //   setScrapData(originalScrapData);
+    // }
+    // else if (key === KEYWORD){
+    //   setCurrentDate(null);
+    //   setCurrentTitle(null);
+    //   setScrapData(keywordData);
+    // }
+    // setShowKeywords(!showKeywords);
+
     setSearchContents(false);
-    if (showKeywords) {
+    if (key === DATE){
       setSelectedKeyword(null);
       setCurrentKeyword({});
       setScrapData(originalScrapData);
-    } else {
+
+    }
+    else if (key === KEYWORD){
       setCurrentDate(null);
       setCurrentTitle(null);
       setScrapData(keywordData);
     }
-    setShowKeywords(!showKeywords);
+    setShowKeywords(key);
+
+
+    // setSearchContents(false);
+    // if (showKeywords) {
+    //   setSelectedKeyword(null);
+    //   setCurrentKeyword({});
+    //   setScrapData(originalScrapData);
+    // } else {
+    //   setCurrentDate(null);
+    //   setCurrentTitle(null);
+    //   setScrapData(keywordData);
+    // }
+    // setShowKeywords(!showKeywords);
   };
   const handleTitleClick = (title) => {
     setSearchContents(false);
@@ -282,23 +322,65 @@ export default function Scrap({
 
   return (
     <div className="h-[93vh] flex ">
+      <div className="fixed left-1 top-[50%]">
+        <div className="flex-col">
+
+        <div>
+          <button onClick={() => {handleShowKeywordsClick(DATE)}}>
+          date
+          </button>
+        </div>
+        <div>
+          <button onClick={() => {handleShowKeywordsClick(KEYWORD)}}>
+          keyword
+          </button>
+        </div>
+        <div>
+          <button onClick={() => {handleShowKeywordsClick(TEXT)}}>
+          text
+         </button>
+        </div>
+        <div>
+          <button onClick={() => {handleShowKeywordsClick(IMAGE)}}>
+          image
+          </button>
+        </div>
+      </div>
+      </div>
+      {showKeywords === TEXT ?<CollectionText/>
+      : showKeywords === IMAGE ? <CollectionImage/>
+      :(<>
       <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
         <div className="pt-3 flex justify-between items-center">
           <div className="pl-3">
-            <span className="text-xl font-semibold">{userName}</span>님
+            <span className="text-xl font-semibold">{userName}</span> 님
           </div>
           <div>
             {isLoading ? null : (
+              <div className="flex ">
               <button
+                className="btn-yellow px-5 py-2.5"
+                onClick={() => {handleShowKeywordsClick(DATE)}}
+              >
+                날짜
+              </button>
+              <button
+                className="btn-red px-5 py-2.5 break-keep"
+                onClick={() => {handleShowKeywordsClick(KEYWORD)}}
+              >
+                검색어
+                </button>
+              {/* <button
                 className={`btn-${showKeywords ? "yellow" : "red"} px-5 py-2.5`}
                 onClick={handleShowKeywordsClick}
               >
                 {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
-              </button>
+              </button> */}
+            </div>
             )}
           </div>
         </div>
-        {showKeywords
+        {showKeywords === KEYWORD
           ? scrapData &&
             scrapData.map((item, index) => (
               <ScrapKeywordList
@@ -332,25 +414,25 @@ export default function Scrap({
           <div className="flex-1 overflow-auto">
             {searchContents ? (
               <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef}/>
-            ) : !showKeywords && currentTitle && !selectedKeyword ? (
+            ) : showKeywords === DATE && currentTitle && !selectedKeyword ? (
               <Detail
                 title={currentTitle}
                 userScrapData={scrapData}
                 handleDragStart={handleDragStart}
               />
-            ) : !showKeywords && currentDate && !selectedKeyword ? (
+            ) : showKeywords === DATE && currentDate && !selectedKeyword ? (
               <Posts
                 date={currentDate}
                 userScrapData={scrapData}
                 handleDragStart={handleDragStart}
               />
-            ) : showKeywords && currentTitle ? (
+            ) : showKeywords === KEYWORD && currentTitle ? (
               <KeywordDetail
                 title={currentTitle}
                 userScrapData={scrapData}
                 handleDragStart={handleDragStart}
               />
-            ) : showKeywords && !currentTitle && selectedKeyword ? (
+            ) : showKeywords === KEYWORD && !currentTitle && selectedKeyword ? (
               <KeywordPosts
                 keyword={selectedKeyword}
                 userScrapData={scrapData}
@@ -359,6 +441,8 @@ export default function Scrap({
             ) : null}
           </div>
         )}
+    </>
+      )}
     </div>
   );
 }

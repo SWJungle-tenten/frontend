@@ -20,7 +20,7 @@ export default function ScrapKeywordList({
     } else {
       setSelectedKeyword(keyword);
     }
-    showKeywords && handleToggleKeywordClick(keyword);
+    showKeywords ==="KEYWORD" && handleToggleKeywordClick(keyword);
   };
 
   return (
@@ -33,7 +33,7 @@ export default function ScrapKeywordList({
           cookies={cookies}
           showKeywords={showKeywords}
         />
-        {showKeywords &&
+        {showKeywords==="KEYWORD" &&
           selectedKeyword === item.keyword &&
           item.dates.map((date, dateIndex) => (
             <div key={`date-${dateIndex}`}>

@@ -16,7 +16,7 @@ export default function Search({ searchResultArray, handleDragStart ,searchRef})
               key={index}
             >
               <div
-                className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2"
+                className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2 break-keep"
                 draggable={true}
                 onDragStart={handleDragStart}
                 key={index}

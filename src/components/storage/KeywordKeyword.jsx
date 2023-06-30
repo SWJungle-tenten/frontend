@@ -12,13 +12,13 @@ export default function KeywordKeyword({
 
   return (
     <div>
-      {showKeywords ? (
+      {showKeywords==="KEYWORD" ? (
         <div>
           <button
             className="btn-toggle-yellow w-full flex flex-row relative"
             onClick={() => handleToggleKeywordClick(keyword)}
-            onMouseEnter={() => showKeywords && setShowDelete(true)}
-            onMouseLeave={() => showKeywords && setShowDelete(false)}
+            onMouseEnter={() => showKeywords==="KEYWORD" && setShowDelete(true)}
+            onMouseLeave={() => showKeywords==="KEYWORD" && setShowDelete(false)}
           >
             <FolderIcon className="text-amber-400 mr-3 mt-1.5" />
             {keyword}
