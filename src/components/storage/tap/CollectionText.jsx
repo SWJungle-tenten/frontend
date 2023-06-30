@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-export default function CollectionText() {
+export default function CollectionText({handleDragStart}) {
   const [cookies] = useCookies(["accessToken"]);
     const [collectText,setCollectText] = useState([]);
 
