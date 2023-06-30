@@ -18,7 +18,6 @@ export default function Scrap({
   setSearchContents,
   searchResultArray,
   searchRef,
-  searchLoading,
 }) {
   const DATE = "DATE";
   const KEYWORD = "KEYWORD";
@@ -35,7 +34,6 @@ export default function Scrap({
   // const [userName, setUserName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [keywordData, setKeywordData] = useState(null);
-  
 
   useEffect(() => {
     if (cookies.accessToken) {
@@ -239,7 +237,7 @@ export default function Scrap({
   const handleShowKeywordsClick = (key) => {
     // prop 을 넣어서 스위치
     // true 일 때 날짜였고 false 일 때 검색어였음
-    // false 일 때 날짜 리스트가 나옴 
+    // false 일 때 날짜 리스트가 나옴
     // 이거 지금 반대로 생각해야함 set으로 show키워드가 반영되기 전에 일어나는 함수들임
 
     // setSearchContents(false);
@@ -257,19 +255,16 @@ export default function Scrap({
     // setShowKeywords(!showKeywords);
 
     setSearchContents(false);
-    if (key === DATE){
+    if (key === DATE) {
       setSelectedKeyword(null);
       setCurrentKeyword({});
       setScrapData(originalScrapData);
-
-    }
-    else if (key === KEYWORD){
+    } else if (key === KEYWORD) {
       setCurrentDate(null);
       setCurrentTitle(null);
       setScrapData(keywordData);
     }
     setShowKeywords(key);
-
 
     // setSearchContents(false);
     // if (showKeywords) {
@@ -326,35 +321,53 @@ export default function Scrap({
     <div className="h-[93vh] flex ">
       <div className="fixed left-1 top-[50%]">
         <div className="flex-col">
-
-        <div>
-          <button onClick={() => {handleShowKeywordsClick(DATE)}}>
-          date
-          </button>
-        </div>
-        <div>
-          <button onClick={() => {handleShowKeywordsClick(KEYWORD)}}>
-          keyword
-          </button>
-        </div>
-        <div>
-          <button onClick={() => {handleShowKeywordsClick(TEXT)}}>
-          text
-         </button>
-        </div>
-        <div>
-          <button onClick={() => {handleShowKeywordsClick(IMAGE)}}>
-          image
-          </button>
+          <div>
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(DATE);
+              }}
+            >
+              date
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(KEYWORD);
+              }}
+            >
+              keyword
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(TEXT);
+              }}
+            >
+              text
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                handleShowKeywordsClick(IMAGE);
+              }}
+            >
+              image
+            </button>
+          </div>
         </div>
       </div>
-      </div>
-      {showKeywords === TEXT ?<CollectionText/>
-      : showKeywords === IMAGE ? <CollectionImage/>
-      :(<>
-      <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
-        {/* <div className="pt-3 flex justify-between items-center"> */}
-        {/* <div className="">
+      {showKeywords === TEXT ? (
+        <CollectionText />
+      ) : showKeywords === IMAGE ? (
+        <CollectionImage />
+      ) : (
+        <>
+          <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
+            {/* <div className="pt-3 flex justify-between items-center"> */}
+            {/* <div className="">
           <div className="pl-3">
           </div>
             {isLoading ? <div className="">로딩중</div> : (
@@ -366,7 +379,7 @@ export default function Scrap({
                 날짜
               </button>
               <button
-                className="btn-red px-5 py-2.5 break-keep"
+                className="btn-red px-5 py-2.5 "
                 onClick={() => {handleShowKeywordsClick(KEYWORD)}}
               >
                 검색어
@@ -380,72 +393,83 @@ export default function Scrap({
             </div>
             )}
         </div> */}
-        {isLoading? <div>로딩중</div>
-        :
-        (showKeywords === KEYWORD
-          ? scrapData &&
-            scrapData.map((item, index) => (
-              <ScrapKeywordList
-                key={index}
-                item={item}
-                handleToggleKeywordClick={handleToggleKeywordClick}
-                deleteKeyword={deleteKeyword}
-                cookies={cookies}
-                currentKeyword={currentKeyword}
-                handleTitleClick={handleTitleClick}
-                deleteTitle={deleteTitle}
-                showKeywords={showKeywords}
-              />
-            ))
-          : scrapData &&
-            scrapData.map((item, index) => (
-              <ScrapDateList
-                key={index}
-                item={item}
-                index={index}
-                scrapData={scrapData}
-                handleToggleDateClick={handleToggleDateClick}
-                handleTitleClick={handleTitleClick}
-                cookies={cookies}
-                deleteTitle={deleteTitle}
-              />
-              )))
-            }
-      </div>
-      {scrapData &&
-        (searchContents || currentTitle || currentDate || selectedKeyword) && (
-          <div className="flex-1 overflow-auto">
-            {searchContents ? (
-              <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef}
-              searchLoading={searchLoading}/>
-            ) : showKeywords === DATE && currentTitle && !selectedKeyword ? (
-              <Detail
-                title={currentTitle}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : showKeywords === DATE && currentDate && !selectedKeyword ? (
-              <Posts
-                date={currentDate}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : showKeywords === KEYWORD && currentTitle ? (
-              <KeywordDetail
-                title={currentTitle}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : showKeywords === KEYWORD && !currentTitle && selectedKeyword ? (
-              <KeywordPosts
-                keyword={selectedKeyword}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : null}
+            {isLoading ? (
+              <div>로딩중</div>
+            ) : showKeywords === KEYWORD ? (
+              scrapData &&
+              scrapData.map((item, index) => (
+                <ScrapKeywordList
+                  key={index}
+                  item={item}
+                  handleToggleKeywordClick={handleToggleKeywordClick}
+                  deleteKeyword={deleteKeyword}
+                  cookies={cookies}
+                  currentKeyword={currentKeyword}
+                  handleTitleClick={handleTitleClick}
+                  deleteTitle={deleteTitle}
+                  showKeywords={showKeywords}
+                />
+              ))
+            ) : (
+              scrapData &&
+              scrapData.map((item, index) => (
+                <ScrapDateList
+                  key={index}
+                  item={item}
+                  index={index}
+                  scrapData={scrapData}
+                  handleToggleDateClick={handleToggleDateClick}
+                  handleTitleClick={handleTitleClick}
+                  cookies={cookies}
+                  deleteTitle={deleteTitle}
+                />
+              ))
+            )}
           </div>
-        )}
-    </>
+          {scrapData &&
+            (searchContents ||
+              currentTitle ||
+              currentDate ||
+              selectedKeyword) && (
+              <div className="flex-1 overflow-auto">
+                {searchContents ? (
+                  <Search
+                    searchResultArray={searchResultArray}
+                    handleDragStart={handleDragStart}
+                    searchRef={searchRef}
+                  />
+                ) : showKeywords === DATE &&
+                  currentTitle &&
+                  !selectedKeyword ? (
+                  <Detail
+                    title={currentTitle}
+                    userScrapData={scrapData}
+                    handleDragStart={handleDragStart}
+                  />
+                ) : showKeywords === DATE && currentDate && !selectedKeyword ? (
+                  <Posts
+                    date={currentDate}
+                    userScrapData={scrapData}
+                    handleDragStart={handleDragStart}
+                  />
+                ) : showKeywords === KEYWORD && currentTitle ? (
+                  <KeywordDetail
+                    title={currentTitle}
+                    userScrapData={scrapData}
+                    handleDragStart={handleDragStart}
+                  />
+                ) : showKeywords === KEYWORD &&
+                  !currentTitle &&
+                  selectedKeyword ? (
+                  <KeywordPosts
+                    keyword={selectedKeyword}
+                    userScrapData={scrapData}
+                    handleDragStart={handleDragStart}
+                  />
+                ) : null}
+              </div>
+            )}
+        </>
       )}
     </div>
   );

@@ -14,7 +14,8 @@ export default function Posts({ date, userScrapData, handleDragStart }) {
         <ul className="h-full overflow-auto p-8 pr-10">
           {dateData.map((data, index) => (
             <div className="pb-6" key={index}>
-              <div className="px-4 py-2 text-left text-3xl font-semibold break-keep">
+              <div className="px-4 py-2 text-left text-3xl font-semibold">
+                
                 {data.title}
               </div>
               <div>

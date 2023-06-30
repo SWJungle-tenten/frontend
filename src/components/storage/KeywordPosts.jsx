@@ -12,7 +12,7 @@ const KeywordPosts = ({ keyword, userScrapData, handleDragStart }) => {
         <ul className="h-full overflow-auto p-8 pr-10">
           {keywordData.map((data, index) => (
             <div className="pb-6" key={`keyword-post-${index}`}>
-              <div className="px-4 py-2 text-left text-3xl font-semibold break-keep">
+              <div className="px-4 py-2 text-left text-3xl font-semibold">
                 {data.title}
               </div>
               {data.url.length > 0 ? (

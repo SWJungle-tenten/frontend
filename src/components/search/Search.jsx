@@ -4,18 +4,14 @@ export default function Search({
   searchResultArray,
   handleDragStart,
   searchRef,
-  searchLoading,
 }) {
   return (
     <div>
       <div className="p-8 overflow-auto">
-        <div className="px-4 pb-4 text-left text-3xl font-semibold break-keep">
+        <div className="px-4 pb-4 text-left text-3xl font-semibold">
           "{searchRef.current}" 검색결과
         </div>
-
-        {searchLoading ? (
-          <div></div>
-        ) : searchResultArray && searchResultArray.length > 0 ? (
+        {searchResultArray && searchResultArray.length > 0 ? (
           searchResultArray.map((result, index) => (
             <div
               className="tooltip px-1"
@@ -23,7 +19,7 @@ export default function Search({
               key={index}
             >
               <div
-                className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2 break-keep"
+                className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg mb-5 text-left border border-slate-300 border-dashed rounded-lg p-2 "
                 draggable={true}
                 onDragStart={handleDragStart}
                 key={index}
@@ -32,9 +28,14 @@ export default function Search({
               </div>
             </div>
           ))
-        ) : (
+        ) 
+        : searchResultArray === null ? 
+        (
           <div className="text-3xl text-center p-6">검색 결과가 없습니다</div>
-        )}
+        )
+        :
+        (<div className="text-3xl text-center p-6">로딩중</div>)
+        }
       </div>
     </div>
   );
