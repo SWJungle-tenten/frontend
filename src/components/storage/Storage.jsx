@@ -15,6 +15,15 @@ export default function Storage() {
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
   const [memoArray, setMemoArray] = useState([]);
+  // 검색
+  const [searchContents,setSearchContents] = useState();
+  const [searchResultArray, setSearchResultArray] = useState([]);
+  const searchRef = useRef();
+  const [searchShowList,setSearchShowList] = useState();
+  // 리스트 렌더
+  const DATE = "DATE";
+  const [showKeywords, setShowKeywords] = useState(DATE);
+
   const receiveMemo = async () => {
     await axios
       .post(
@@ -54,14 +63,10 @@ export default function Storage() {
   };
 
   // search
-  const DATE = "DATE";
-  const [showKeywords, setShowKeywords] = useState(DATE);
-
-  const [searchContents,setSearchContents] = useState();
-  const [searchResultArray, setSearchResultArray] = useState([]);
-  const searchRef = useRef();
-  const [searchShowList,setSearchShowList] = useState();
+  
   const receiveSearchContents = async(search) => {
+    if (cookies.accessToken) {
+    
     setSearchContents(true);
     setSearchResultArray([]);
     setShowKeywords(searchShowList);
@@ -87,6 +92,7 @@ export default function Storage() {
       .catch((error) => {
         // console.log(error);
       });
+    }
   }
   
 

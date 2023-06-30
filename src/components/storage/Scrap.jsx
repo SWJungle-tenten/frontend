@@ -203,7 +203,7 @@ export default function Scrap({
         );
 
         setScrapData(filteredScrapData);
-
+        if (cookies.accessToken) {
         axios
           .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteTitle`, {
             data: {
@@ -226,7 +226,7 @@ export default function Scrap({
           .catch((error) => {
             console.error(`HTTP error! status: ${error}`);
           });
-
+        }
         Swal.fire({
           icon: "success",
           title: "삭제 완료!",
