@@ -18,6 +18,9 @@ export default function Scrap({
   setSearchContents,
   searchResultArray,
   searchRef,
+  showKeywords,
+  setShowKeywords,
+  setSearchShowList
 }) {
   const DATE = "DATE";
   const KEYWORD = "KEYWORD";
@@ -27,7 +30,6 @@ export default function Scrap({
   const [originalScrapData, setOriginalScrapData] = useState(null);
   const [currentKeyword, setCurrentKeyword] = useState({});
   const [currentTitle, setCurrentTitle] = useState(null);
-  const [showKeywords, setShowKeywords] = useState(DATE);
   const [currentDate, setCurrentDate] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
@@ -259,10 +261,12 @@ export default function Scrap({
       setSelectedKeyword(null);
       setCurrentKeyword({});
       setScrapData(originalScrapData);
+      setSearchShowList(key);
     } else if (key === KEYWORD) {
       setCurrentDate(null);
       setCurrentTitle(null);
       setScrapData(keywordData);
+      setSearchShowList(key);
     }
     setShowKeywords(key);
 

@@ -54,14 +54,17 @@ export default function Storage() {
   };
 
   // search
-  
+  const DATE = "DATE";
+  const [showKeywords, setShowKeywords] = useState(DATE);
+
   const [searchContents,setSearchContents] = useState();
   const [searchResultArray, setSearchResultArray] = useState([]);
   const searchRef = useRef();
-
+  const [searchShowList,setSearchShowList] = useState();
   const receiveSearchContents = async(search) => {
     setSearchContents(true);
     setSearchResultArray([]);
+    setShowKeywords(searchShowList);
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
@@ -99,6 +102,9 @@ export default function Storage() {
               setSearchContents={setSearchContents}
               searchResultArray={searchResultArray}
               searchRef={searchRef}
+              showKeywords={showKeywords}
+              setShowKeywords={setShowKeywords}
+              setSearchShowList={setSearchShowList}
             />
           }
         </div>
