@@ -15,6 +15,7 @@ export default function Storage() {
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
   const [memoArray, setMemoArray] = useState([]);
+  const [draggedElementContent, setDraggedElementContent] = useState("");
   // 검색
   const [searchContents, setSearchContents] = useState();
   const [searchResultArray, setSearchResultArray] = useState([]);
@@ -54,7 +55,6 @@ export default function Storage() {
     }
   }, [cookies.accessToken, receiveMemo]);
 
-  const [draggedElementContent, setDraggedElementContent] = useState("");
 
   const handleDragStart = (event) => {
     setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
@@ -73,7 +73,9 @@ export default function Storage() {
     if (cookies.accessToken) {
       setSearchContents(true);
       setSearchResultArray([]);
-      setShowKeywords(searchShowList);
+      if (searchShowList !== undefined){
+        setShowKeywords(searchShowList);
+      }
       await axios
         .post(
           `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
@@ -92,7 +94,8 @@ export default function Storage() {
           setSearchResultArray(res.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
+          setSearchResultArray(null);
         });
     }
   };
