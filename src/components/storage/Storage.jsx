@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -16,15 +16,15 @@ export default function Storage() {
   const [openList, setOpenList] = useState(true);
   const [memoArray, setMemoArray] = useState([]);
   // 검색
-  const [searchContents,setSearchContents] = useState();
+  const [searchContents, setSearchContents] = useState();
   const [searchResultArray, setSearchResultArray] = useState([]);
   const searchRef = useRef();
-  const [searchShowList,setSearchShowList] = useState();
+  const [searchShowList, setSearchShowList] = useState();
   // 리스트 렌더
   const DATE = "DATE";
   const [showKeywords, setShowKeywords] = useState(DATE);
 
-  const receiveMemo = async () => {
+  const receiveMemo = useCallback(async () => {
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/allMemoTitle`,
@@ -36,22 +36,23 @@ export default function Storage() {
         }
       )
       .then((res) => {
-        if (res.data.memoData.length === 0){
+        if (res.data.memoData.length === 0) {
           setMemoArray(null);
           return;
         }
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
-  };
+  }, [cookies.accessToken]);
+
   //memo API
   useEffect(() => {
     if (cookies.accessToken) {
       receiveMemo();
     }
-  }, []);
+  }, [cookies.accessToken, receiveMemo]);
 
   const [draggedElementContent, setDraggedElementContent] = useState("");
 
@@ -67,38 +68,34 @@ export default function Storage() {
   };
 
   // search
-  
-  const receiveSearchContents = async(search) => {
+
+  const receiveSearchContents = async (search) => {
     if (cookies.accessToken) {
-    
-    setSearchContents(true);
-    setSearchResultArray([]);
-    setShowKeywords(searchShowList);
-    await axios
-      .post(
-        `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
-        { search:search },
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        // console.log(res);
-        // console.log(res.data);
-        if(res.data.length === 0){
-          setSearchResultArray(null);
-          return
-        }
-        setSearchResultArray(res.data);
-      })
-      .catch((error) => {
-        // console.log(error);
-      });
+      setSearchContents(true);
+      setSearchResultArray([]);
+      setShowKeywords(searchShowList);
+      await axios
+        .post(
+          `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
+          { search: search },
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.length === 0) {
+            setSearchResultArray(null);
+            return;
+          }
+          setSearchResultArray(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }
-  
+  };
 
   return (
     <>
