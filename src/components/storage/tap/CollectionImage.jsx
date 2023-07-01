@@ -1,39 +1,42 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
-export default function CollectionImage({handleDragStart}) {
+export default function CollectionImage({ handleDragStart }) {
   const [cookies] = useCookies(["accessToken"]);
-  const [collectImage,setCollectImage] = useState([]);
+  const [collectImage, setCollectImage] = useState([]);
 
   useEffect(() => {
     if (cookies.accessToken) {
-    axios
-      .get(
-        `${process.env.REACT_APP_SERVER_ADDR}/api/imgCollect`,
+      axios
+        .get(
+          `${process.env.REACT_APP_SERVER_ADDR}/api/imgCollect`,
 
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        // console.log(res);
-        console.log(res.data);
-        setCollectImage(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          // console.log(res);
+          if (res.data.length === 0) {
+            setCollectImage(null);
+            return;
+          }
+          setCollectImage(res.data);
+        })
+        .catch((error) => {
+          // console.log(error);
+        });
     }
   }, []);
-    return (
-        <div className='pl-16 py-10 pr-2 overflow-auto overflow-x-hidden space-y-6'>
-            <div className='text-3xl font-bold'>
-                스크랩한 이미지 
-            </div>
-            {collectImage.length > 0 && (
+  return (
+    <div className="pl-16 py-10 pr-2 overflow-auto overflow-x-hidden space-y-6">
+      <div className="text-3xl font-bold">스크랩한 이미지</div>
+      {collectImage === null ? (
+        <div className="text-3xl text-center p-6">스크랩한 이미지가 없어요</div>
+      ) : collectImage.length > 0 ? (
         <div className="flex flex-row flex-wrap w-full gap-[19px] pb-">
           {collectImage.map((img, imgIndex) => (
             <div
@@ -52,7 +55,9 @@ export default function CollectionImage({handleDragStart}) {
             </div>
           ))}
         </div>
+      ) : (
+        <div className="text-3xl text-center p-6">로딩중</div>
       )}
-        </div>
-    );
+    </div>
+  );
 }

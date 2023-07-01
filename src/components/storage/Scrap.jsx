@@ -55,7 +55,7 @@ export default function Scrap({
           setOriginalScrapData(response.data.dataToSend);
           // setUserName(response.data.username);
         } catch (error) {
-          console.error(`HTTP error! status: ${error}`);
+          // console.error(`HTTP error! status: ${error}`);
         }
         setIsLoading(false);
       };
@@ -455,8 +455,9 @@ export default function Scrap({
             )}
         </div> */}
             {isLoading ? (
-              <div>로딩중</div>
-            ) : showKeywords === KEYWORD ? (
+              <div className="text-3xl font-bold pt-10 text-center">로딩중</div>
+            ) : scrapData === undefined ? <div className="text-2xl font-bold pt-10 text-center"> 스크랩한 데이터가 없어요 </div> 
+            : showKeywords === KEYWORD ? (
               scrapData &&
               scrapData.map((item, index) => (
                 <ScrapKeywordList
