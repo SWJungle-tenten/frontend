@@ -253,47 +253,50 @@ export default function Scrap({
   };
 
   return (
-    <div className="h-[93vh] flex ">
-      <div
-        className="fixed 
-      left-0
-      top-[65%]"
-      >
-        <div className="flex -rotate-90 origin-top-left border-2 border rounded-b-lg ">
-          <button
+    <div className="h-[93vh] flex flex-row ">
+        <div className="flex flex-col h-full justify-around w-10 border-r-2">
+        <button
             onClick={() => {
-              handleShowKeywordsClick(IMAGE);
+              handleShowKeywordsClick(DATE);
             }}
-            className={`px-2 py-1 rounded-es-md w-16 ${showKeywords === IMAGE ? "bg-green-300" : ""}`}
+            className={`px-2 py-1 h-[25%]  ${showKeywords === DATE ? "bg-blue-300" : ""}`}
           >
-            이미지
+            <div className="-rotate-90 ">
+            날짜
+            </div>
+          </button>
+        <button
+            onClick={() => {
+              handleShowKeywordsClick(KEYWORD);
+            }}
+            className={`px-2 py-1 h-[25%] border-t-2 ${showKeywords === KEYWORD ? "bg-red-300" : ""}`}
+          >
+            <div className="-rotate-90 ">
+            검색어
+            </div>
           </button>
           <button
             onClick={() => {
               handleShowKeywordsClick(TEXT);
             }}
-            className={`px-2 py-1 w-16 border-x-2 border ${showKeywords === TEXT ? "bg-yellow-300" : ""}`}
+            className={`px-2 py-1 h-[25%] border-y-2 ${showKeywords === TEXT ? "bg-yellow-300" : ""}`}
           >
+            <div className="-rotate-90 ">
             텍스트
+            </div>
           </button>
           <button
             onClick={() => {
-              handleShowKeywordsClick(KEYWORD);
+              handleShowKeywordsClick(IMAGE);
             }}
-            className={`px-2 py-1 w-16 border-r-2 border ${showKeywords === KEYWORD ? "bg-red-300" : ""}`}
+            className={`px-2 py-0 h-[25%]  ${showKeywords === IMAGE ? "bg-green-300" : ""}`}
           >
-            검색어
-          </button>
-          <button
-            onClick={() => {
-              handleShowKeywordsClick(DATE);
-            }}
-            className={`px-2 py-1 rounded-ee-md w-16 ${showKeywords === DATE ? "bg-blue-300" : ""}`}
-          >
-            날짜
+            <div className="-rotate-90 ">
+            이미지
+            </div>
           </button>
         </div>
-      </div>
+      {/* </div> */}
       {showKeywords === TEXT ? (
         <CollectionText handleDragStart={handleDragStart} />
       ) : showKeywords === IMAGE ? (
