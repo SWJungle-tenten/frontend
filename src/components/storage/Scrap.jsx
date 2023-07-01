@@ -86,42 +86,12 @@ export default function Scrap({
   }, []);
 
   const handleDeleteKeywordResponse = (data) => {
-    if (data.message === "success") {
-      const deletedKeyword = data.keyword;
-
-      const updatedScrapData = scrapData.filter((item) => {
-        if (item.keywords.keyword === deletedKeyword) {
-          item.keywords.titles = item.keywords.titles.filter(
-            (title) => title !== deletedKeyword
-          );
-        }
-        return item.keywords.titles.length > 0;
-      });
-
-      setScrapData(updatedScrapData);
-    } else if (data.message === "error") {
+    if (data.message === "error") {
       alert("키워드 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
   const handleDeleteUserScrapResponse = (data) => {
-    if (data.message === "success") {
-      const deletedTitle = data.title;
-
-      const updatedScrapData = scrapData.map((item) => {
-        if (item.keywords.titles.includes(deletedTitle)) {
-          item.keywords.titles = item.keywords.titles.filter(
-            (titleItem) => titleItem !== deletedTitle
-          );
-        }
-        return item;
-      });
-
-      const filteredScrapData = updatedScrapData.filter(
-        (item) => item.keywords.titles.length > 0
-      );
-
-      setScrapData(filteredScrapData);
-    } else if (data.message === "error") {
+    if (data.message === "error") {
       alert("스크랩 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
@@ -188,20 +158,22 @@ export default function Scrap({
       cancelButtonText: "취소",
       reverseButtons: true,
     }).then((result) => {
-      if (result.isConfirmed) {
-        const updatedScrapData = scrapData.map((item) => {
-          if (item.keywords.titles.includes(title)) {
-            item.keywords.titles = item.keywords.titles.filter(
-              (titleItem) => titleItem !== title
-            );
-          }
-          return item;
-        });
-
-        const filteredScrapData = updatedScrapData.filter(
-          (item) => item.keywords.titles.length > 0
-        );
-
+        if (result.isConfirmed) {
+          const updatedScrapData = scrapData.map((item) => {
+            if (item.keywords.titles.includes(title)) {
+              item.keywords.urls = item.keywords.urls.filter(
+                (urlItem) => urlItem !== url
+              );
+              item.keywords.titles = item.keywords.titles.filter(
+                (titleItem) => titleItem !== title
+              );
+            }
+            return item;
+          });
+        
+          const filteredScrapData = updatedScrapData.filter(
+            (item) => item.keywords.titles.length > 0
+          );
         setScrapData(filteredScrapData);
         if (cookies.accessToken) {
           axios

@@ -18,7 +18,7 @@ export default function Detail({
             src={data.url}
             className="iframe"
           ></iframe>
-        </div>
+        </div>   
       )}
       {data.text &&
         data.text.map((text, textIndex) => (
