@@ -16,7 +16,11 @@ export default function CollectionText({ handleDragStart }) {
           },
         })
         .then((res) => {
-          setCollectText(res.data.dataTosend);
+          if (res.data.length === 0) {
+            setCollectText(null);
+            return;
+          }
+          setCollectText(res.data);
         })
         .catch((error) => {
           console.error(error);
@@ -25,14 +29,39 @@ export default function CollectionText({ handleDragStart }) {
   }, [cookies.accessToken]);
 
   return (
-    <div className="pl-16 py-10 pr-2 overflow-auto overflow-x-hidden space-y-6">
-      <div className="text-3xl font-bold">스크랩한 이미지</div>
+    <div className="pl-16 py-10 pr-2 overflow-auto overflow-x-hidden space-y-2">
+      <div className="text-3xl font-bold pb-2">스크랩한 텍스트</div>
       {!collectText ? (
-        <div className="text-3xl text-center p-6">스크랩한 이미지가 없어요</div>
+        <div className="text-3xl text-center p-6">스크랩한 텍스트가 없어요</div>
       ) : collectText.length > 0 ? (
-        <div className="flex flex-row flex-wrap w-full gap-[19px] pb-">
-          <TextSpreader texts={collectText} handleDragStart={handleDragStart} />
-        </div>
+        <>
+          {collectText.map((array, index) => (
+            <div key={index}>
+              <div key={array.keyWord} className="text-2xl font-semibold py-4">
+
+              {array.keyWord}
+              </div>
+              <div key={array.keyword+index} className="flex flex-row flex-wrap w-full gap-[19px]">
+                {array.text.map((scrap, index) => (
+                  <div
+                    className="tooltip px-1"
+                    data-tip="드래그해서 텍스트를 메모에 추가해보세요"
+                    key={index}
+                  >
+                    <div
+                      className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg text-left border border-slate-300 border-dashed rounded-lg p-2 mb-2"
+                      draggable={true}
+                      onDragStart={handleDragStart}
+                      key={scrap}
+                    >
+                      {scrap}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
       ) : (
         <div className="text-3xl text-center p-6">로딩중</div>
       )}

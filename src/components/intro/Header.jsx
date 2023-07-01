@@ -18,13 +18,11 @@ export default function Header({ receiveSearchContents, searchRef }) {
           },
         })
         .then((res) => {
-          // console.log(res);
           removeCookie("accessToken");
-          console.log("로그아웃 완료.");
           go("/");
         })
         .catch((error) => {
-          // console.log(error);
+          console.error(error);
           removeCookie("accessToken");
           go("/");
         });
@@ -48,7 +46,7 @@ export default function Header({ receiveSearchContents, searchRef }) {
           setUserName(res.data.username);
         })
         .catch((error) => {
-          // console.log(error);
+          console.error(error);
         });
     } else {
       Swal.fire({
@@ -98,9 +96,10 @@ export default function Header({ receiveSearchContents, searchRef }) {
             </button>
           </div>
         </div>
-        <div className="flex space-x-2">
-          <div className="flex items-center pr-6 space-x-2">
-          <div className="font-semibold flex items-center">{userName}</div>
+        <div className="flex space-x-2 items-end">
+          <div className="flex pr-6 space-x-1 items-baseline">
+
+          <div className="font-semibold flex text-2xl ">{userName}</div>
           <div className="text-base ">님</div>
           </div>
           <button onClick={logout} className="btn-white">
