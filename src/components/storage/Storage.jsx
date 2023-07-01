@@ -16,13 +16,14 @@ export default function Storage() {
   const [openList, setOpenList] = useState(true);
   const [memoArray, setMemoArray] = useState([]);
   const [draggedElementContent, setDraggedElementContent] = useState("");
+
+  const DATE = "DATE";
   // 검색
   const [searchContents, setSearchContents] = useState();
   const [searchResultArray, setSearchResultArray] = useState([]);
   const searchRef = useRef();
-  const [searchShowList, setSearchShowList] = useState();
+  const [searchShowList, setSearchShowList] = useState(DATE);
   // 리스트 렌더
-  const DATE = "DATE";
   const [showKeywords, setShowKeywords] = useState(DATE);
 
   const receiveMemo = useCallback(async () => {
