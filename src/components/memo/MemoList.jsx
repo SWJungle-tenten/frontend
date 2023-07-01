@@ -10,7 +10,8 @@ export default function MemoList({ memoArray, setSelectedMemo, open, setSelected
   return (
     <div className="flex-col p-6">
       <div className="text-2xl font-bold mb-7">메모</div>
-      {memoArray &&
+      {memoArray === null ? (<div className="text-3xl text-center p-6"> 새 메모를 추가하세요</div>):
+      memoArray.length > 0 ?
         memoArray.map((memo, index) => (
           <div key={memo.time}>
             <button
@@ -24,7 +25,11 @@ export default function MemoList({ memoArray, setSelectedMemo, open, setSelected
               </p>
             </button>
           </div>
-        ))}
+        ))
+        : 
+        (<div className="text-3xl text-center p-6 ">로딩중</div>)
+
+      }
       {/* <Memo/> */}
     </div>
   );

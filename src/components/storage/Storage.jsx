@@ -15,6 +15,15 @@ export default function Storage() {
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
   const [memoArray, setMemoArray] = useState([]);
+  // 검색
+  const [searchContents,setSearchContents] = useState();
+  const [searchResultArray, setSearchResultArray] = useState([]);
+  const searchRef = useRef();
+  const [searchShowList,setSearchShowList] = useState();
+  // 리스트 렌더
+  const DATE = "DATE";
+  const [showKeywords, setShowKeywords] = useState(DATE);
+
   const receiveMemo = async () => {
     await axios
       .post(
@@ -27,6 +36,10 @@ export default function Storage() {
         }
       )
       .then((res) => {
+        if (res.data.memoData.length === 0){
+          setMemoArray(null);
+          return;
+        }
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
@@ -55,11 +68,12 @@ export default function Storage() {
 
   // search
   
-  const [searchContents,setSearchContents] = useState();
-  const [searchResultArray, setsearchResultArray] = useState([]);
-  const searchRef = useRef();
   const receiveSearchContents = async(search) => {
+    if (cookies.accessToken) {
+    
     setSearchContents(true);
+    setSearchResultArray([]);
+    setShowKeywords(searchShowList);
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
@@ -73,18 +87,23 @@ export default function Storage() {
       .then((res) => {
         // console.log(res);
         // console.log(res.data);
-        setsearchResultArray(res.data);
+        if(res.data.length === 0){
+          setSearchResultArray(null);
+          return
+        }
+        setSearchResultArray(res.data);
       })
       .catch((error) => {
         // console.log(error);
       });
+    }
   }
   
 
   return (
     <>
-      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef}/>
-      <div className="flex">
+      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef} />
+      <div className="flex break-keep">
         <div className="flex-grow w-[70%]">
           {
             <Scrap
@@ -93,6 +112,9 @@ export default function Storage() {
               setSearchContents={setSearchContents}
               searchResultArray={searchResultArray}
               searchRef={searchRef}
+              showKeywords={showKeywords}
+              setShowKeywords={setShowKeywords}
+              setSearchShowList={setSearchShowList}
             />
           }
         </div>

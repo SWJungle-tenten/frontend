@@ -8,7 +8,7 @@ export default function Detail({
   const data = titleData[0] || {};
   return (
     <div className="p-8 overflow-auto">
-      <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold break-keep">
+      <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold ">
         {data.title}
       </p>
       {data.url && (

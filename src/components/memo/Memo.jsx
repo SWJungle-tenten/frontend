@@ -27,6 +27,8 @@ export default function Memo({
 
   // 메모 삭제
   const deleteMemo = () => {
+    if (cookies.accessToken) {
+
     Swal.fire({
       title: "메모를 삭제하시겠습니까?",
       text: "다시 되돌릴 수 없습니다.",
@@ -68,11 +70,13 @@ export default function Memo({
             });
           });
       }
-    });
+    });}
   };
 
   // 메모 저장
   const saveContent = () => {
+    if (cookies.accessToken) {
+
     const data = editorRef.current?.getInstance().getHTML();
 
     const date = new Date();
@@ -87,6 +91,7 @@ export default function Memo({
       });
       return;
     }
+    
     if (data) {
       axios
         .post(
@@ -113,16 +118,18 @@ export default function Memo({
         .catch((error) => {
           // console.log(error);
         });
-    }
+    }}
   };
   // 제목이 있으면 메모 내용 불러오기
   useEffect(() => {
+    if (cookies.accessToken) {
+
     if (selectedMemo) {
       receiveContent();
     }
     else{
     editorRef.current?.getInstance().setHTML(" ");
-    }
+    }}
   }, [selectedMemo]);
   
   // 메모 받아와서 셋팅

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 export default function Header({ receiveSearchContents, searchRef }) {
   const [cookies, setCookie, removeCookie] = useCookies("accessToken");
+  const [userName, setUserName] = useState(null);
   const go = useNavigate();
   const logout = async () => {
     if (cookies.accessToken) {
@@ -32,13 +33,29 @@ export default function Header({ receiveSearchContents, searchRef }) {
     }
   };
   useEffect(() => {
-    if (!cookies.accessToken) {
+    if (cookies.accessToken) {
+      axios
+        .post(
+          `${process.env.REACT_APP_SERVER_ADDR}/api/giveUserName`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          setUserName(res.data.username);
+        })
+        .catch((error) => {
+          // console.log(error);
+        });
+    } else {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "로그인이 필요합니다.",
       });
-
       go("/");
     }
   });
@@ -81,7 +98,11 @@ export default function Header({ receiveSearchContents, searchRef }) {
             </button>
           </div>
         </div>
-        <div className="">
+        <div className="flex space-x-2">
+          <div className="flex items-center pr-6 space-x-2">
+          <div className="font-semibold flex items-center">{userName}</div>
+          <div className="text-base ">님</div>
+          </div>
           <button onClick={logout} className="btn-white">
             로그아웃
           </button>
