@@ -16,7 +16,6 @@ export default function CollectionText({ handleDragStart }) {
           },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.length === 0) {
             setCollectText(null);
             return;
@@ -37,12 +36,12 @@ export default function CollectionText({ handleDragStart }) {
       ) : collectText.length > 0 ? (
         <>
           {collectText.map((array, index) => (
-            <>
-              <div className="text-2xl font-semibold pt-4">
+            <div key={index}>
+              <div key={array.keyWord} className="text-2xl font-semibold pt-4">
 
               {array.keyWord}
               </div>
-              <div className="flex flex-row flex-wrap w-full gap-[19px]">
+              <div key={array.keyword+index} className="flex flex-row flex-wrap w-full gap-[19px]">
                 {array.text.map((scrap, index) => (
                   <div
                     className="tooltip px-1"
@@ -53,14 +52,14 @@ export default function CollectionText({ handleDragStart }) {
                       className="cursor-grab hover:brightness-50 active:cursor-grabbing text-lg text-left border border-slate-300 border-dashed rounded-lg p-2 mb-2"
                       draggable={true}
                       onDragStart={handleDragStart}
-                      key={index}
+                      key={scrap}
                     >
                       {scrap}
                     </div>
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           ))}
         </>
       ) : (
@@ -68,7 +67,4 @@ export default function CollectionText({ handleDragStart }) {
       )}
     </div>
   );
-}
-{
-  /* <TextSpreader texts={collectText} handleDragStart={handleDragStart} /> */
 }

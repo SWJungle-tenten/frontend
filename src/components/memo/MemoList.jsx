@@ -28,9 +28,7 @@ export default function MemoList({ memoArray, setSelectedMemo, open, setSelected
         ))
         : 
         (<div className="text-3xl text-center p-6 ">로딩중</div>)
-
       }
-      {/* <Memo/> */}
     </div>
   );
 }

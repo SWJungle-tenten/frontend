@@ -18,13 +18,11 @@ export default function Header({ receiveSearchContents, searchRef }) {
           },
         })
         .then((res) => {
-          // console.log(res);
           removeCookie("accessToken");
-          console.log("로그아웃 완료.");
           go("/");
         })
         .catch((error) => {
-          // console.log(error);
+          console.error(error);
           removeCookie("accessToken");
           go("/");
         });
@@ -48,7 +46,7 @@ export default function Header({ receiveSearchContents, searchRef }) {
           setUserName(res.data.username);
         })
         .catch((error) => {
-          // console.log(error);
+          console.error(error);
         });
     } else {
       Swal.fire({

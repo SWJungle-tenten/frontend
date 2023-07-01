@@ -199,11 +199,6 @@ export default function Scrap({
   };
 
   const handleShowKeywordsClick = (key) => {
-    // prop 을 넣어서 스위치
-    // true 일 때 날짜였고 false 일 때 검색어였음
-    // false 일 때 날짜 리스트가 나옴
-    // 이거 지금 반대로 생각해야함 set으로 show키워드가 반영되기 전에 일어나는 함수들임
-
     setSearchContents(false);
     if (key === DATE) {
       setSelectedKeyword(null);

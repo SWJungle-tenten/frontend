@@ -18,11 +18,10 @@ export default function Intro() {
           },
         })
         .then((res) => {
-          // console.log(res);
           go("/storage");
         })
         .catch((error) => {
-          // console.log(error);
+          console.error(error);
         });
     }
   }, []);
