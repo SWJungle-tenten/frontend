@@ -37,7 +37,7 @@ export default function CollectionImage({ handleDragStart }) {
       {!collectImage ? (
         <div className="text-3xl text-center p-6">스크랩한 이미지가 없어요</div>
       ) : collectImage.length > 0 ? (
-        <div className="flex flex-row flex-wrap w-full gap-[19px] pb-">
+        <div className="flex flex-row flex-wrap w-full gap-[19px]">
           <ImageSpreader images={collectImage} handleDragStart={handleDragStart} />
         </div>
       ) : (
