@@ -96,9 +96,10 @@ export default function Header({ receiveSearchContents, searchRef }) {
             </button>
           </div>
         </div>
-        <div className="flex space-x-2">
-          <div className="flex items-center pr-6 space-x-2">
-          <div className="font-semibold flex items-center">{userName}</div>
+        <div className="flex space-x-2 items-end">
+          <div className="flex pr-6 space-x-1 items-baseline">
+
+          <div className="font-semibold flex text-2xl ">{userName}</div>
           <div className="text-base ">님</div>
           </div>
           <button onClick={logout} className="btn-white">
