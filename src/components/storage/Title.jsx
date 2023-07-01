@@ -28,8 +28,8 @@ export default function Title({
             onClick={() => {
               const titleIndex = item.keywords.titles.findIndex(
                 (t) => t === title
-              );
-              const url = item.keywords.urls[titleIndex];
+                );
+                const url = item.keywords.urls[titleIndex];
               deleteTitle(title, cookies.accessToken, item.date, url);
             }}
             onMouseEnter={() => setShowDelete(true)}
@@ -39,7 +39,7 @@ export default function Title({
           >
             <DeleteOutlineOutlinedIcon className=" text-red-400" />
           </button>
-        )}
+        )}  
       </div>
     </div>
   );
