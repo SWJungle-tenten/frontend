@@ -36,6 +36,10 @@ export default function Storage() {
         }
       )
       .then((res) => {
+        if (res.data.memoData.length === 0){
+          setMemoArray(null);
+          return;
+        }
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
