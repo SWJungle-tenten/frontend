@@ -70,18 +70,17 @@ export default function SignIn(prop) {
         }
       )
       .then((res) => {
-        // console.log(res);
         handleCookie(res.data.token);
         go("/storage");
       })
       .catch((error) => {
-        // console.log(error);
-        if(error.message === "Network Error"){
+        console.error(error);
+        if (error.message === "Network Error") {
           return Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "네트워크 에러!",
-          }); 
+          });
         }
         Swal.fire({
           icon: "error",
