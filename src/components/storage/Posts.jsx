@@ -6,20 +6,42 @@ export default function Posts({ date, userScrapData, handleDragStart }) {
 
   return (
     <div className="py-4 h-[93vh] overflow-hidden ">
-      {date ? <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold border-b bg-white">{date}</h1> : ``}
+      {date ? (
+        <h1 className="sticky top-0 px-4 py-2 text-5xl text-center font-bold border-b bg-white">
+          {date}
+        </h1>
+      ) : (
+        ``
+      )}
       {dateData && (
         <ul className="h-full overflow-auto p-8 pr-10">
           {dateData.map((data, index) => (
             <div className="pb-6" key={index}>
-              <div className="px-4 py-2 text-left text-3xl font-semibold">{data.title}</div>
-              <div>
-                <iframe title={`iframe-${index}`} src={data.url} className="iframe"></iframe>
+              <div className="px-4 py-2 text-left text-3xl font-semibold">
+                <a href={data.url} target="_blank" rel="noreferrer">
+                  {data.title}
+                </a>
               </div>
-              {data.text && <TextSpreader texts={data.text} handleDragStart={handleDragStart} />}
+              <div>
+                <iframe
+                  title={`iframe-${index}`}
+                  src={data.url}
+                  className="iframe"
+                ></iframe>
+              </div>
+              {data.text && (
+                <TextSpreader
+                  texts={data.text}
+                  handleDragStart={handleDragStart}
+                />
+              )}
               {data.img && data.img.length > 0 && (
                 <div className="flex flex-row flex-wrap w-full gap-[19px] pb-14">
                   {data.img.map}
-                  <ImageSpreader images={data.img} handleDragStart={handleDragStart} />
+                  <ImageSpreader
+                    images={data.img}
+                    handleDragStart={handleDragStart}
+                  />
                 </div>
               )}
             </div>

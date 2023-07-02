@@ -7,15 +7,23 @@ export default function Detail({ title, userScrapData, handleDragStart }) {
 
   return (
     <div className="p-8 overflow-auto">
-      <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold ">
-        {data.title}
-      </p>
+      <div className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold ">
+        <a href={data.url} target="_blank" rel="noreferrer">
+          {data.title}
+        </a>
+      </div>
       {data.url && (
         <div>
-          <iframe title={`iframe-${data.title}`} src={data.url} className="iframe"></iframe>
+          <iframe
+            title={`iframe-${data.title}`}
+            src={data.url}
+            className="iframe"
+          ></iframe>
         </div>
       )}
-      {data.text && data.text.length > 0 && <TextSpreader texts={data.text} handleDragStart={handleDragStart} />}
+      {data.text && data.text.length > 0 && (
+        <TextSpreader texts={data.text} handleDragStart={handleDragStart} />
+      )}
       {data.img && data.img.length > 0 && (
         <div className="flex flex-row flex-wrap w-full gap-[19px] pb-14">
           <ImageSpreader images={data.img} handleDragStart={handleDragStart} />
