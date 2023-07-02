@@ -161,7 +161,7 @@ export default function Scrap({
         setScrapData(filteredScrapData);
         if (cookies.accessToken) {
           axios
-            .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteTitle`, {
+            .delete(`https://sangunlee.shop/api/deleteTitle`, {
               data: {
                 title,
                 userToken,
