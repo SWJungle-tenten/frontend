@@ -28,19 +28,19 @@ export default function CollectionText({ handleDragStart }) {
   }, [cookies.accessToken]);
 
   return (
-    <div className="pl-16 py-10 pr-2 overflow-auto overflow-x-hidden space-y-2">
+    <div className="px-16 py-10 overflow-auto overflow-x-hidden space-y-2">
       <div className="text-3xl font-bold pb-2">스크랩한 텍스트</div>
       {!collectText ? (
         <div className="text-3xl text-center p-6">스크랩한 텍스트가 없어요</div>
       ) : collectText.length > 0 ? (
         <>
           {collectText.map((array, index) => (
-            <div key={index}>
+            <div key={index} className="px-5">
               <div key={array.keyWord} className="text-2xl font-semibold py-4">
 
               {array.keyWord}
               </div>
-              <div key={array.keyword+index} className="flex flex-row flex-wrap w-full gap-[19px]">
+              <div key={array.keyword+index} className="flex flex-wrap w-full gap-[19px]">
                 {array.text.map((scrap, index) => (
                   <div
                     className="tooltip px-1"
