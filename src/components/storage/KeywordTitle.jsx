@@ -15,7 +15,7 @@ export default function KeywordTitle({
     <div className="flex py-1 ml-2">
       <div className="flex flex-row bg-amber-50 hover:bg-amber-100 rounded-lg w-full relative">
         <button
-          className="btn-title "
+          className="btn-title focus:ring-amber-300"
           onClick={handleTitleClick}
           onMouseEnter={() => setShowDelete(true)}
           onMouseLeave={() => setShowDelete(false)}
