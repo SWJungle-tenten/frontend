@@ -6,11 +6,8 @@ import Header from "../intro/Header";
 import Memo from "../memo/Memo";
 import MemoList from "../memo/MemoList";
 
-import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
-import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
-import { Resizable } from 're-resizable';
+import { Resizable } from "re-resizable";
 
-import TestResize from "./TestResize";
 
 export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
@@ -45,9 +42,9 @@ export default function Storage() {
       })
       .catch((error) => {
         console.error(error);
-        if(error.response?.data?.message === "empty"){
-            setMemoArray(null);
-            return;
+        if (error.response?.data?.message === "empty") {
+          setMemoArray(null);
+          return;
         }
       });
   }, [cookies.accessToken]);
@@ -58,7 +55,6 @@ export default function Storage() {
       receiveMemo();
     }
   }, [cookies.accessToken, receiveMemo]);
-
 
   const handleDragStart = (event) => {
     setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
@@ -77,7 +73,7 @@ export default function Storage() {
     if (cookies.accessToken) {
       setSearchContents(true);
       setSearchResultArray([]);
-      if (searchShowList !== undefined){
+      if (searchShowList !== undefined) {
         setShowKeywords(searchShowList);
       }
       await axios
@@ -106,8 +102,11 @@ export default function Storage() {
 
   return (
     <>
-      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef} />
-      <div className="flex break-keep">
+      <Header
+        receiveSearchContents={receiveSearchContents}
+        searchRef={searchRef}
+      />
+      <div className="flex break-keep ">
         <div className="flex-grow w-[]">
           {
             <Scrap
@@ -123,77 +122,59 @@ export default function Storage() {
           }
         </div>
         <Resizable
-        defaultSize={{ width: '30%', height: '100%' }}
-        className=""
-        minWidth={'10%'}
-        maxWidth={'80%'}
-        enable={{
-          top: false,
-          right: false,
-          bottom: false,
-          left: true,
-          topRight: false,
-          bottomRight: false,
-          bottomLeft: false,
-          topLeft: false,
-        }}
-        handleStyles={{
-          left: {
-            width: '5px',
-            height: '100%',
-            left: '0px',
-            backgroundColor: '#d1d5db',
-          },
-        }}
-      >
-        <div className="h-[100vh] border-l overflow-auto viewsize relative">
-          <div className="flex p-4 pb-0 space-x-2  flex-row w-full justify-between">
-            <div className="hidden sm:flex flex-row">
-              <button
-                className="btn-yellow px-1.5 mr-2"
-                onClick={() => {
-                  document.querySelector(".viewsize").style.width = "70%";
-                }}
-              >
-                <ZoomOutMapIcon />
-              </button>
-              <button
-                className="btn-green px-1.5"
-                onClick={() => {
-                  document.querySelector(".viewsize").style.width = "30%";
-                }}
-              >
-                <ZoomInMapIcon />
+          defaultSize={{ width: "30%", height: "100%" }}
+          className=""
+          minWidth={"10%"}
+          maxWidth={"80%"}
+          enable={{
+            top: false,
+            right: false,
+            bottom: false,
+            left: true,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false,
+          }}
+          handleStyles={{
+            left: {
+              width: "3px",
+              height: "100%",
+              left: "0px",
+              backgroundColor: "#d1d5db",
+            },
+          }}
+        >
+          <div className="h-[100vh] border-l overflow-auto viewsize relative">
+            <div className="flex p-6 pb-0 flex-row w-full justify-between items-end ">
+              <div className="text-2xl font-bold pl-4 ">메모</div>
+              <button className="btn-bluewhite w-fit" onClick={handleNewMemo}>
+                새 메모 만들기
               </button>
             </div>
-            <button className="btn-blue w-fit" onClick={handleNewMemo}>
-              새 메모 만들기
-            </button>
-          </div>
-          <div className="flex-col border-gray-300 overflow-auto">
-            {openList ? (
-              <MemoList
-                memoArray={memoArray}
-                open={setOpenList}
-                setSelectedMemo={setSelectedMemo}
-                setSelectedTitle={setSelectedTitle}
-              />
-            ) : (
-              <>
-                <Memo
+            <div className="flex-col border-gray-300 overflow-auto">
+              {openList ? (
+                <MemoList
+                  memoArray={memoArray}
                   open={setOpenList}
-                  receiveMemo={receiveMemo}
-                  draggedElementContent={draggedElementContent}
-                  setDraggedElementContent={setDraggedElementContent}
-                  selectedMemo={selectedMemo}
-                  selectedTitle={selectedTitle}
+                  setSelectedMemo={setSelectedMemo}
+                  setSelectedTitle={setSelectedTitle}
                 />
-              </>
-            )}
+              ) : (
+                <>
+                  <Memo
+                    open={setOpenList}
+                    receiveMemo={receiveMemo}
+                    draggedElementContent={draggedElementContent}
+                    setDraggedElementContent={setDraggedElementContent}
+                    selectedMemo={selectedMemo}
+                    selectedTitle={selectedTitle}
+                  />
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </Resizable>
-
+        </Resizable>
       </div>
     </>
   );
