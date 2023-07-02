@@ -79,7 +79,7 @@ export default function Storage() {
       }
       await axios
         .post(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
+          `https://sangunlee.shop/api/searchData`,
           { search: search },
           {
             headers: {

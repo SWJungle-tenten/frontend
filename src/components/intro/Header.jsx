@@ -34,7 +34,7 @@ export default function Header({ receiveSearchContents, searchRef }) {
     if (cookies.accessToken) {
       axios
         .post(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/giveUserName`,
+          `https://sangunlee.shop/api/giveUserName`,
           {},
           {
             headers: {

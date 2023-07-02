@@ -11,7 +11,7 @@ export default function CollectionImage({ handleDragStart }) {
     if (cookies.accessToken) {
       axios
         .get(
-          `${process.env.REACT_APP_SERVER_ADDR}/api/imgCollect`,
+          `https://sangunlee.shop/api/imgCollect`,
 
           {
             headers: {

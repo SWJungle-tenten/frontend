@@ -10,7 +10,7 @@ export default function CollectionText({ handleDragStart }) {
   useEffect(() => {
     if (cookies.accessToken) {
       axios
-        .get(`${process.env.REACT_APP_SERVER_ADDR}/api/textCollect`, {
+        .get(`https://sangunlee.shop/api/textCollect`, {
           headers: {
             Authorization: `Bearer ${cookies.accessToken}`,
           },
