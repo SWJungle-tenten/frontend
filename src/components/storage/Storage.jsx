@@ -42,7 +42,7 @@ export default function Storage() {
       })
       .catch((error) => {
         console.error(error);
-        if(error.response.data.message === "empty"){
+        if(error.response?.data?.message === "empty"){
             setMemoArray(null);
             return;
         }

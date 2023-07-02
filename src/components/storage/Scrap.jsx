@@ -52,10 +52,10 @@ export default function Scrap({
           );
           setScrapData(response.data.dataToSend);
           setOriginalScrapData(response.data.dataToSend);
+          setIsLoading(false);
         } catch (error) {
           console.error(`HTTP error! status: ${error}`);
         }
-        setIsLoading(false);
       };
 
       const fetchDataKeywords = async () => {
@@ -72,10 +72,10 @@ export default function Scrap({
           );
 
           setKeywordData(response.data.dataToSend);
+          setIsLoading(false);
         } catch (error) {
           console.error(`HTTP error! status: ${error}`);
         }
-        setIsLoading(false);
       };
 
       fetchDataStorage();
