@@ -78,6 +78,9 @@ html .toastui-editor-contents {
   .btn-white {
     @apply border-2 border-red-300 text-red-300 hover:bg-red-400 hover:border-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-2 duration-200;
   }
+  .btn-bluewhite {
+    @apply border-2 border-blue-300 text-blue-300 hover:bg-blue-400 hover:border-blue-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-4 py-1 duration-200;
+  }
 
   .btn-toggle {
     @apply font-semibold hover:bg-red-100 focus:ring-2 focus:outline-0 focus:ring-red-300 rounded-lg text-2xl px-3 py-1.5 my-2 text-start pr-8;
