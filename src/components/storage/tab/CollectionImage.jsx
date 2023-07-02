@@ -27,7 +27,7 @@ export default function CollectionImage({ handleDragStart }) {
           setCollectImage(res.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     }
   }, []);

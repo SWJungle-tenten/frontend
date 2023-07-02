@@ -146,13 +146,13 @@ export default function Memo({
         }
       )
       .then((res) => {
-        // console.log(res);
+        console.error(res);
         titleRef.current = selectedTitle;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
       })
       .catch((error) => {
-        // console.log(error);
+        console.error(error);
       });
   };
 

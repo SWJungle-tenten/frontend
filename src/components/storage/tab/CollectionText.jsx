@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import TextSpreader from "../TextSpreader";
 
 export default function CollectionText({ handleDragStart }) {
   const [cookies] = useCookies(["accessToken"]);

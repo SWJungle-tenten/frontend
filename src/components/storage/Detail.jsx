@@ -7,19 +7,27 @@ export default function Detail({ title, userScrapData, handleDragStart }) {
 
   return (
     <div className="p-8 overflow-auto">
-      <div className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold ">
-        <a href={data.url} target="_blank" rel="noreferrer">
+      <div className="pl-4 pt-2 pb-5 mb-5 border-b-2 border-slate-400 text-center text-4xl font-bold flex justify-between">
           {data.title}
-        </a>
+          <div className="text-2xl flex items-end ">
+            <button
+              className="btn-bluewhite"
+              onClick={() =>
+                window.open(data.url, "_blank", "noopener noreferrer")
+              }
+            >
+              Link
+            </button>
+          </div>
       </div>
       {data.url && (
-        <div>
+        <>
           <iframe
             title={`iframe-${data.title}`}
             src={data.url}
             className="iframe"
           ></iframe>
-        </div>
+        </>
       )}
       {data.text && data.text.length > 0 && (
         <TextSpreader texts={data.text} handleDragStart={handleDragStart} />
