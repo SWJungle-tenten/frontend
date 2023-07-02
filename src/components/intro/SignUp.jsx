@@ -74,15 +74,21 @@ export default function SignUp(prop) {
         });
       })
       .catch((error) => {
-        console.log(error.response.data);
-        if (error.response.status === 400) {
+        if (error.response.data.msg ==="Email already exists") {
           return Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "이미 존재하는 Email 입니다.",
           });
         }
-        console.error("Error");
+        if (error.response.data.msg ==="User name already exists") {
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "이미 존재하는 Name 입니다.",
+          });
+        }
+        console.error(error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
