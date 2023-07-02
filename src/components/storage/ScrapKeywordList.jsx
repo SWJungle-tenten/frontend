@@ -20,7 +20,7 @@ export default function ScrapKeywordList({
     } else {
       setSelectedKeyword(keyword);
     }
-    showKeywords ==="KEYWORD" && handleToggleKeywordClick(keyword);
+    showKeywords === "KEYWORD" && handleToggleKeywordClick(keyword);
   };
 
   return (
@@ -33,22 +33,25 @@ export default function ScrapKeywordList({
           cookies={cookies}
           showKeywords={showKeywords}
         />
-        {showKeywords==="KEYWORD" &&
+        {showKeywords === "KEYWORD" &&
           selectedKeyword === item.keyword &&
           item.dates.map((date, dateIndex) => (
-            <div key={`date-${dateIndex}`}>
-              {currentKeyword[item.keyword] &&
-                date.titles.map((title, titleIndex) => (
-                  <KeywordTitle
-                    key={`title-${titleIndex}`}
-                    title={title}
-                    handleTitleClick={() => handleTitleClick(title)}
-                    deleteTitle={deleteTitle}
-                    cookies={cookies}
-                    date={date}
-                    showDetails={true}
-                  />
-                ))}
+            <div className="flex flex-row">
+              <div className="w-7"></div>
+              <div className="w-[100%]" key={`date-${dateIndex}`}>
+                {currentKeyword[item.keyword] &&
+                  date.titles.map((title, titleIndex) => (
+                    <KeywordTitle
+                      key={`title-${titleIndex}`}
+                      title={title}
+                      handleTitleClick={() => handleTitleClick(title)}
+                      deleteTitle={deleteTitle}
+                      cookies={cookies}
+                      date={date}
+                      showDetails={true}
+                    />
+                  ))}
+              </div>
             </div>
           ))}
       </li>
