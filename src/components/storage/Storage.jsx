@@ -8,6 +8,9 @@ import MemoList from "../memo/MemoList";
 
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
+import { Resizable } from 're-resizable';
+
+import TestResize from "./TestResize";
 
 export default function Storage() {
   const [cookies] = useCookies(["accessToken"]);
@@ -105,7 +108,7 @@ export default function Storage() {
     <>
       <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef} />
       <div className="flex break-keep">
-        <div className="flex-grow w-[70%]">
+        <div className="flex-grow w-[]">
           {
             <Scrap
               handleDragStart={handleDragStart}
@@ -119,7 +122,31 @@ export default function Storage() {
             />
           }
         </div>
-        <div className="w-[30%] border-l overflow-auto viewsize relative">
+        <Resizable
+        defaultSize={{ width: '30%', height: '100%' }}
+        className=""
+        minWidth={'10%'}
+        maxWidth={'80%'}
+        enable={{
+          top: false,
+          right: false,
+          bottom: false,
+          left: true,
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
+        handleStyles={{
+          left: {
+            width: '5px',
+            height: '100%',
+            left: '0px',
+            backgroundColor: '#d1d5db',
+          },
+        }}
+      >
+        <div className="h-[100vh] border-l overflow-auto viewsize relative">
           <div className="flex p-4 pb-0 space-x-2  flex-row w-full justify-between">
             <div className="hidden sm:flex flex-row">
               <button
@@ -165,6 +192,8 @@ export default function Storage() {
             )}
           </div>
         </div>
+      </Resizable>
+
       </div>
     </>
   );
