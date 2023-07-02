@@ -8,6 +8,8 @@ export default function SignUp(prop) {
   const password = useRef("");
   const name = useRef("");
   const [showPassword, setShowPassword] = useState(false);
+  const emailRegEx =
+    /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
 
   const handleCheckboxChange = () => {
     setShowPassword(!showPassword);
@@ -21,38 +23,43 @@ export default function SignUp(prop) {
   };
   const nameHandler = (event) => {
     name.current = event.target.value;
-
   };
   const submitHandler = async (event) => {
     event.preventDefault();
-    if (name.current === ''){
-      Swal.fire({
+    if (name.current === "") {
+      return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "이름을 입력하세요.",
       });
-      return
-    }
-    else if (email.current === '' ){
-      Swal.fire({
+    } else if (email.current === "") {
+      return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "이메일을 입력하세요.",
       });
-      return
-    }
-    else if (password.current === ''){
-      Swal.fire({
+    } else if (password.current === "") {
+      return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "비밀번호를 입력하세요.",
       });
-      return
+    } 
+    else if (!emailRegEx.test(email.current)) {
+      return Swal.fire({
+        icon: "error",
+        title: "이메일 형식이 맞지 않습니다.",
+        text: "예시: google@gmail.com",
+      });
     }
     await axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDR}/api/register`,
-        { name: name.current, email: email.current, password: password.current },
+        {
+          name: name.current,
+          email: email.current,
+          password: password.current,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -65,17 +72,23 @@ export default function SignUp(prop) {
           icon: "success",
           title: "회원가입 완료!",
         });
-
       })
       .catch((error) => {
-        if (error.response.status === 400) {
+        if (error.response.data.msg ==="Email already exists") {
           return Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "이미 존재하는 Email 입니다.",
           });
         }
-        console.error("Error");
+        if (error.response.data.msg ==="User name already exists") {
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "이미 존재하는 Name 입니다.",
+          });
+        }
+        console.error(error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -83,7 +96,6 @@ export default function SignUp(prop) {
           confirmButtonColor: "#0ea5e9",
         });
       });
-      
   };
   return (
     <div className="p-6  pb-0">
@@ -93,7 +105,7 @@ export default function SignUp(prop) {
             Name
           </label>
           <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5  "
             placeholder="name"
             onChange={nameHandler}
           />
@@ -103,8 +115,8 @@ export default function SignUp(prop) {
             Email
           </label>
           <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
-            placeholder="name@gmail.com"
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5  "
+            placeholder="google@gmail.com"
             onChange={emailHandler}
           />
         </div>
@@ -115,12 +127,12 @@ export default function SignUp(prop) {
           <input
             placeholder="••••••••"
             type={showPassword ? "text" : "password"}
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5  "
             onChange={passwordHandler}
           />
         </div>
         <div className="pt-1">
-          <label className="">
+          <label>
             <input
               className=""
               type="checkbox"

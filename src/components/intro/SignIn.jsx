@@ -98,7 +98,7 @@ export default function SignIn(prop) {
             Email
           </label>
           <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5  "
             placeholder="name@gmail.com"
             onChange={emailHandler}
           />
@@ -110,12 +110,12 @@ export default function SignIn(prop) {
           <input
             placeholder="••••••••"
             type={showPassword ? "text" : "password"}
-            className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5  "
+            className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg block w-full p-2.5  "
             onChange={passwordHandler}
           />
         </div>
         <div className="pt-1">
-          <label className="">
+          <label >
             <input
               className=""
               type="checkbox"
