@@ -6,15 +6,29 @@ const KeywordDetail = ({ title, userScrapData, handleDragStart }) => {
   const keywordData = getKeywordData(title, userScrapData);
   return (
     <div className="p-8 overflow-auto">
-      <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold">{title}</p>
+      <p className="px-4 py-2 pt-2 pb-5 border-b-2 border-slate-400 mb-5 text-center text-4xl font-bold">
+        <a href={keywordData.url} target="_blank" rel="noreferrer">
+          {title}
+        </a>
+      </p>
       {keywordData.url && (
         <div>
-          <iframe title={`iframe-${title}`} src={keywordData.url} className="iframe"></iframe>
+          <iframe
+            title={`iframe-${title}`}
+            src={keywordData.url}
+            className="iframe"
+          ></iframe>
         </div>
       )}
-      <TextSpreader texts={keywordData.texts} handleDragStart={handleDragStart} />
+      <TextSpreader
+        texts={keywordData.texts}
+        handleDragStart={handleDragStart}
+      />
       <div className="flex flex-row flex-wrap w-full gap-[19px] pb-14">
-        <ImageSpreader images={keywordData.imgs} handleDragStart={handleDragStart} />
+        <ImageSpreader
+          images={keywordData.imgs}
+          handleDragStart={handleDragStart}
+        />
       </div>
     </div>
   );
