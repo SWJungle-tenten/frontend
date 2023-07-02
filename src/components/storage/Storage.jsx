@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Scrap from "./Scrap";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -15,7 +15,18 @@ export default function Storage() {
   const [selectedTitle, setSelectedTitle] = useState();
   const [openList, setOpenList] = useState(true);
   const [memoArray, setMemoArray] = useState([]);
-  const receiveMemo = async () => {
+  const [draggedElementContent, setDraggedElementContent] = useState("");
+
+  const DATE = "DATE";
+  // 검색
+  const [searchContents, setSearchContents] = useState();
+  const [searchResultArray, setSearchResultArray] = useState([]);
+  const searchRef = useRef();
+  const [searchShowList, setSearchShowList] = useState(DATE);
+  // 리스트 렌더
+  const [showKeywords, setShowKeywords] = useState(DATE);
+
+  const receiveMemo = useCallback(async () => {
     await axios
       .post(
         `https://sangunlee.shop/api/allMemoTitle`,
@@ -30,17 +41,21 @@ export default function Storage() {
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
-        // console.log(error);
+        console.error(error);
+        if(error.response.data.message === "empty"){
+            setMemoArray(null);
+            return;
+        }
       });
-  };
+  }, [cookies.accessToken]);
+
   //memo API
   useEffect(() => {
     if (cookies.accessToken) {
       receiveMemo();
     }
-  }, []);
+  }, [cookies.accessToken, receiveMemo]);
 
-  const [draggedElementContent, setDraggedElementContent] = useState("");
 
   const handleDragStart = (event) => {
     setDraggedElementContent(event.target.outerHTML); // 드래그한 요소의 내용을 저장
@@ -54,37 +69,42 @@ export default function Storage() {
   };
 
   // search
-  
-  const [searchContents,setSearchContents] = useState();
-  const [searchResultArray, setsearchResultArray] = useState([]);
-  const searchRef = useRef();
-  const receiveSearchContents = async(search) => {
-    setSearchContents(true);
-    await axios
-      .post(
-        `https://sangunlee.shop/api/searchData`,
-        { search:search },
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        // console.log(res);
-        // console.log(res.data);
-        setsearchResultArray(res.data);
-      })
-      .catch((error) => {
-        // console.log(error);
-      });
-  }
-  
+
+  const receiveSearchContents = async (search) => {
+    if (cookies.accessToken) {
+      setSearchContents(true);
+      setSearchResultArray([]);
+      if (searchShowList !== undefined){
+        setShowKeywords(searchShowList);
+      }
+      await axios
+        .post(
+          `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
+          { search: search },
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.length === 0) {
+            setSearchResultArray(null);
+            return;
+          }
+          setSearchResultArray(res.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          setSearchResultArray(null);
+        });
+    }
+  };
 
   return (
     <>
-      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef}/>
-      <div className="flex">
+      <Header receiveSearchContents={receiveSearchContents} searchRef={searchRef} />
+      <div className="flex break-keep">
         <div className="flex-grow w-[70%]">
           {
             <Scrap
@@ -93,6 +113,9 @@ export default function Storage() {
               setSearchContents={setSearchContents}
               searchResultArray={searchResultArray}
               searchRef={searchRef}
+              showKeywords={showKeywords}
+              setShowKeywords={setShowKeywords}
+              setSearchShowList={setSearchShowList}
             />
           }
         </div>

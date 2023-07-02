@@ -9,23 +9,30 @@ import KeywordPosts from "./KeywordPosts";
 import Swal from "sweetalert2";
 import KeywordDetail from "./KeywordDetail";
 import Search from "../search/Search";
+import CollectionImage from "./tab/CollectionImage";
+import CollectionText from "./tab/CollectionText";
 
 export default function Scrap({
   handleDragStart,
   searchContents,
   setSearchContents,
   searchResultArray,
-  searchRef
+  searchRef,
+  showKeywords,
+  setShowKeywords,
+  setSearchShowList,
 }) {
+  const DATE = "DATE";
+  const KEYWORD = "KEYWORD";
+  const TEXT = "TEXT";
+  const IMAGE = "IMAGE";
   const [scrapData, setScrapData] = useState(null);
   const [originalScrapData, setOriginalScrapData] = useState(null);
   const [currentKeyword, setCurrentKeyword] = useState({});
   const [currentTitle, setCurrentTitle] = useState(null);
-  const [showKeywords, setShowKeywords] = useState(false);
   const [currentDate, setCurrentDate] = useState(null);
   const [cookies] = useCookies(["accessToken"]);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
-  const [userName, setUserName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [keywordData, setKeywordData] = useState(null);
 
@@ -45,7 +52,6 @@ export default function Scrap({
           );
           setScrapData(response.data.dataToSend);
           setOriginalScrapData(response.data.dataToSend);
-          setUserName(response.data.username);
         } catch (error) {
           console.error(`HTTP error! status: ${error}`);
         }
@@ -75,45 +81,15 @@ export default function Scrap({
       fetchDataStorage();
       fetchDataKeywords();
     }
-  }, []);
+  }, [cookies.accessToken]);
 
   const handleDeleteKeywordResponse = (data) => {
-    if (data.message === "success") {
-      const deletedKeyword = data.keyword;
-
-      const updatedScrapData = scrapData.filter((item) => {
-        if (item.keywords.keyword === deletedKeyword) {
-          item.keywords.titles = item.keywords.titles.filter(
-            (title) => title !== deletedKeyword
-          );
-        }
-        return item.keywords.titles.length > 0;
-      });
-
-      setScrapData(updatedScrapData);
-    } else if (data.message === "error") {
+    if (data.message === "error") {
       alert("키워드 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
   const handleDeleteUserScrapResponse = (data) => {
-    if (data.message === "success") {
-      const deletedTitle = data.title;
-
-      const updatedScrapData = scrapData.map((item) => {
-        if (item.keywords.titles.includes(deletedTitle)) {
-          item.keywords.titles = item.keywords.titles.filter(
-            (titleItem) => titleItem !== deletedTitle
-          );
-        }
-        return item;
-      });
-
-      const filteredScrapData = updatedScrapData.filter(
-        (item) => item.keywords.titles.length > 0
-      );
-
-      setScrapData(filteredScrapData);
-    } else if (data.message === "error") {
+    if (data.message === "error") {
       alert("스크랩 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
@@ -131,9 +107,7 @@ export default function Scrap({
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        const updatedScrapData = scrapData.filter(
-          (item) => item.keyword !== keyword
-        );
+        const updatedScrapData = scrapData.filter((item) => item.keyword !== keyword);
 
         setScrapData(updatedScrapData);
 
@@ -183,42 +157,38 @@ export default function Scrap({
       if (result.isConfirmed) {
         const updatedScrapData = scrapData.map((item) => {
           if (item.keywords.titles.includes(title)) {
-            item.keywords.titles = item.keywords.titles.filter(
-              (titleItem) => titleItem !== title
-            );
+            item.keywords.urls = item.keywords.urls.filter((urlItem) => urlItem !== url);
+            item.keywords.titles = item.keywords.titles.filter((titleItem) => titleItem !== title);
           }
           return item;
         });
 
-        const filteredScrapData = updatedScrapData.filter(
-          (item) => item.keywords.titles.length > 0
-        );
-
+        const filteredScrapData = updatedScrapData.filter((item) => item.keywords.titles.length > 0);
         setScrapData(filteredScrapData);
+        if (cookies.accessToken) {
+          axios
+            .delete(`https://sangunlee.shop/api/deleteTitle`, {
+              data: {
+                title,
+                userToken,
+                date,
+                url,
+              },
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            })
+            .then((response) => {
+              const data = response.data;
 
-        axios
-          .delete(`https://sangunlee.shop/api/deleteTitle`, {
-            data: {
-              title,
-              userToken,
-              date,
-              url,
-            },
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          })
-          .then((response) => {
-            const data = response.data;
-
-            if (data.message !== "success") {
-              handleDeleteUserScrapResponse(data);
-            }
-          })
-          .catch((error) => {
-            console.error(`HTTP error! status: ${error}`);
-          });
-
+              if (data.message !== "success") {
+                handleDeleteUserScrapResponse(data);
+              }
+            })
+            .catch((error) => {
+              console.error(`HTTP error! status: ${error}`);
+            });
+        }
         Swal.fire({
           icon: "success",
           title: "삭제 완료!",
@@ -228,18 +198,20 @@ export default function Scrap({
     });
   };
 
-  const handleShowKeywordsClick = () => {
+  const handleShowKeywordsClick = (key) => {
     setSearchContents(false);
-    if (showKeywords) {
+    if (key === DATE) {
       setSelectedKeyword(null);
       setCurrentKeyword({});
       setScrapData(originalScrapData);
-    } else {
+      setSearchShowList(key);
+    } else if (key === KEYWORD) {
       setCurrentDate(null);
       setCurrentTitle(null);
       setScrapData(keywordData);
+      setSearchShowList(key);
     }
-    setShowKeywords(!showKeywords);
+    setShowKeywords(key);
   };
   const handleTitleClick = (title) => {
     setSearchContents(false);
@@ -281,84 +253,109 @@ export default function Scrap({
   };
 
   return (
-    <div className="h-[93vh] flex ">
-      <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
-        <div className="pt-3 flex justify-between items-center">
-          <div className="pl-3">
-            <span className="text-xl font-semibold">{userName}</span>님
-          </div>
-          <div>
-            {isLoading ? null : (
-              <button
-                className={`btn-${showKeywords ? "yellow" : "red"} px-5 py-2.5`}
-                onClick={handleShowKeywordsClick}
-              >
-                {showKeywords ? "날짜별로 보기" : "검색어별로 보기"}
-              </button>
+    <div className="h-[93vh] flex flex-row ">
+        <div className="flex flex-col h-full justify-around w-10 border-r-2">
+        <button
+            onClick={() => {
+              handleShowKeywordsClick(DATE);
+            }}
+            className={`px-2 py-1 h-[25%]  ${showKeywords === DATE ? "bg-blue-300" : ""}`}
+          >
+            <div className="-rotate-90 ">
+            날짜
+            </div>
+          </button>
+        <button
+            onClick={() => {
+              handleShowKeywordsClick(KEYWORD);
+            }}
+            className={`px-2 py-1 h-[25%] border-t-2 ${showKeywords === KEYWORD ? "bg-red-300" : ""}`}
+          >
+            <div className="-rotate-90 ">
+            검색어
+            </div>
+          </button>
+          <button
+            onClick={() => {
+              handleShowKeywordsClick(TEXT);
+            }}
+            className={`px-2 py-1 h-[25%] border-y-2 ${showKeywords === TEXT ? "bg-yellow-300" : ""}`}
+          >
+            <div className="-rotate-90 ">
+            텍스트
+            </div>
+          </button>
+          <button
+            onClick={() => {
+              handleShowKeywordsClick(IMAGE);
+            }}
+            className={`px-2 py-0 h-[25%]  ${showKeywords === IMAGE ? "bg-green-300" : ""}`}
+          >
+            <div className="-rotate-90 ">
+            이미지
+            </div>
+          </button>
+        </div>
+      {/* </div> */}
+      {showKeywords === TEXT ? (
+        <CollectionText handleDragStart={handleDragStart} />
+      ) : showKeywords === IMAGE ? (
+        <CollectionImage handleDragStart={handleDragStart} />
+      ) : (
+        <>
+          <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
+            {isLoading ? (
+              <div className="text-3xl font-bold pt-10 text-center">로딩중</div>
+            ) : scrapData === undefined ? (
+              <div className="text-2xl font-bold pt-10 text-center"> 스크랩한 데이터가 없어요 </div>
+            ) : showKeywords === KEYWORD ? (
+              scrapData &&
+              scrapData.map((item, index) => (
+                <ScrapKeywordList
+                  key={index}
+                  item={item}
+                  handleToggleKeywordClick={handleToggleKeywordClick}
+                  deleteKeyword={deleteKeyword}
+                  cookies={cookies}
+                  currentKeyword={currentKeyword}
+                  handleTitleClick={handleTitleClick}
+                  deleteTitle={deleteTitle}
+                  showKeywords={showKeywords}
+                />
+              ))
+            ) : (
+              scrapData &&
+              scrapData.map((item, index) => (
+                <ScrapDateList
+                  key={index}
+                  item={item}
+                  index={index}
+                  scrapData={scrapData}
+                  handleToggleDateClick={handleToggleDateClick}
+                  handleTitleClick={handleTitleClick}
+                  cookies={cookies}
+                  deleteTitle={deleteTitle}
+                />
+              ))
             )}
           </div>
-        </div>
-        {showKeywords
-          ? scrapData &&
-            scrapData.map((item, index) => (
-              <ScrapKeywordList
-                key={index}
-                item={item}
-                handleToggleKeywordClick={handleToggleKeywordClick}
-                deleteKeyword={deleteKeyword}
-                cookies={cookies}
-                currentKeyword={currentKeyword}
-                handleTitleClick={handleTitleClick}
-                deleteTitle={deleteTitle}
-                showKeywords={showKeywords}
-              />
-            ))
-          : scrapData &&
-            scrapData.map((item, index) => (
-              <ScrapDateList
-                key={index}
-                item={item}
-                index={index}
-                scrapData={scrapData}
-                handleToggleDateClick={handleToggleDateClick}
-                handleTitleClick={handleTitleClick}
-                cookies={cookies}
-                deleteTitle={deleteTitle}
-              />
-            ))}
-      </div>
-      {scrapData &&
-        (searchContents || currentTitle || currentDate || selectedKeyword) && (
-          <div className="flex-1 overflow-auto">
-            {searchContents ? (
-              <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef}/>
-            ) : !showKeywords && currentTitle && !selectedKeyword ? (
-              <Detail
-                title={currentTitle}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : !showKeywords && currentDate && !selectedKeyword ? (
-              <Posts
-                date={currentDate}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : showKeywords && currentTitle ? (
-              <KeywordDetail
-                title={currentTitle}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : showKeywords && !currentTitle && selectedKeyword ? (
-              <KeywordPosts
-                keyword={selectedKeyword}
-                userScrapData={scrapData}
-                handleDragStart={handleDragStart}
-              />
-            ) : null}
-          </div>
-        )}
+          {scrapData && (searchContents || currentTitle || currentDate || selectedKeyword) && (
+            <div className="flex-1 overflow-auto">
+              {searchContents ? (
+                <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef} />
+              ) : showKeywords === DATE && currentTitle && !selectedKeyword ? (
+                <Detail title={currentTitle} userScrapData={scrapData} handleDragStart={handleDragStart} />
+              ) : showKeywords === DATE && currentDate && !selectedKeyword ? (
+                <Posts date={currentDate} userScrapData={scrapData} handleDragStart={handleDragStart} />
+              ) : showKeywords === KEYWORD && currentTitle ? (
+                <KeywordDetail title={currentTitle} userScrapData={scrapData} handleDragStart={handleDragStart} />
+              ) : showKeywords === KEYWORD && !currentTitle && selectedKeyword ? (
+                <KeywordPosts keyword={selectedKeyword} userScrapData={scrapData} handleDragStart={handleDragStart} />
+              ) : null}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

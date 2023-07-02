@@ -27,6 +27,8 @@ export default function Memo({
 
   // 메모 삭제
   const deleteMemo = () => {
+    if (cookies.accessToken) {
+
     Swal.fire({
       title: "메모를 삭제하시겠습니까?",
       text: "다시 되돌릴 수 없습니다.",
@@ -51,7 +53,6 @@ export default function Memo({
             },
           })
           .then((res) => {
-            // console.log(res);
             Swal.fire({
               icon: "success",
               title: "삭제 완료!",
@@ -60,7 +61,7 @@ export default function Memo({
             goList();
           })
           .catch((error) => {
-            // console.log(error);
+            console.error(error);
             Swal.fire({
               icon: "error",
               title: "Oops...",
@@ -68,11 +69,13 @@ export default function Memo({
             });
           });
       }
-    });
+    });}
   };
 
   // 메모 저장
   const saveContent = () => {
+    if (cookies.accessToken) {
+
     const data = editorRef.current?.getInstance().getHTML();
 
     const date = new Date();
@@ -87,6 +90,7 @@ export default function Memo({
       });
       return;
     }
+    
     if (data) {
       axios
         .post(
@@ -111,18 +115,20 @@ export default function Memo({
           goList();
         })
         .catch((error) => {
-          // console.log(error);
+          console.error(error);
         });
-    }
+    }}
   };
   // 제목이 있으면 메모 내용 불러오기
   useEffect(() => {
+    if (cookies.accessToken) {
+
     if (selectedMemo) {
       receiveContent();
     }
     else{
     editorRef.current?.getInstance().setHTML(" ");
-    }
+    }}
   }, [selectedMemo]);
   
   // 메모 받아와서 셋팅
@@ -154,11 +160,6 @@ export default function Memo({
     titleRef.current = event.target.value;
   };
 
-  // 제목 불러오기
-  // titleRef.current="" 여기에 값을 넣으면 될 듯?
-  // 내용 불러오기
-  // initialValue에 html형태로 넘기면 됨
-
   // Drop
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -173,66 +174,10 @@ export default function Memo({
     document
       .querySelector(".ProseMirror.toastui-editor-contents")
       ?.setAttribute("style", "height: auto !important; ");
-      //-------------------
-      // const convertToBase64 = (url) => {
-      //   return new Promise((resolve, reject) => {
-      //     fetch(url)
-      //       .then((response) => response.blob())
-      //       .then((blob) => {
-      //         const reader = new FileReader();
-      //         reader.onloadend = () => {
-      //           const base64String = reader.result;
-      //           resolve(base64String);
-      //           setBase64Image(base64String);
-      //         };
-      //         reader.onerror = reject;
-      //         reader.readAsDataURL(blob);
-      //       })
-      //       .catch((error) => reject(error));
-      //   });
-      // };
     
-      // const editorContents = document.querySelector(".ProseMirror.toastui-editor-contents");
-      // const imgTags = editorContents.querySelectorAll("img");
-    
-      // // const base64ImagesPromises = Array.from(imgTags).map((img) => {
-      // //   const imageUrl = img.src;
-      // //   return convertToBase64(imageUrl);
-      // // });
-      // const base64ImagesPromises = Array.from(imgTags).map((img) => {
-      //   const imageUrl = img.src;
-      //   // console.log(img);
-      //   if (imageUrl.startsWith("data:image")) {
-      //     // 이미지가 base64로 변환된 경우, 원래의 S3 URL로 변경
-      //     return Promise.resolve(imageUrl);
-      //   } else {
-      //     // 이미지가 S3 URL인 경우, base64로 변환
-      //     return convertToBase64(imageUrl);
-      //   }
-      // });
-    
-      // const base64Images = await Promise.all(base64ImagesPromises);
-    
-      // imgTags.forEach((img, index) => {
-      //   if (img.classList.contains("ProseMirror-separator")) {
-      //     img.remove();
-      //   }
-      //   // console.log(img);
-      //   img.dataset.originalSrc = img.src; // 원래의 S3 URL을 저장해둡니다.
-      //   img.src = base64Images[index];
-      
-      // });
-
     html2canvas(
       document.querySelector(".ProseMirror.toastui-editor-contents"),
       {
-        // ignoreElements: (element) => {
-        //   // class가 "ProseMirror-separator"인 img 요소는 캡처에서 제외
-        //   if (element.tagName === "IMG" && element.classList.contains("ProseMirror-separator")) {
-        //     return true;
-        //   }
-        //   return false;
-        // },
         logging: true,
         letterRendering: 1, 
         allowTaint : true, 
@@ -263,12 +208,6 @@ export default function Memo({
       }
       doc.save(`${name}.pdf`);
     });
-    // // s3로 다시 바꾸기!
-    // imgTags.forEach((img, index) => {
-    //   // console.log(img.dataset.originalSrc);
-    //   img.src = img.dataset.originalSrc;
-    // });
-
 
     document
       .querySelector(".ProseMirror.toastui-editor-contents")
@@ -293,8 +232,6 @@ export default function Memo({
         >
           <Editor
             initialValue=" "
-            // initialValue="<p>내용을 입력하세요!<p>dddd"
-            // placeholder="내용을 입력하세요!!"
             ref={editorRef}
             previewStyle="vertical"
             height="540px"

@@ -9,11 +9,9 @@ export default function Title({
   item,
 }) {
   const [showDelete, setShowDelete] = useState(false);
-  const titleIndex = item.keywords.titles.findIndex((t) => t === title);
 
   return (
     <div className="flex py-1 ml-2">
-      {/* <div className="hover:bg-gray-500 hover:text-gray-900"> */}
       <div className="flex flex-row bg-red-50 hover:bg-red-100 rounded-lg w-full relative">
         <button
           className="btn-title "
@@ -26,9 +24,7 @@ export default function Title({
         {showDelete && (
           <button
             onClick={() => {
-              const titleIndex = item.keywords.titles.findIndex(
-                (t) => t === title
-              );
+              const titleIndex = item.keywords.titles.findIndex((t) => t === title);
               const url = item.keywords.urls[titleIndex];
               deleteTitle(title, cookies.accessToken, item.date, url);
             }}
