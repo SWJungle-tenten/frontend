@@ -83,16 +83,6 @@ export default function Scrap({
     }
   }, [cookies.accessToken]);
 
-  const handleDeleteKeywordResponse = (data) => {
-    if (data.message === "error") {
-      alert("키워드 삭제에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
-  const handleDeleteUserScrapResponse = (data) => {
-    if (data.message === "error") {
-      alert("스크랩 삭제에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
 
   const deleteKeyword = (keyword, userToken, date) => {
     Swal.fire({
@@ -126,7 +116,7 @@ export default function Scrap({
             const data = response.data;
 
             if (data.message !== "success") {
-              handleDeleteKeywordResponse(data);
+              alert("스크랩 삭제에 실패했습니다. 다시 시도해주세요.");
             }
           })
           .catch((error) => {
@@ -142,6 +132,67 @@ export default function Scrap({
     });
   };
 
+  const deleteKeywordTitle = (title, userToken, date, url) => {
+    Swal.fire({
+      title: "스크랩을 삭제하시겠습니까?",
+      text: "다시 되돌릴 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedScrapData = scrapData.map((item) => {
+          if (item.dates[0].titles.includes(title)) {
+            const index = item.dates[0].titles.indexOf(title);
+            item.dates[0].img.splice(index, 1);
+            item.dates[0].texts.splice(index, 1);
+            item.dates[0].times.splice(index, 1);
+            item.dates[0].titles.splice(index, 1);
+            item.dates[0].urls.splice(index, 1);
+          }
+          return item;
+        });
+  
+        const filteredScrapData = updatedScrapData.filter((item) => item.dates[0].titles.length > 0);
+        setScrapData(filteredScrapData);
+        if (cookies.accessToken) {
+          axios
+            .delete(`${process.env.REACT_APP_SERVER_ADDR}/api/deleteTitle`, {
+              data: {
+                title,
+                userToken,
+                date,
+                url,
+              },
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            })
+            .then((response) => {
+              const data = response.data;
+
+              if (data.message !== "success") {
+                alert("키워드 삭제에 실패했습니다. 다시 시도해주세요.");
+              }
+            })
+            .catch((error) => {
+              console.error(`HTTP error! status: ${error}`);
+            });
+        }
+        Swal.fire({
+          icon: "success",
+          title: "삭제 완료!",
+          text: "삭제되었습니다.",
+        });
+      }
+    });
+  };
+
+  
   const deleteTitle = (title, userToken, date, url) => {
     Swal.fire({
       title: "스크랩을 삭제하시겠습니까?",
@@ -182,7 +233,7 @@ export default function Scrap({
               const data = response.data;
 
               if (data.message !== "success") {
-                handleDeleteUserScrapResponse(data);
+                alert("키워드 삭제에 실패했습니다. 다시 시도해주세요.");
               }
             })
             .catch((error) => {
@@ -319,7 +370,7 @@ export default function Scrap({
                   cookies={cookies}
                   currentKeyword={currentKeyword}
                   handleTitleClick={handleTitleClick}
-                  deleteTitle={deleteTitle}
+                  deleteTitle={deleteKeywordTitle}
                   showKeywords={showKeywords}
                 />
               ))
