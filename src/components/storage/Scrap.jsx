@@ -312,8 +312,9 @@ export default function Scrap({
             }}
             className={`px-2 py-1 h-[25%]  ${showKeywords === DATE ? "bg-blue-300" : ""}`}
           >
-            <div className="-rotate-90 ">
-            날짜
+            <div className="">
+            날
+            짜
             </div>
           </button>
         <button
@@ -322,8 +323,10 @@ export default function Scrap({
             }}
             className={`px-2 py-1 h-[25%] border-t-2 ${showKeywords === KEYWORD ? "bg-red-300" : ""}`}
           >
-            <div className="-rotate-90 ">
-            검색어
+            <div className=" ">
+            검
+            색
+            어
             </div>
           </button>
           <button
@@ -332,8 +335,10 @@ export default function Scrap({
             }}
             className={`px-2 py-1 h-[25%] border-y-2 ${showKeywords === TEXT ? "bg-yellow-300" : ""}`}
           >
-            <div className="-rotate-90 ">
-            텍스트
+            <div className="">
+            텍
+            스
+            트
             </div>
           </button>
           <button
@@ -342,8 +347,10 @@ export default function Scrap({
             }}
             className={`px-2 py-0 h-[25%]  ${showKeywords === IMAGE ? "bg-green-300" : ""}`}
           >
-            <div className="-rotate-90 ">
-            이미지
+            <div className="">
+            이
+            미
+            지
             </div>
           </button>
         </div>

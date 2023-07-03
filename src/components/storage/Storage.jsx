@@ -124,7 +124,7 @@ export default function Storage() {
         <Resizable
           defaultSize={{ width: "30%", height: "100%" }}
           className=""
-          minWidth={"10%"}
+          minWidth={"20%"}
           maxWidth={"50%"}
           enable={{
             top: false,
