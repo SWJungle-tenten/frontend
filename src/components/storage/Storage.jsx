@@ -125,7 +125,7 @@ export default function Storage() {
           defaultSize={{ width: "30%", height: "100%" }}
           className=""
           minWidth={"10%"}
-          maxWidth={"80%"}
+          maxWidth={"50%"}
           enable={{
             top: false,
             right: false,
