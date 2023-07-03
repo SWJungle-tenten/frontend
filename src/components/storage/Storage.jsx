@@ -38,14 +38,14 @@ export default function Storage() {
         }
       )
       .then((res) => {
+        if (res?.data?.message === "empty") {
+          setMemoArray(null);
+          return;
+        }
         setMemoArray(res.data.memoData);
       })
       .catch((error) => {
         console.error(error);
-        if (error.response?.data?.message === "empty") {
-          setMemoArray(null);
-          return;
-        }
       });
   }, [cookies.accessToken]);
 
