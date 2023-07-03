@@ -390,11 +390,12 @@ export default function Scrap({
               ))
             )}
           </div>
-          {scrapData && (searchContents || currentTitle || currentDate || selectedKeyword) && (
-            <div className="flex-1 overflow-auto">
-              {searchContents ? (
-                <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef} />
-              ) : showKeywords === DATE && currentTitle && !selectedKeyword ? (
+          <div className="flex-1 overflow-auto">
+            {searchContents ? (
+              <Search searchResultArray={searchResultArray} handleDragStart={handleDragStart} searchRef={searchRef} />) 
+              : 
+              (scrapData && ( currentTitle || currentDate || selectedKeyword) && (
+                showKeywords === DATE && currentTitle && !selectedKeyword ? (
                 <Detail title={currentTitle} userScrapData={scrapData} handleDragStart={handleDragStart} />
               ) : showKeywords === DATE && currentDate && !selectedKeyword ? (
                 <Posts date={currentDate} userScrapData={scrapData} handleDragStart={handleDragStart} />
@@ -402,9 +403,9 @@ export default function Scrap({
                 <KeywordDetail title={currentTitle} userScrapData={scrapData} handleDragStart={handleDragStart} />
               ) : showKeywords === KEYWORD && !currentTitle && selectedKeyword ? (
                 <KeywordPosts keyword={selectedKeyword} userScrapData={scrapData} handleDragStart={handleDragStart} />
-              ) : null}
-            </div>
-          )}
+              ) : null)
+              )}
+              </div>
         </>
       )}
     </div>
