@@ -52,10 +52,10 @@ export default function Scrap({
           );
           setScrapData(response.data.dataToSend);
           setOriginalScrapData(response.data.dataToSend);
+          setIsLoading(false);
         } catch (error) {
           console.error(`HTTP error! status: ${error}`);
         }
-        setIsLoading(false);
       };
 
       const fetchDataKeywords = async () => {
@@ -72,10 +72,10 @@ export default function Scrap({
             );
 
           setKeywordData(response.data.dataToSend);
+          setIsLoading(false);
         } catch (error) {
           console.error(`HTTP error! status: ${error}`);
         }
-        setIsLoading(false);
       };
 
       fetchDataStorage();
@@ -354,7 +354,7 @@ export default function Scrap({
         <CollectionImage handleDragStart={handleDragStart} />
       ) : (
         <>
-          <div className="px-4 w-[30%] border-r-2 border-gray-400 overflow-auto pb-5">
+          <div className="w-[30%] min-w-[200px] max-w-[300px] overflow-auto px-4 border-r-2 border-gray-40 pb-5">
             {isLoading ? (
               <div className="text-3xl font-bold pt-10 text-center">로딩중</div>
             ) : scrapData === undefined ? (
