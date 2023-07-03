@@ -146,7 +146,6 @@ export default function Memo({
         }
       )
       .then((res) => {
-        console.error(res);
         titleRef.current = selectedTitle;
         const contentsHTML = res.data.memoContent;
         editorRef.current?.getInstance().setHTML(contentsHTML);
