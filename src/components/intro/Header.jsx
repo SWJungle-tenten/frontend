@@ -56,7 +56,7 @@ export default function Header({ receiveSearchContents, searchRef }) {
       });
       go("/");
     }
-  });
+  },[]);
 
   const changeSearchContents = (event) => {
     searchRef.current = event.target.value;
