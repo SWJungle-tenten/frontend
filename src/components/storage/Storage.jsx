@@ -76,6 +76,13 @@ export default function Storage() {
       if (searchShowList !== undefined) {
         setShowKeywords(searchShowList);
       }
+
+      if (!search || search.trim() === "" || search.includes("?")) {
+        setSearchResultArray(null);
+        return;
+      }
+      
+      
       await axios
         .post(
           `${process.env.REACT_APP_SERVER_ADDR}/api/searchData`,
