@@ -356,9 +356,13 @@ export default function Scrap({
         </div>
       {/* </div> */}
       {showKeywords === TEXT ? (
+        <div className="w-[98%]">
         <CollectionText handleDragStart={handleDragStart} />
+        </div>
       ) : showKeywords === IMAGE ? (
+        <div className="w-[98%]">
         <CollectionImage handleDragStart={handleDragStart} />
+        </div>
       ) : (
         <>
           <div className="w-[30%] min-w-[200px] max-w-[300px] overflow-auto px-4 border-r-2 border-gray-40 pb-5">
