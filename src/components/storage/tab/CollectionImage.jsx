@@ -32,7 +32,7 @@ export default function CollectionImage({ handleDragStart }) {
     }
   }, []);
   return (
-    <div className="px-16 py-10  overflow-auto overflow-x-hidden space-y-6">
+    <div className="px-16 py-10 overflow-x-hidden space-y-6">
       <div className="text-3xl font-bold">스크랩한 이미지</div>
       {!collectImage ? (
         <div className="text-3xl text-center p-6">스크랩한 이미지가 없어요</div>
