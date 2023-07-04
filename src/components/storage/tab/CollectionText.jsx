@@ -28,7 +28,7 @@ export default function CollectionText({ handleDragStart }) {
   }, [cookies.accessToken]);
 
   return (
-    <div className="px-16 py-10 overflow-auto overflow-x-hidden space-y-2">
+    <div className="px-16 py-10 overflow-x-hidden space-y-2">
       <div className="text-3xl font-bold pb-2">스크랩한 텍스트</div>
       {!collectText ? (
         <div className="text-3xl text-center p-6">스크랩한 텍스트가 없어요</div>
